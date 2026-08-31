@@ -34,7 +34,7 @@ public class Main {
 
             //Check if input from user is valid
             while(!scanner.hasNextInt()){
-                System.out.print("Invalid input! Please enter a number between 1 and 5.");
+                System.out.println("Invalid input! Please enter a number between 1 and 5.");
                 scanner.nextLine();
             }
 
@@ -42,25 +42,15 @@ public class Main {
 
             //Switch Operations, we should change the case value with methods
             String operations = switch(choice){
-                case 1 -> "Create Pokemon";
-                case 2 -> "Show Pokemon";
-                case 3 -> "Customize your Pokemon";
-                case 4 -> "Delete Pokemon";
+                case 1 -> "Should call a Method Create Pokemon";
+                case 2 -> "Should call a Method Show Pokemon";
+                case 3 -> "Should call a Method Customize your Pokemon";
+                case 4 -> "Should call a Method Delete Pokemon";
+                case 5 -> "Good bye trainer.";
                 default -> "Invalid choice";
             };
-
-            if(choice < 1 || choice > 5){
-                System.out.println("Invalid choice, please enter a number between 1 and 5.");
-            } else if(choice == 5){
-                System.out.println("Good bye trainer.");
-            } else {
-                System.out.println("Welcome Trainer!");
-            }
-
-
+            System.out.println(operations);
         }while(choice!=5);
-
-
 
         scanner.close();
     }
