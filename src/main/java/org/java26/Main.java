@@ -38,6 +38,8 @@ public class Main {
                 scanner.nextLine();
             }
 
+            //FIX: If user enter 1 2 3, trigger the switch and call case 1, 2, 3.
+            //Ideally must call only 1 case
             choice=scanner.nextInt();
 
             //Switch Operations, we should change the case value with methods
