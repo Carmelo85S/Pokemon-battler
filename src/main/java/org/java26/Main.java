@@ -32,15 +32,18 @@ public class Main {
             System.out.println("Choose your option.");
             System.out.print("Your choice is: ");
 
-            //Check if input from user is valid
-            while(!scanner.hasNextInt()){
-                System.out.println("Invalid input! Please enter a number between 1 and 5.");
-                scanner.nextLine();
-            }
+            String input = scanner.nextLine().trim();
 
-            //FIX: If user enter 1 2 3, trigger the switch and call case 1, 2, 3.
-            //Ideally must call only 1 case
-            choice=scanner.nextInt();
+            try{
+                choice = Integer.parseInt(input);
+                    if(choice < 1 || choice > 5){
+                        System.out.println("Please insert a number between 1 and 5.");
+                        continue;
+                    }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter only one number.");
+                continue;
+            }
 
             //Switch Operations, we should change the case value with methods
             String operations = switch(choice){
