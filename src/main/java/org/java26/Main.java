@@ -13,21 +13,17 @@ public class Main {
         System.out.println("+---------------------------+ ");
         System.out.println();
 
-
-        /*
-        * Menu should appear at least once, create a Menu with 5 options
-        * use do-while loop
-        * Create, Show, Update, Delete, Exit
-        * */
-
         int choice = 0;
 
         do{
-            System.out.println("1 - Create your Pokemon");
-            System.out.println("2 - Show Pokemons");
+            System.out.println("1 - Show all Pokemon.");
+            System.out.println("2 - Insert a new Pokemon");
             System.out.println("3 - Customize your Pokemon");
             System.out.println("4 - Delete your Pokemon");
-            System.out.println("5 - Exit");
+            System.out.println("5 - Save to file.");
+            System.out.println("6 - Load from file.");
+            System.out.println("7 - Reset to seed data");
+            System.out.println("8 - Exit.");
 
             System.out.println("Choose your option.");
             System.out.print("Your choice is: ");
@@ -36,8 +32,8 @@ public class Main {
 
             try{
                 choice = Integer.parseInt(input);
-                    if(choice < 1 || choice > 5){
-                        System.out.println("Please insert a number between 1 and 5.");
+                    if(choice < 1 || choice > 8){
+                        System.out.println("Please insert a number between 1 and 8.");
                         continue;
                     }
             } catch (NumberFormatException e) {
@@ -45,18 +41,51 @@ public class Main {
                 continue;
             }
 
-            //Switch Operations, we should change the case value with methods
-            String operations = switch(choice){
-                case 1 -> "Should call a Method Create Pokemon";
-                case 2 -> "Should call a Method Show Pokemon";
-                case 3 -> "Should call a Method Customize your Pokemon";
-                case 4 -> "Should call a Method Delete Pokemon";
-                case 5 -> "Good bye trainer.";
-                default -> "Invalid choice";
-            };
-            System.out.println(operations);
-        }while(choice!=5);
+            //Switch Operations, replace cases with methods calls later
+            switch(choice){
+                case 1 -> showAllPokemon();
+                case 2 -> insertNewPokemon();
+                case 3 -> customizePokemon();
+                case 4 -> deletePokemon();
+                case 5 -> saveToFile();
+                case 6 -> loadFromFile();
+                case 7 -> resetToSeedData();
+                case 8 -> System.out.println("Goodbye, Trainer!");
+                default -> System.out.println("Invalid input");
+
+            }
+        }while(choice != 8);
 
         scanner.close();
+    }
+
+    public static void showAllPokemon(){
+        System.out.println("Pikatchu");
+        System.out.println("Bulbasaut");
+        System.out.println("Charizard");
+    }
+
+    public static void insertNewPokemon(){
+        System.out.println("Insert new Pokemon");
+    }
+
+    public static void customizePokemon(){
+        System.out.println("Customize your pokemon");
+    }
+
+    public static void deletePokemon(){
+        System.out.println("Are you sure you want to delete your pokemon?");
+    }
+
+    public static void saveToFile(){
+        System.out.println("Saving...");
+    }
+
+    public static void loadFromFile(){
+        System.out.println("Loading...");
+    }
+
+    static void resetToSeedData(){
+        System.out.println("Reset data...");
     }
 }
