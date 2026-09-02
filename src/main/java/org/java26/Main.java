@@ -11,19 +11,8 @@ public class Main {
         do {
             showMenu();
             choice = getChoice(scanner);
+            runAction(choice);
 
-            switch (choice) {
-                case 1 -> showAllPokemon();
-                case 2 -> insertNewPokemon();
-                case 3 -> customizePokemon();
-                case 4 -> deletePokemon();
-                case 5 -> saveToFile();
-                case 6 -> loadFromFile();
-                case 7 -> resetToSeedData();
-                case 8 -> System.out.println("Goodbye, Trainer!");
-                default -> System.out.println("Invalid input");
-
-            }
         } while (choice != 8);
 
         scanner.close();
@@ -100,5 +89,19 @@ public class Main {
 
     static void resetToSeedData() {
         System.out.println("Reset data...");
+    }
+
+    public static void runAction(int choice) {
+        switch (choice) {
+            case 1 -> showAllPokemon();
+            case 2 -> insertNewPokemon();
+            case 3 -> customizePokemon();
+            case 4 -> deletePokemon();
+            case 5 -> saveToFile();
+            case 6 -> loadFromFile();
+            case 7 -> resetToSeedData();
+            case 8 -> System.out.println("Goodbye, Trainer!");
+            default -> System.out.println("Invalid input");
+        }
     }
 }
