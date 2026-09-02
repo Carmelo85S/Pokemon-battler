@@ -11,14 +11,7 @@ public class Main {
         int choice = 0;
 
         do{
-            System.out.println("1 - Show all Pokemon.");
-            System.out.println("2 - Insert a new Pokemon");
-            System.out.println("3 - Customize your Pokemon");
-            System.out.println("4 - Delete your Pokemon");
-            System.out.println("5 - Save to file.");
-            System.out.println("6 - Load from file.");
-            System.out.println("7 - Reset to seed data");
-            System.out.println("8 - Exit.");
+           showMenu();
 
             System.out.println("Choose your option.");
             System.out.print("Your choice is: ");
@@ -68,6 +61,18 @@ public class Main {
         System.out.println("+---------------------------+ ");
         System.out.println();
     }
+
+    public static void showMenu(){
+        System.out.println("1 - Show all Pokemon.");
+        System.out.println("2 - Insert a new Pokemon");
+        System.out.println("3 - Customize your Pokemon");
+        System.out.println("4 - Delete your Pokemon");
+        System.out.println("5 - Save to file.");
+        System.out.println("6 - Load from file.");
+        System.out.println("7 - Reset to seed data");
+        System.out.println("8 - Exit.");
+    }
+
 
 
     public static void insertNewPokemon(){
