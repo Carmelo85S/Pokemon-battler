@@ -6,12 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("+---------------------------+ ");
-        System.out.println("|     WELCOME TRAINER       |");
-        System.out.println("|            by             |");
-        System.out.println("|      Carmelo Salis        |");
-        System.out.println("+---------------------------+ ");
-        System.out.println();
+        printWelcome();
 
         int choice = 0;
 
@@ -64,6 +59,16 @@ public class Main {
         System.out.println("Bulbasaut");
         System.out.println("Charizard");
     }
+
+    public static void printWelcome(){
+        System.out.println("+---------------------------+ ");
+        System.out.println("|     WELCOME TRAINER       |");
+        System.out.println("|            by             |");
+        System.out.println("|      Carmelo Salis        |");
+        System.out.println("+---------------------------+ ");
+        System.out.println();
+    }
+
 
     public static void insertNewPokemon(){
         System.out.println("Insert new Pokemon");
