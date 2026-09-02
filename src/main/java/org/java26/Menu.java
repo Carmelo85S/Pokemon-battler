@@ -1,6 +1,7 @@
 package org.java26;
 
 import java.util.Scanner;
+
 import static org.java26.ActionMenu.*;
 
 public class Menu {
@@ -36,20 +37,24 @@ public class Menu {
         while (true) {
             System.out.print("Your choice is: ");
 
-            String input = scanner.nextLine().trim();
+            String input = scanner.nextLine();
+                try {
+                    if (input.startsWith(" ") || input.startsWith("\t")) {
+                        System.out.println("Space not allowed, please enter a valid number.");
+                    }
 
-            try {
-                int choice = Integer.parseInt(input);
+                    int choice = Integer.parseInt(input);
 
-                if (choice >= 1 && choice <= 8) {
-                    return choice;
+                    if (choice >= 1 && choice <= 8) {
+                        return choice;
+                    }
+
+                    System.out.println("Please insert a number between 1 and 8.");
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input! Please enter only one number.");
                 }
 
-                System.out.println("Please insert a number between 1 and 8.");
-
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Please enter only one number.");
-            }
         }
     }
 
