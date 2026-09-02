@@ -5,32 +5,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        printWelcome();
-
         int choice = 0;
 
-        do{
-           showMenu();
+        printWelcome();
+        do {
+            showMenu();
+            choice = getChoice(scanner);
 
-            System.out.println("Choose your option.");
-            System.out.print("Your choice is: ");
-
-            String input = scanner.nextLine().trim();
-
-            try{
-                choice = Integer.parseInt(input);
-                    if(choice < 1 || choice > 8){
-                        System.out.println("Please insert a number between 1 and 8.");
-                        continue;
-                    }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Please enter only one number.");
-                continue;
-            }
-
-            //Switch Operations, replace cases with methods calls later
-            switch(choice){
+            switch (choice) {
                 case 1 -> showAllPokemon();
                 case 2 -> insertNewPokemon();
                 case 3 -> customizePokemon();
@@ -42,18 +24,18 @@ public class Main {
                 default -> System.out.println("Invalid input");
 
             }
-        }while(choice != 8);
+        } while (choice != 8);
 
         scanner.close();
     }
 
-    public static void showAllPokemon(){
+    public static void showAllPokemon() {
         System.out.println("Pikatchu");
         System.out.println("Bulbasaut");
         System.out.println("Charizard");
     }
 
-    public static void printWelcome(){
+    public static void printWelcome() {
         System.out.println("+---------------------------+ ");
         System.out.println("|     WELCOME TRAINER       |");
         System.out.println("|            by             |");
@@ -62,7 +44,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void showMenu(){
+    public static void showMenu() {
         System.out.println("1 - Show all Pokemon.");
         System.out.println("2 - Insert a new Pokemon");
         System.out.println("3 - Customize your Pokemon");
@@ -73,29 +55,50 @@ public class Main {
         System.out.println("8 - Exit.");
     }
 
+    public static int getChoice(Scanner scanner) {
+
+        while (true) {
+            System.out.print("Your choice is: ");
+
+            String input = scanner.nextLine().trim();
+
+            try {
+                int choice = Integer.parseInt(input);
+
+                if (choice >= 1 && choice <= 8) {
+                    return choice;
+                }
+
+                System.out.println("Please insert a number between 1 and 8.");
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter only one number.");
+            }
+        }
+    }
 
 
-    public static void insertNewPokemon(){
+    public static void insertNewPokemon() {
         System.out.println("Insert new Pokemon");
     }
 
-    public static void customizePokemon(){
+    public static void customizePokemon() {
         System.out.println("Customize your pokemon");
     }
 
-    public static void deletePokemon(){
+    public static void deletePokemon() {
         System.out.println("Are you sure you want to delete your pokemon?");
     }
 
-    public static void saveToFile(){
+    public static void saveToFile() {
         System.out.println("Saving...");
     }
 
-    public static void loadFromFile(){
+    public static void loadFromFile() {
         System.out.println("Loading...");
     }
 
-    static void resetToSeedData(){
+    static void resetToSeedData() {
         System.out.println("Reset data...");
     }
 }
