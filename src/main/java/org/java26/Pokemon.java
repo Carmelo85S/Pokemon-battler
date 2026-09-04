@@ -7,5 +7,12 @@ public class Pokemon {
     PokemonType type;
     int maxHp;
     int currentHp;
-    ArrayList<Attack> attack = new ArrayList<>();
+    ArrayList<Attack> attacks = new ArrayList<>();
+
+    public Pokemon(String name, PokemonType type, int maxHp) {
+        this.name = name;
+        this.type = type;
+        this.maxHp = maxHp;
+        this.currentHp = maxHp;
+    }
 }
