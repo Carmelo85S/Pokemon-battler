@@ -52,7 +52,7 @@ public class Menu {
                     System.out.println("Please insert a number between 1 and 8.");
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid input! Please enter only one number.");
+                    System.out.println("Invalid input!");
                 }
 
         }
