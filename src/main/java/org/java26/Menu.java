@@ -1,5 +1,4 @@
 package org.java26;
-
 import java.util.Scanner;
 
 import static org.java26.ActionMenu.*;
@@ -52,10 +51,10 @@ public class Menu {
         }
     }
 
-    public static void runAction(int choice, Pokedex pokemon) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokemon) {
         switch (choice) {
             case 1 -> showAllPokemon(pokemon);
-            case 2 -> insertNewPokemon();
+            case 2 -> insertNewPokemon(scanner, pokemon);
             case 3 -> customizePokemon();
             case 4 -> deletePokemon();
             case 5 -> saveToFile();

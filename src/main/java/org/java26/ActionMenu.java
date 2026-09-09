@@ -1,5 +1,7 @@
 package org.java26;
 
+import java.util.Scanner;
+
 public class ActionMenu {
     public static void showAllPokemon(Pokedex pokedex) {
         for (Pokemon p : pokedex.getPokemons()) {
@@ -12,8 +14,22 @@ public class ActionMenu {
     }
 
 
-    public static void insertNewPokemon() {
-        System.out.println("Insert new Pokemon");
+    public static void insertNewPokemon(Scanner scanner, Pokedex pokedex) {
+        System.out.println("Insert new pokemon.");
+        String name;
+        String type;
+        int maxHp;
+        int currentHp;
+
+        while (true) {
+            System.out.print("Enter name: ");
+            name = scanner.nextLine();
+            if (name.isBlank()) {
+                System.out.println("Name cannot be empty.");
+                continue;
+            }
+            break;
+        }
     }
 
     public static void customizePokemon() {

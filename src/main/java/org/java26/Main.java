@@ -14,7 +14,7 @@ public class Main {
         do {
             showMenu();
             choice = getChoice(scanner);
-            runAction(choice, pokedex);
+            runAction(choice, scanner, pokedex);
         } while (choice != 8);
         scanner.close();
     }
