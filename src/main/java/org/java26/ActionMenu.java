@@ -1,5 +1,6 @@
 package org.java26;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ActionMenu {
@@ -7,8 +8,8 @@ public class ActionMenu {
         for (Pokemon p : pokedex.getPokemons()) {
             System.out.println(
                     "Name: " + p.name + " type: " + p.type + " max Hp: " + p.maxHp + " current Hp: " + p.currentHp);
-            for(Attack attack : p.attacks){
-                System.out.println("Attacks: "+attack.name);
+            for (Attack attack : p.attacks) {
+                System.out.println("Attacks: " + attack.name);
             }
         }
     }
@@ -29,6 +30,22 @@ public class ActionMenu {
                 continue;
             }
             break;
+        }
+
+
+        while(true) {
+            System.out.print("Enter type: ");
+            try {
+                type = scanner.nextLine().toUpperCase(Locale.ROOT);
+                if (type.isBlank()) {
+                    System.out.println("Type cannot be empty.");
+                    continue;
+                }
+                PokemonType.valueOf(type);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Type not found in database...");
+            }
         }
     }
 
