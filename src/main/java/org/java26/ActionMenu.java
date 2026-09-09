@@ -25,7 +25,7 @@ public class ActionMenu {
     public static String readString(Scanner scanner, String prompt) {
         while (true) {
             System.out.print(prompt);
-            String userInput = scanner.nextLine();
+            String userInput = scanner.nextLine().trim();
             if (userInput.isBlank()) {
                 System.out.println("Input cannot be empty.");
                 continue;
@@ -50,16 +50,39 @@ public class ActionMenu {
         }
     }
 
-    public static void showAllPokemon(Pokedex pokedex) {
+    public static void showAllPokemon(Scanner scanner, Pokedex pokedex) {
+
+        if (pokedex.getPokemons().isEmpty()) {
+            System.out.println("Nothing to show");
+            System.out.println("Do you want to create a Pokemon?");
+
+            int choice = readIntBetween(
+                    scanner,
+                    1,
+                    2,
+                    "Make your choice:\n1. Yes\n2. No"
+            );
+
+            if (choice == 1) {
+                insertNewPokemon(scanner, pokedex);
+            } else {
+                return;
+            }
+        }
+
         for (Pokemon p : pokedex.getPokemons()) {
             System.out.println(
-                    "Name: " + p.name + " type: " + p.type + " max Hp: " + p.maxHp + " current Hp: " + p.currentHp);
+                    "Name: " + p.name +
+                            " type: " + p.type +
+                            " max HP: " + p.maxHp +
+                            " current HP: " + p.currentHp
+            );
+
             for (Attack attack : p.attacks) {
-                System.out.println("Attacks: " + attack.name);
+                System.out.println("Attack: " + attack.name);
             }
         }
     }
-
     public static void insertNewPokemon(Scanner scanner, Pokedex pokemon) {
         System.out.println("Insert new pokemon.");
         //Pokemon obj

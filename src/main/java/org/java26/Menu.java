@@ -53,7 +53,7 @@ public class Menu {
 
     public static void runAction(int choice, Scanner scanner, Pokedex pokemon) {
         switch (choice) {
-            case 1 -> showAllPokemon(pokemon);
+            case 1 -> showAllPokemon(scanner, pokemon);
             case 2 -> insertNewPokemon(scanner, pokemon);
             case 3 -> customizePokemon();
             case 4 -> deletePokemon();
