@@ -70,19 +70,9 @@ public class ActionMenu {
             }
         }
 
-        for (Pokemon p : pokedex.getPokemons()) {
-            System.out.println(
-                    "Name: " + p.name +
-                            " type: " + p.type +
-                            " max HP: " + p.maxHp +
-                            " current HP: " + p.currentHp
-            );
-
-            for (Attack attack : p.attacks) {
-                System.out.println("Attack: " + attack.name);
-            }
-        }
+        showPokemons(pokedex);
     }
+
     public static void insertNewPokemon(Scanner scanner, Pokedex pokemon) {
         System.out.println("Insert new pokemon.");
         //Pokemon obj
@@ -128,9 +118,24 @@ public class ActionMenu {
         p1.addAttack(a1);
     }
 
+    public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
+        //show all pokemons, choose pokemons to customize
+        showPokemons(pokedex);
+    }
 
-    public static void customizePokemon() {
-        System.out.println("Customize your pokemon");
+    private static void showPokemons(Pokedex pokedex) {
+        for (Pokemon p : pokedex.getPokemons()) {
+            System.out.println(
+                    "Name: " + p.name +
+                            " type: " + p.type +
+                            " max HP: " + p.maxHp +
+                            " current HP: " + p.currentHp
+            );
+
+            for (Attack attack : p.attacks) {
+                System.out.println("Attack: " + attack.name);
+            }
+        }
     }
 
     public static void deletePokemon() {

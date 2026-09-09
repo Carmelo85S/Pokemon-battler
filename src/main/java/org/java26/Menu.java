@@ -55,7 +55,7 @@ public class Menu {
         switch (choice) {
             case 1 -> showAllPokemon(scanner, pokemon);
             case 2 -> insertNewPokemon(scanner, pokemon);
-            case 3 -> customizePokemon();
+            case 3 -> customizePokemon(scanner, pokemon);
             case 4 -> deletePokemon();
             case 5 -> saveToFile();
             case 6 -> loadFromFile();
