@@ -66,6 +66,21 @@ public class ActionMenu {
             }
         }
 
+        while (true) {
+            System.out.printf("Enter a value between %d and %d.%n", min, max);
+            currentHp = scanner.nextLine().trim();
+            try {
+                int userInput = Integer.parseInt(currentHp);
+                if (userInput <= min || userInput > max) {
+                    System.out.println("Input out of range");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Input resulted in not a number. Try again");
+            }
+        }
+
     }
 
     public static void customizePokemon() {
