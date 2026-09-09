@@ -15,4 +15,8 @@ public class Pokemon {
         this.maxHp = maxHp;
         this.currentHp = maxHp;
     }
+
+    public void addAttack(Attack attack) {
+        attacks.add(attack);
+    }
 }

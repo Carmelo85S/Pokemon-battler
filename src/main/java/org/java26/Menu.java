@@ -58,7 +58,7 @@ public class Menu {
         }
     }
 
-    public static void runAction(int choice) {
+    public static void runAction(int choice, Pokedex pokemon) {
         switch (choice) {
             case 1 -> showAllPokemon();
             case 2 -> insertNewPokemon();
@@ -66,7 +66,7 @@ public class Menu {
             case 4 -> deletePokemon();
             case 5 -> saveToFile();
             case 6 -> loadFromFile();
-            case 7 -> resetToSeedData();
+            case 7 -> resetToSeedData(pokemon);
             case 8 -> System.out.println("Goodbye, Trainer!");
             default -> System.out.println("Invalid input");
         }

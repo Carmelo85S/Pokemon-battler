@@ -21,7 +21,68 @@ public class ActionMenu {
         System.out.println("Loading...");
     }
 
-    static void resetToSeedData() {
-        System.out.println("Reset data...");
+    static void resetToSeedData(Pokedex pokemon) {
+        Attack thunderbolt = new Attack("Thunderbolt", 50, 80, PokemonType.ELECTRIC);
+        Attack quickAttack = new Attack("Quick Attack", 40, 90, PokemonType.NORMAL);
+
+        Pokemon pikachu = new Pokemon("Pikachu", PokemonType.ELECTRIC, 100);
+        pikachu.addAttack(thunderbolt);
+        pikachu.addAttack(quickAttack);
+
+
+        Attack ember = new Attack("Ember", 40, 90, PokemonType.FIRE);
+        Attack scratch = new Attack("Scratch", 35, 95, PokemonType.NORMAL);
+
+        Pokemon charmander = new Pokemon("Charmander", PokemonType.FIRE, 100);
+        charmander.addAttack(ember);
+        charmander.addAttack(scratch);
+
+
+        Attack waterGun = new Attack("Water Gun", 40, 95, PokemonType.WATER);
+        Attack tackle = new Attack("Tackle", 35, 95, PokemonType.NORMAL);
+
+        Pokemon squirtle = new Pokemon("Squirtle", PokemonType.WATER, 100);
+        squirtle.addAttack(waterGun);
+        squirtle.addAttack(tackle);
+
+
+        Attack vineWhip = new Attack("Vine Whip", 45, 90, PokemonType.GRASS);
+        Attack headbutt = new Attack("Headbutt", 50, 85, PokemonType.NORMAL);
+
+        Pokemon bulbasaur = new Pokemon("Bulbasaur", PokemonType.GRASS, 100);
+        bulbasaur.addAttack(vineWhip);
+        bulbasaur.addAttack(headbutt);
+
+
+        Attack flamethrower = new Attack("Flamethrower", 70, 85, PokemonType.FIRE);
+        Attack wingAttack = new Attack("Wing Attack", 60, 90, PokemonType.NORMAL);
+
+        Pokemon charizard = new Pokemon("Charizard", PokemonType.FIRE, 120);
+        charizard.addAttack(flamethrower);
+        charizard.addAttack(wingAttack);
+
+
+        Attack thunderShock = new Attack("Thunder Shock", 40, 95, PokemonType.ELECTRIC);
+        Attack spark = new Attack("Spark", 50, 90, PokemonType.ELECTRIC);
+
+        Pokemon raichu = new Pokemon("Raichu", PokemonType.ELECTRIC, 110);
+        raichu.addAttack(thunderShock);
+        raichu.addAttack(spark);
+
+        Pokemon[] Pokemon = {
+                pikachu,
+                charmander,
+                squirtle,
+                bulbasaur,
+                charizard,
+                raichu
+        };
+
+        for (Pokemon p : Pokemon) {
+            pokemon.addPokemon(p);
+        }
+
+        System.out.println("Size: "+ pokemon.getPokemons().size());
     }
 }
+
