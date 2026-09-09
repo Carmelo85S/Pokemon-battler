@@ -1,5 +1,6 @@
 package org.java26;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -19,8 +20,10 @@ public class ActionMenu {
         System.out.println("Insert new pokemon.");
         String name;
         String type;
-        int maxHp;
-        int currentHp;
+        String maxHp = "";
+        int min = 0;
+        int max = 100;
+        String currentHp;
 
         while (true) {
             System.out.print("Enter name: ");
@@ -33,7 +36,7 @@ public class ActionMenu {
         }
 
 
-        while(true) {
+        while (true) {
             System.out.print("Enter type: ");
             try {
                 type = scanner.nextLine().toUpperCase(Locale.ROOT);
@@ -47,6 +50,22 @@ public class ActionMenu {
                 System.out.println("Invalid input. Type not found in database...");
             }
         }
+
+        while (true) {
+            System.out.printf("Enter a value between %d and %d.%n", min, max);
+            maxHp = scanner.nextLine().trim();
+            try {
+                int userInput = Integer.parseInt(maxHp);
+                if (userInput <= min || userInput > max) {
+                    System.out.println("Input out of range");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Input resulted in not a number. Try again");
+            }
+        }
+
     }
 
     public static void customizePokemon() {
