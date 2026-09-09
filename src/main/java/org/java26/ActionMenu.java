@@ -4,6 +4,52 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class ActionMenu {
+
+    public static int readIntBetween(Scanner scanner, int min, int max, String prompt) {
+        while (true) {
+            System.out.printf(prompt + "%n", min, max);
+            String userInput = scanner.nextLine().trim();
+            try {
+                int value = Integer.parseInt(userInput);
+                if (value < min || value > max) {
+                    System.out.printf("Invalid input. Choose a value between %d and %d.%n", min, max);
+                    continue;
+                }
+                return value;
+            } catch (NumberFormatException e) {
+                System.out.println("Input is not a number. Please enter a valid input.");
+            }
+        }
+    }
+
+    public static String readString(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String userInput = scanner.nextLine();
+            if (userInput.isBlank()) {
+                System.out.println("Input cannot be empty.");
+                continue;
+            }
+            return userInput;
+        }
+    }
+
+    public static PokemonType readType(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                String userInput = scanner.nextLine().toUpperCase(Locale.ROOT);
+                if (userInput.isBlank()) {
+                    System.out.println("Type cannot be empty.");
+                    continue;
+                }
+                return PokemonType.valueOf(userInput);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Type not found in database...");
+            }
+        }
+    }
+
     public static void showAllPokemon(Pokedex pokedex) {
         for (Pokemon p : pokedex.getPokemons()) {
             System.out.println(
@@ -14,15 +60,12 @@ public class ActionMenu {
         }
     }
 
-
     public static void insertNewPokemon(Scanner scanner, Pokedex pokemon) {
         System.out.println("Insert new pokemon.");
         //Pokemon obj
         String name = "";
-        String type;
+
         int maxHp;
-        int min = 0;
-        int max = 100;
         int currentHp;
 
         //Attack obj
@@ -30,107 +73,35 @@ public class ActionMenu {
         int baseDamage;
         int accuracy;
 
-        while (true) {
-            System.out.print("Enter name: ");
-            name = scanner.nextLine();
-            if (name.isBlank()) {
-                System.out.println("Name cannot be empty.");
-                continue;
-            }
-            break;
-        }
+        name = readString(scanner, "Enter new pokemon name");
 
-        while (true) {
-            System.out.print("Enter type: ");
-            try {
-                type = scanner.nextLine().toUpperCase(Locale.ROOT);
-                if (type.isBlank()) {
-                    System.out.println("Type cannot be empty.");
-                    continue;
-                }
-                PokemonType.valueOf(type);
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid input. Type not found in database...");
-            }
-        }
+        PokemonType type = readType(scanner, "Which type is your new pokemon? ");
 
-        while (true) {
-            System.out.printf("Enter a value between %d and %d.%n", min, max);
-            String userInput = scanner.nextLine().trim();
-            try {
-                maxHp = Integer.parseInt(userInput);
-                if (maxHp <= min || maxHp > max) {
-                    System.out.println("Input out of range");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Input resulted in not a number. Try again");
-            }
-        }
+        maxHp = readIntBetween(scanner, 0, 100, "Enter max HP between %d and %d.");
 
-        while (true) {
-            System.out.printf("Enter a value between %d and %d.%n", min, max);
-            String userInput = scanner.nextLine().trim();
-            try {
-                currentHp = Integer.parseInt(userInput);
-                if (currentHp <= min || currentHp > maxHp) {
-                    System.out.println("Input out of range");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Input resulted in not a number. Try again");
-            }
-        }
+        currentHp = readIntBetween(scanner, 1, maxHp, "Enter current HP between %d and %d.");
 
         //Attack
+        attackName = readString(scanner, "Enter attack name");
 
-        while (true) {
-            System.out.print("Enter attack name: ");
-            attackName = scanner.nextLine();
-            if (attackName.isBlank()) {
-                System.out.println("Name cannot be empty.");
-                continue;
-            }
-            break;
-        }
+        baseDamage = readIntBetween(
+                scanner,
+                0,
+                100,
+                "How much damage should your attack have? Enter a value between %d and %d."
+        );
 
-        while (true) {
-            System.out.printf("Enter a value between %d and %d.%n", min, max);
-            String userInput = scanner.nextLine().trim();
-            try {
-                baseDamage = Integer.parseInt(userInput);
-                if (baseDamage <= min || baseDamage > max) {
-                    System.out.println("Input out of range");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Input resulted in not a number. Try again");
-            }
-        }
+        accuracy = readIntBetween(
+                scanner,
+                0,
+                100,
+                "Enter accuracy between %d and %d."
+        );
 
-        while (true) {
-            System.out.printf("Enter a value between %d and %d.%n", min, max);
-            String userInput = scanner.nextLine().trim();
-            try {
-                accuracy = Integer.parseInt(userInput);
-                if (accuracy <= min || accuracy > max) {
-                    System.out.println("Input out of range");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Input resulted in not a number. Try again");
-            }
-        }
-
-        Pokemon p1 = new Pokemon(name, PokemonType.valueOf(type), maxHp, currentHp);
+        Pokemon p1 = new Pokemon(name, type, maxHp, currentHp);
         pokemon.addPokemon(p1);
 
-        Attack a1 = new Attack(attackName, baseDamage, accuracy, PokemonType.valueOf(type));
+        Attack a1 = new Attack(attackName, baseDamage, accuracy, type);
         p1.addAttack(a1);
     }
 
