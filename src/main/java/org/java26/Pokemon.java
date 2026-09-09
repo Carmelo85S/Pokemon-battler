@@ -9,11 +9,11 @@ public class Pokemon {
     int currentHp;
     ArrayList<Attack> attacks = new ArrayList<>();
 
-    public Pokemon(String name, PokemonType type, int maxHp) {
+    public Pokemon(String name, PokemonType type, int maxHp, int currentHp) {
         this.name = name;
         this.type = type;
         this.maxHp = maxHp;
-        this.currentHp = maxHp;
+        this.currentHp = currentHp;
     }
 
     public void addAttack(Attack attack) {

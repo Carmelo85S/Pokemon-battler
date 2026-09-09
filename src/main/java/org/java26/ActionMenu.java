@@ -1,6 +1,5 @@
 package org.java26;
 
-import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -16,14 +15,14 @@ public class ActionMenu {
     }
 
 
-    public static void insertNewPokemon(Scanner scanner, Pokedex pokedex) {
+    public static void insertNewPokemon(Scanner scanner, Pokedex pokemon) {
         System.out.println("Insert new pokemon.");
-        String name;
+        String name = "";
         String type;
-        String maxHp = "";
+        int maxHp;
         int min = 0;
         int max = 100;
-        String currentHp;
+        int currentHp;
 
         while (true) {
             System.out.print("Enter name: ");
@@ -34,7 +33,6 @@ public class ActionMenu {
             }
             break;
         }
-
 
         while (true) {
             System.out.print("Enter type: ");
@@ -53,10 +51,10 @@ public class ActionMenu {
 
         while (true) {
             System.out.printf("Enter a value between %d and %d.%n", min, max);
-            maxHp = scanner.nextLine().trim();
+            String userInput = scanner.nextLine().trim();
             try {
-                int userInput = Integer.parseInt(maxHp);
-                if (userInput <= min || userInput > max) {
+                maxHp = Integer.parseInt(userInput);
+                if (maxHp <= min || maxHp > max) {
                     System.out.println("Input out of range");
                     continue;
                 }
@@ -68,10 +66,10 @@ public class ActionMenu {
 
         while (true) {
             System.out.printf("Enter a value between %d and %d.%n", min, max);
-            currentHp = scanner.nextLine().trim();
+            String userInput = scanner.nextLine().trim();
             try {
-                int userInput = Integer.parseInt(currentHp);
-                if (userInput <= min || userInput > max) {
+                currentHp = Integer.parseInt(userInput);
+                if (currentHp <= min || currentHp > maxHp) {
                     System.out.println("Input out of range");
                     continue;
                 }
@@ -81,7 +79,12 @@ public class ActionMenu {
             }
         }
 
+        Pokemon p1 = new Pokemon(name, PokemonType.valueOf(type), maxHp, currentHp);
+        pokemon.addPokemon(p1);
+
+
     }
+
 
     public static void customizePokemon() {
         System.out.println("Customize your pokemon");
@@ -103,7 +106,7 @@ public class ActionMenu {
         Attack thunderbolt = new Attack("Thunderbolt", 50, 80, PokemonType.ELECTRIC);
         Attack quickAttack = new Attack("Quick Attack", 40, 90, PokemonType.NORMAL);
 
-        Pokemon pikachu = new Pokemon("Pikachu", PokemonType.ELECTRIC, 100);
+        Pokemon pikachu = new Pokemon("Pikachu", PokemonType.ELECTRIC, 100, 80);
         pikachu.addAttack(thunderbolt);
         pikachu.addAttack(quickAttack);
 
@@ -111,7 +114,7 @@ public class ActionMenu {
         Attack ember = new Attack("Ember", 40, 90, PokemonType.FIRE);
         Attack scratch = new Attack("Scratch", 35, 95, PokemonType.NORMAL);
 
-        Pokemon charmander = new Pokemon("Charmander", PokemonType.FIRE, 100);
+        Pokemon charmander = new Pokemon("Charmander", PokemonType.FIRE, 100, 70);
         charmander.addAttack(ember);
         charmander.addAttack(scratch);
 
@@ -119,7 +122,7 @@ public class ActionMenu {
         Attack waterGun = new Attack("Water Gun", 40, 95, PokemonType.WATER);
         Attack tackle = new Attack("Tackle", 35, 95, PokemonType.NORMAL);
 
-        Pokemon squirtle = new Pokemon("Squirtle", PokemonType.WATER, 100);
+        Pokemon squirtle = new Pokemon("Squirtle", PokemonType.WATER, 100, 65);
         squirtle.addAttack(waterGun);
         squirtle.addAttack(tackle);
 
@@ -127,7 +130,7 @@ public class ActionMenu {
         Attack vineWhip = new Attack("Vine Whip", 45, 90, PokemonType.GRASS);
         Attack headbutt = new Attack("Headbutt", 50, 85, PokemonType.NORMAL);
 
-        Pokemon bulbasaur = new Pokemon("Bulbasaur", PokemonType.GRASS, 100);
+        Pokemon bulbasaur = new Pokemon("Bulbasaur", PokemonType.GRASS, 100, 90);
         bulbasaur.addAttack(vineWhip);
         bulbasaur.addAttack(headbutt);
 
@@ -135,7 +138,7 @@ public class ActionMenu {
         Attack flamethrower = new Attack("Flamethrower", 70, 85, PokemonType.FIRE);
         Attack wingAttack = new Attack("Wing Attack", 60, 90, PokemonType.NORMAL);
 
-        Pokemon charizard = new Pokemon("Charizard", PokemonType.FIRE, 100);
+        Pokemon charizard = new Pokemon("Charizard", PokemonType.FIRE, 100, 100);
         charizard.addAttack(flamethrower);
         charizard.addAttack(wingAttack);
 
@@ -143,7 +146,7 @@ public class ActionMenu {
         Attack thunderShock = new Attack("Thunder Shock", 40, 95, PokemonType.ELECTRIC);
         Attack spark = new Attack("Spark", 50, 90, PokemonType.ELECTRIC);
 
-        Pokemon raichu = new Pokemon("Raichu", PokemonType.ELECTRIC, 100);
+        Pokemon raichu = new Pokemon("Raichu", PokemonType.ELECTRIC, 100, 100);
         raichu.addAttack(thunderShock);
         raichu.addAttack(spark);
 
