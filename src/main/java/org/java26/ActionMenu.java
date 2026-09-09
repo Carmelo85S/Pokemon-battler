@@ -1,6 +1,17 @@
 package org.java26;
 
 public class ActionMenu {
+    public static void showAllPokemon(Pokedex pokedex) {
+        for (Pokemon p : pokedex.getPokemons()) {
+            System.out.println(
+                    "Name: " + p.name + " type: " + p.type + " max Hp: " + p.maxHp + " current Hp: " + p.currentHp);
+            for(Attack attack : p.attacks){
+                System.out.println("Attacks: "+attack.name);
+            }
+        }
+    }
+
+
     public static void insertNewPokemon() {
         System.out.println("Insert new Pokemon");
     }
@@ -57,7 +68,7 @@ public class ActionMenu {
         Attack flamethrower = new Attack("Flamethrower", 70, 85, PokemonType.FIRE);
         Attack wingAttack = new Attack("Wing Attack", 60, 90, PokemonType.NORMAL);
 
-        Pokemon charizard = new Pokemon("Charizard", PokemonType.FIRE, 120);
+        Pokemon charizard = new Pokemon("Charizard", PokemonType.FIRE, 100);
         charizard.addAttack(flamethrower);
         charizard.addAttack(wingAttack);
 
@@ -65,7 +76,7 @@ public class ActionMenu {
         Attack thunderShock = new Attack("Thunder Shock", 40, 95, PokemonType.ELECTRIC);
         Attack spark = new Attack("Spark", 50, 90, PokemonType.ELECTRIC);
 
-        Pokemon raichu = new Pokemon("Raichu", PokemonType.ELECTRIC, 110);
+        Pokemon raichu = new Pokemon("Raichu", PokemonType.ELECTRIC, 100);
         raichu.addAttack(thunderShock);
         raichu.addAttack(spark);
 
@@ -81,8 +92,6 @@ public class ActionMenu {
         for (Pokemon p : Pokemon) {
             pokemon.addPokemon(p);
         }
-
-        System.out.println("Size: "+ pokemon.getPokemons().size());
     }
 }
 

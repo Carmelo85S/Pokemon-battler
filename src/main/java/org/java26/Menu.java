@@ -6,12 +6,6 @@ import static org.java26.ActionMenu.*;
 
 public class Menu {
 
-    public static void showAllPokemon() {
-        System.out.println("Pikatchu");
-        System.out.println("Bulbasaut");
-        System.out.println("Charizard");
-    }
-
     public static void printWelcome() {
         System.out.println("+---------------------------+ ");
         System.out.println("|     WELCOME TRAINER       |");
@@ -60,7 +54,7 @@ public class Menu {
 
     public static void runAction(int choice, Pokedex pokemon) {
         switch (choice) {
-            case 1 -> showAllPokemon();
+            case 1 -> showAllPokemon(pokemon);
             case 2 -> insertNewPokemon();
             case 3 -> customizePokemon();
             case 4 -> deletePokemon();
