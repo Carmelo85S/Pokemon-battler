@@ -17,12 +17,18 @@ public class ActionMenu {
 
     public static void insertNewPokemon(Scanner scanner, Pokedex pokemon) {
         System.out.println("Insert new pokemon.");
+        //Pokemon obj
         String name = "";
         String type;
         int maxHp;
         int min = 0;
         int max = 100;
         int currentHp;
+
+        //Attack obj
+        String attackName;
+        int baseDamage;
+        int accuracy;
 
         while (true) {
             System.out.print("Enter name: ");
@@ -79,10 +85,53 @@ public class ActionMenu {
             }
         }
 
+        //Attack
+
+        while (true) {
+            System.out.print("Enter attack name: ");
+            attackName = scanner.nextLine();
+            if (attackName.isBlank()) {
+                System.out.println("Name cannot be empty.");
+                continue;
+            }
+            break;
+        }
+
+        while (true) {
+            System.out.printf("Enter a value between %d and %d.%n", min, max);
+            String userInput = scanner.nextLine().trim();
+            try {
+                baseDamage = Integer.parseInt(userInput);
+                if (baseDamage <= min || baseDamage > max) {
+                    System.out.println("Input out of range");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Input resulted in not a number. Try again");
+            }
+        }
+
+        while (true) {
+            System.out.printf("Enter a value between %d and %d.%n", min, max);
+            String userInput = scanner.nextLine().trim();
+            try {
+                accuracy = Integer.parseInt(userInput);
+                if (accuracy <= min || accuracy > max) {
+                    System.out.println("Input out of range");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Input resulted in not a number. Try again");
+            }
+        }
+
         Pokemon p1 = new Pokemon(name, PokemonType.valueOf(type), maxHp, currentHp);
         pokemon.addPokemon(p1);
 
-
+        Attack a1 = new Attack(attackName, baseDamage, accuracy, PokemonType.valueOf(type));
+        p1.addAttack(a1);
     }
 
 
