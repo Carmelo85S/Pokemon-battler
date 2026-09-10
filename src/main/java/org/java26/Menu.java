@@ -56,7 +56,7 @@ public class Menu {
             case 1 -> showAllPokemon(scanner, pokedex);
             case 2 -> insertNewPokemon(scanner, pokedex);
             case 3 -> customizePokemon(scanner, pokedex);
-            case 4 -> deletePokemon();
+            case 4 -> deletePokemon(scanner, pokedex);
             case 5 -> saveToFile();
             case 6 -> loadFromFile();
             case 7 -> resetToSeedData(pokedex);

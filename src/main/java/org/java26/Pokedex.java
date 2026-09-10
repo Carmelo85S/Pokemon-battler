@@ -17,6 +17,15 @@ public class Pokedex  {
         }return null;
     }
 
+    public boolean removePokemon(String choice){
+        Pokemon pokemon = getPokemon(choice);
+        if(pokemon == null){
+            return false;
+        }
+        pokemons.remove(pokemon);
+        return true;
+    }
+
     public ArrayList<Pokemon> getPokemons() {
         return pokemons;
     }

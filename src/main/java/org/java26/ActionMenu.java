@@ -230,8 +230,11 @@ public class ActionMenu {
         }
     }
 
-    public static void deletePokemon() {
-        System.out.println("Are you sure you want to delete your pokemon?");
+    public static void deletePokemon(Scanner scanner, Pokedex pokedex) {
+        showPokemons(pokedex);
+        String pokemonToRemove = readString(scanner, "Which Pokemon do you wanna delete?: ");
+
+        System.out.println(pokemonToRemove + " has been removed from list." );
     }
 
     public static void saveToFile() {
