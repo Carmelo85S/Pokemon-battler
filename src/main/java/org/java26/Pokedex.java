@@ -9,6 +9,14 @@ public class Pokedex  {
         pokemons.add(pokemon);
     }
 
+    public Pokemon getPokemon(String choice){
+        for(Pokemon pokemon : pokemons){
+            if(pokemon.name.equalsIgnoreCase(choice)){
+                return pokemon;
+            }
+        }return null;
+    }
+
     public ArrayList<Pokemon> getPokemons() {
         return pokemons;
     }

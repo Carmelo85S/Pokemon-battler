@@ -105,14 +105,18 @@ public class ActionMenu {
 
     public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
         //show all pokemons, choose pokemons to customize
-        showPokemons(pokedex);
-        System.out.print("Choose pokemon to customize: ");
+        System.out.println("Choose pokemon to customize: ");
 
-            String userInput = scanner.nextLine();
-            for(Pokemon pokemon  : pokedex.getPokemons()){
-                pokemon.name.equalsIgnoreCase(userInput);
-                pokemon.name = "banana";
-            }
+        for(int i = 0; i < pokedex.getPokemons().size(); i++){
+            System.out.println(pokedex.getPokemons().get(i).name);
+        }
+
+        try {
+            String choice = readString(scanner, "Choose pokemon to customize: ");
+            System.out.println("Customize: " + pokedex.getPokemon(choice).name);
+        } catch (NullPointerException e){
+            System.out.println("The pokemon that you want to customize is not present in the list.");
+        }
     }
 
     private static void showPokemons(Pokedex pokedex) {
