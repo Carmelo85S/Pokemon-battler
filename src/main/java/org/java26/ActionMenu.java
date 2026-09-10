@@ -73,7 +73,7 @@ public class ActionMenu {
         showPokemons(pokedex);
     }
 
-    public static void insertNewPokemon(Scanner scanner, Pokedex pokemon) {
+    public static void insertNewPokemon(Scanner scanner, Pokedex pokedex) {
         System.out.println("Insert new pokemon.");
         //Pokemon obj
         String name = "";
@@ -112,7 +112,7 @@ public class ActionMenu {
         );
 
         Pokemon p1 = new Pokemon(name, type, maxHp, currentHp);
-        pokemon.addPokemon(p1);
+        pokedex.addPokemon(p1);
 
         Attack a1 = new Attack(attackName, baseDamage, accuracy, type);
         p1.addAttack(a1);
@@ -121,6 +121,13 @@ public class ActionMenu {
     public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
         //show all pokemons, choose pokemons to customize
         showPokemons(pokedex);
+        System.out.print("Choose pokemon to customize: ");
+
+            String userInput = scanner.nextLine();
+            for(Pokemon pokemon  : pokedex.getPokemons()){
+                pokemon.name.equalsIgnoreCase(userInput);
+                pokemon.name = "banana";
+            }
     }
 
     private static void showPokemons(Pokedex pokedex) {

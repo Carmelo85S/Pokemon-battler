@@ -51,15 +51,15 @@ public class Menu {
         }
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokemon) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokedex) {
         switch (choice) {
-            case 1 -> showAllPokemon(scanner, pokemon);
-            case 2 -> insertNewPokemon(scanner, pokemon);
-            case 3 -> customizePokemon(scanner, pokemon);
+            case 1 -> showAllPokemon(scanner, pokedex);
+            case 2 -> insertNewPokemon(scanner, pokedex);
+            case 3 -> customizePokemon(scanner, pokedex);
             case 4 -> deletePokemon();
             case 5 -> saveToFile();
             case 6 -> loadFromFile();
-            case 7 -> resetToSeedData(pokemon);
+            case 7 -> resetToSeedData(pokedex);
             case 8 -> System.out.println("Goodbye, Trainer!");
             default -> System.out.println("Invalid input");
         }
