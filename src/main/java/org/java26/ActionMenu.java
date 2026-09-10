@@ -122,16 +122,37 @@ public class ActionMenu {
             return;
         }
 
-        System.out.println("Customize"+ pokemon.name);
-        System.out.println(" --- Which parameter do you want to change? ---");
-        System.out.println("|                 1 - Name                     |");
-        System.out.println("|                 2 - Type                     |");
-        System.out.println("|                 3 - Hp                       |");
-        System.out.println("|                 4 - Add attack               |");
-        System.out.println("|                 5 - Remove attack            |");
-        System.out.println("|                 6 - Back to menu             |");
-        System.out.println(" ----------------------------------------------");
 
+        while(true) {
+            System.out.println("Customize" + pokemon.name);
+            System.out.println(" --- Which parameter do you want to change? ---");
+            System.out.println("|                 1 - Name                     |");
+            System.out.println("|                 2 - Type                     |");
+            System.out.println("|                 3 - Hp                       |");
+            System.out.println("|                 4 - Add attack               |");
+            System.out.println("|                 5 - Remove attack            |");
+            System.out.println("|                 6 - Back to menu             |");
+            System.out.println(" ----------------------------------------------");
+
+            int chooseOperation = readIntBetween(scanner, 1, 6,"Choose an option between %d and %d: ");
+
+            switch(chooseOperation){
+                case 1 -> {
+                    String newName = readString(scanner, "Enter new name: ");
+                    pokemon.name = newName;
+                }
+                case 2 -> System.out.println("Type");
+                case 3 -> System.out.println("Hp");
+                case 4 -> System.out.println("Add attack");
+                case 5 -> System.out.println("Remove attack");
+                case 6 -> {
+                    System.out.println("Back to menu");
+                    return;
+                }
+
+                default -> System.out.println("Invalid choice");
+            }
+        }
     }
 
     private static void showPokemons(Pokedex pokedex) {
