@@ -66,7 +66,7 @@ public class ActionMenu {
         }
 
         //Attack
-        while(attackCount < 4) {
+        while (attackCount < 4) {
             attackName = readString(scanner, "Enter attack name: ");
             baseDamage = readIntBetween(
                     scanner, 0, 100,
@@ -80,7 +80,7 @@ public class ActionMenu {
             pokemon.addAttack(attack);
 
             attackCount++;
-            if(attackCount == 4){
+            if (attackCount == 4) {
                 System.out.println("Attack slots filled");
                 break;
             }
@@ -108,19 +108,30 @@ public class ActionMenu {
             System.out.println("Nothing to show");
             return;
         }
-        //show all pokemons, choose pokemons to customize
         System.out.println("Choose pokemon to customize: ");
 
-        for(int i = 0; i < pokedex.getPokemons().size(); i++){
+        for (int i = 0; i < pokedex.getPokemons().size(); i++) {
             System.out.println(pokedex.getPokemons().get(i).name);
         }
+        String choice = readString(scanner, "Choose pokemon to customize: ");
 
-        try {
-            String choice = readString(scanner, "Choose pokemon to customize: ");
-            System.out.println("Customize: " + pokedex.getPokemon(choice).name);
-        } catch (NullPointerException e){
+        Pokemon pokemon = pokedex.getPokemon(choice);
+
+        if (pokemon == null) {
             System.out.println("The pokemon that you want to customize is not present in the list.");
+            return;
         }
+
+        System.out.println("Customize"+ pokemon.name);
+        System.out.println(" --- Which parameter do you want to change? ---");
+        System.out.println("|                 1 - Name                     |");
+        System.out.println("|                 2 - Type                     |");
+        System.out.println("|                 3 - Hp                       |");
+        System.out.println("|                 4 - Add attack               |");
+        System.out.println("|                 5 - Remove attack            |");
+        System.out.println("|                 6 - Back to menu             |");
+        System.out.println(" ----------------------------------------------");
+
     }
 
     private static void showPokemons(Pokedex pokedex) {
