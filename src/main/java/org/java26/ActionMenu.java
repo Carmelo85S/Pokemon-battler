@@ -148,7 +148,51 @@ public class ActionMenu {
                 case 3 -> {
                     pokemon.maxHp = readIntBetween(scanner, 1, 100, "Enter new hp value");
                 }
-                case 4 -> System.out.println("Add attack");
+                case 4 -> {
+                        for(Attack attack : pokemon.attacks){
+                            System.out.println(attack.name);
+                        }
+                    int attackCount = pokemon.attacks.size();
+                        if(attackCount <= 4){
+
+                            while (attackCount < 4) {
+                                String attackName = readString(scanner, "Enter attack name: ");
+                                int baseDamage = readIntBetween(
+                                        scanner, 0, 100,
+                                        "How much damage should your attack have? Enter a value between %d and %d: "
+                                );
+                                int accuracy = readIntBetween(
+                                        scanner, 0, 100,
+                                        "Enter accuracy between %d and %d: "
+                                );
+                                Attack newAttack = new Attack(attackName, baseDamage, accuracy, pokemon.type);
+                                pokemon.addAttack(newAttack);
+
+                                attackCount++;
+                                if (attackCount == 4) {
+                                    System.out.println("Attack slots filled");
+                                    break;
+                                }
+
+                                String userChoice = readString(
+                                        scanner,
+                                        "Do you want to enter another attack? (yes/no): "
+                                );
+
+                                if (userChoice.equalsIgnoreCase("no")) {
+                                    break;
+                                }
+
+                                if (!userChoice.equalsIgnoreCase("yes")) {
+                                    System.out.println("Invalid input.");
+                                    break;
+                                }
+                            }
+                        }
+                        else{
+                            return;
+                        }
+                }
                 case 5 -> System.out.println("Remove attack");
                 case 6 -> {
                     System.out.println("Back to menu");
