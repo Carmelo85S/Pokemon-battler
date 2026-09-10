@@ -141,7 +141,10 @@ public class ActionMenu {
                     String newName = readString(scanner, "Enter new name: ");
                     pokemon.name = newName;
                 }
-                case 2 -> System.out.println("Type");
+                case 2 -> {
+                    String newType = readString(scanner, "Enter new type: ");
+                    pokemon.type = PokemonType.valueOf(newType);
+                }
                 case 3 -> System.out.println("Hp");
                 case 4 -> System.out.println("Add attack");
                 case 5 -> System.out.println("Remove attack");
