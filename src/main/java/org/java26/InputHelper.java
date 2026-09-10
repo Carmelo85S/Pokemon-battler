@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class InputHelper {
     public static int readIntBetween(Scanner scanner, int min, int max, String prompt) {
         while (true) {
-            System.out.printf(prompt + "%n", min, max);
+            System.out.printf(prompt, min, max);
             String userInput = scanner.nextLine().trim();
             try {
                 int value = Integer.parseInt(userInput);
