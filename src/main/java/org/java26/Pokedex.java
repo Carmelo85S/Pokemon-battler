@@ -14,16 +14,14 @@ public class Pokedex  {
             if(pokemon.name.equalsIgnoreCase(choice)){
                 return pokemon;
             }
-        }return null;
+        }throw new InvalidPokemonException(
+            "Pokemon '" + choice + "' not found."
+        );
     }
 
-    public boolean removePokemon(String choice){
+    public void removePokemon(String choice){
         Pokemon pokemon = getPokemon(choice);
-        if(pokemon == null){
-            return false;
-        }
         pokemons.remove(pokemon);
-        return true;
     }
 
     public ArrayList<Pokemon> getPokemons() {

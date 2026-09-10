@@ -232,9 +232,17 @@ public class ActionMenu {
 
     public static void deletePokemon(Scanner scanner, Pokedex pokedex) {
         showPokemons(pokedex);
-        String pokemonToRemove = readString(scanner, "Which Pokemon do you wanna delete?: ");
 
-        System.out.println(pokemonToRemove + " has been removed from list." );
+        while (true) {
+            String pokemonToRemove = readString(scanner, "Which Pokemon do you wanna delete?: ");
+            try {
+                pokedex.removePokemon(pokemonToRemove);
+                System.out.println(pokemonToRemove + " has been removed from list." );
+                break;
+            } catch (InvalidPokemonException e){
+                System.out.println("Pokemon not found, try again");
+            }
+        }
     }
 
     public static void saveToFile() {
