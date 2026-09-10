@@ -104,6 +104,10 @@ public class ActionMenu {
     }
 
     public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
+        if (pokedex.getPokemons().isEmpty()) {
+            System.out.println("Nothing to show");
+            return;
+        }
         //show all pokemons, choose pokemons to customize
         System.out.println("Choose pokemon to customize: ");
 
