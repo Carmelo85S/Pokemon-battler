@@ -103,7 +103,7 @@ public class ActionMenu {
 
     public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
         if (pokedex.getPokemons().isEmpty()) {
-            System.out.println("Nothing to show");
+            System.out.println("No pokemons listed");
             return;
         }
         System.out.println("Choose pokemon to customize: ");
@@ -113,10 +113,12 @@ public class ActionMenu {
         }
         String choice = readString(scanner, "Choose pokemon to customize: ");
 
-        Pokemon pokemon = pokedex.getPokemon(choice);
+        Pokemon pokemon;
 
-        if (pokemon == null) {
-            System.out.println("The pokemon that you want to customize is not present in the list.");
+        try {
+             pokemon = pokedex.getPokemon(choice);
+        } catch (InvalidPokemonException e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -233,7 +235,8 @@ public class ActionMenu {
                 System.out.println(pokemonToRemove + " has been removed from list.");
                 break;
             } catch (InvalidPokemonException e) {
-                System.out.println("Pokemon not found, try again");
+                System.out.println(e.getMessage());
+                System.out.println("Try again.");
             }
         }
     }
