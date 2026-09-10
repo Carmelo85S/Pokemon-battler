@@ -33,7 +33,6 @@ public class ActionMenu {
         System.out.println("Insert new pokemon.");
         //Pokemon obj
         String name = "";
-
         int maxHp;
         int currentHp;
 
@@ -41,37 +40,67 @@ public class ActionMenu {
         String attackName;
         int baseDamage;
         int accuracy;
+        int attackCount = 0;
 
-        name = readString(scanner, "Enter new pokemon name");
+        name = readString(scanner, "Enter new pokemon name: ");
+        PokemonType type = readType(scanner, "Which type is your new pokemon?: ");
+        maxHp = readIntBetween(scanner, 0, 100, "Enter max HP between %d and %d: ");
+        currentHp = readIntBetween(scanner, 1, maxHp, "Enter current HP between %d and %d: ");
+        Pokemon pokemon = new Pokemon(name, type, maxHp, currentHp);
+        pokedex.addPokemon(pokemon);
 
-        PokemonType type = readType(scanner, "Which type is your new pokemon? ");
 
-        maxHp = readIntBetween(scanner, 0, 100, "Enter max HP between %d and %d.");
+        while (true) {
+            String answer = readString(
+                    scanner,
+                    "Do you want to enter attacks? Yes / No: "
+            );
 
-        currentHp = readIntBetween(scanner, 1, maxHp, "Enter current HP between %d and %d.");
+            if (answer.equalsIgnoreCase("Yes")) {
+                break;
+            } else if (answer.equalsIgnoreCase("No")) {
+                return;
+            } else {
+                System.out.println("Invalid input. Please enter Yes or No.");
+            }
+        }
 
         //Attack
-        attackName = readString(scanner, "Enter attack name");
+        while(attackCount < 4) {
+            attackName = readString(scanner, "Enter attack name: ");
+            baseDamage = readIntBetween(
+                    scanner, 0, 100,
+                    "How much damage should your attack have? Enter a value between %d and %d: "
+            );
+            accuracy = readIntBetween(
+                    scanner, 0, 100,
+                    "Enter accuracy between %d and %d: "
+            );
+            Attack attack = new Attack(attackName, baseDamage, accuracy, type);
+            pokemon.addAttack(attack);
 
-        baseDamage = readIntBetween(
-                scanner,
-                0,
-                100,
-                "How much damage should your attack have? Enter a value between %d and %d."
-        );
+            attackCount++;
+            if(attackCount == 4){
+                System.out.println("Attack slots filled");
+                break;
+            }
 
-        accuracy = readIntBetween(
-                scanner,
-                0,
-                100,
-                "Enter accuracy between %d and %d."
-        );
+            String choice = readString(
+                    scanner,
+                    "Do you want to enter another attack? (yes/no): "
+            );
 
-        Pokemon p1 = new Pokemon(name, type, maxHp, currentHp);
-        pokedex.addPokemon(p1);
+            if (choice.equalsIgnoreCase("no")) {
+                break;
+            }
 
-        Attack a1 = new Attack(attackName, baseDamage, accuracy, type);
-        p1.addAttack(a1);
+            if (!choice.equalsIgnoreCase("yes")) {
+                System.out.println("Invalid input.");
+                break;
+            }
+        }
+
+
     }
 
     public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
