@@ -138,14 +138,16 @@ public class ActionMenu {
 
             switch(chooseOperation){
                 case 1 -> {
-                    String newName = readString(scanner, "Enter new name: ");
-                    pokemon.name = newName;
+                    pokemon.name = readString(scanner, "Enter new name: ");
+
                 }
                 case 2 -> {
                     String newType = readString(scanner, "Enter new type: ");
                     pokemon.type = PokemonType.valueOf(newType);
                 }
-                case 3 -> System.out.println("Hp");
+                case 3 -> {
+                    pokemon.maxHp = readIntBetween(scanner, 1, 100, "Enter new hp value");
+                }
                 case 4 -> System.out.println("Add attack");
                 case 5 -> System.out.println("Remove attack");
                 case 6 -> {
