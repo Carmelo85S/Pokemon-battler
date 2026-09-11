@@ -257,7 +257,7 @@ public class ActionMenu {
 
         System.out.println();
         System.out.println("+----------------+----------------+----------------+----------------+----------------+");
-        System.out.println("|                                 YOUR POKEMONS                                      |");
+        System.out.println("|                                 AVAILABLE POKEMONS                                 |");
         System.out.println("+----------------+----------------+----------------+----------------+----------------+");
 
         System.out.printf(
