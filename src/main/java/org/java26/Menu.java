@@ -16,14 +16,22 @@ public class Menu {
     }
 
     public static void showMenu() {
-        System.out.println("1 - Show all Pokemon.");
-        System.out.println("2 - Insert a new Pokemon");
-        System.out.println("3 - Customize your Pokemon");
-        System.out.println("4 - Delete your Pokemon");
-        System.out.println("5 - Save to file.");
-        System.out.println("6 - Load from file.");
-        System.out.println("7 - Reset to seed data");
-        System.out.println("8 - Exit.");
+        System.out.println();
+        System.out.println("+========================================+");
+        System.out.println("|                POKEDEX                 |");
+        System.out.println("+========================================+");
+        System.out.println("|                                        |");
+        System.out.println("|        [1]. Show all Pokemon           |");
+        System.out.println("|        [2]. Insert a new Pokemon       |");
+        System.out.println("|        [3]. Customize your Pokemon     |");
+        System.out.println("|        [4]. Delete your Pokemon        |");
+        System.out.println("|        [5]. Save to file               |");
+        System.out.println("|        [6]. Load from file             |");
+        System.out.println("|        [7]. Reset to seed data         |");
+        System.out.println("|        [8]. Exit                       |");
+        System.out.println("|                                        |");
+        System.out.println("+----------------------------------------+");
+        System.out.println();
     }
 
     public static int getChoice(Scanner scanner) {
@@ -32,7 +40,7 @@ public class Menu {
                 scanner,
                 1,
                 8,
-                "Your choice is: "
+                "  Select an option: "
         );
     }
 

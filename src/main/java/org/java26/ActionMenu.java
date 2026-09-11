@@ -1,5 +1,6 @@
 package org.java26;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 import static org.java26.InputHelper.*;
@@ -9,16 +10,27 @@ public class ActionMenu {
     public static void showAllPokemon(Scanner scanner, Pokedex pokedex) {
 
         if (pokedex.getPokemons().isEmpty()) {
-            System.out.println("Nothing to show");
-            System.out.println("Do you want to create a Pokemon?");
+            System.out.println();
+            System.out.println("+========================================+");
+            System.out.println("|              POKEDEX EMPTY             |");
+            System.out.println("+========================================+");
+            System.out.println("|                                        |");
+            System.out.println("|        Nothing to show.               |");
+            System.out.println("|                                        |");
+            System.out.println("|        Do you want to create           |");
+            System.out.println("|        a Pokemon?                      |");
+            System.out.println("|                                        |");
+            System.out.println("|        [1]. Yes                        |");
+            System.out.println("|        [2]. No                         |");
+            System.out.println("|                                        |");
+            System.out.println("+----------------------------------------+");
 
             int choice = readIntBetween(
                     scanner,
                     1,
                     2,
-                    "Make your choice:\n1. Yes\n2. No"
+                    "  Select an option: "
             );
-
             if (choice == 1) {
                 insertNewPokemon(scanner, pokedex);
             } else {
@@ -42,10 +54,19 @@ public class ActionMenu {
         int accuracy;
         int attackCount = 0;
 
-        name = readString(scanner, "Enter new pokemon name: ");
-        PokemonType type = readType(scanner, "Which type is your new pokemon?: ");
-        maxHp = readIntBetween(scanner, 0, 100, "Enter max HP between %d and %d: ");
-        currentHp = readIntBetween(scanner, 1, maxHp, "Enter current HP between %d and %d: ");
+        System.out.println();
+        System.out.println("+========================================+");
+        System.out.println("|            CREATE POKEMON              |");
+        System.out.println("+========================================+");
+        System.out.println("|                                        |");
+        System.out.println("|        Enter the Pokemon details       |");
+        System.out.println("|                                        |");
+        System.out.println("+----------------------------------------+");
+
+        name = readString(scanner, "  Enter new pokemon name: ");
+        PokemonType type = readType(scanner, "  Which type is your new pokemon?: ");
+        maxHp = readIntBetween(scanner, 1, 100, "  Enter max HP between %d and %d: ");
+        currentHp = readIntBetween(scanner, 1, maxHp, "  Enter current HP between %d and %d: ");
         Pokemon pokemon = new Pokemon(name, type, maxHp, currentHp);
         pokedex.addPokemon(pokemon);
 
@@ -53,7 +74,7 @@ public class ActionMenu {
         while (true) {
             String answer = readString(
                     scanner,
-                    "Do you want to enter attacks? Yes / No: "
+                    "  Do you want to enter attacks? Yes / No: "
             );
 
             if (answer.equalsIgnoreCase("Yes")) {
@@ -61,33 +82,33 @@ public class ActionMenu {
             } else if (answer.equalsIgnoreCase("No")) {
                 return;
             } else {
-                System.out.println("Invalid input. Please enter Yes or No.");
+                System.out.println("  Invalid input. Please enter Yes or No.");
             }
         }
 
         //Attack
         while (attackCount < 4) {
-            attackName = readString(scanner, "Enter attack name: ");
+            attackName = readString(scanner, "  Enter attack name: ");
             baseDamage = readIntBetween(
                     scanner, 0, 100,
-                    "How much damage should your attack have? Enter a value between %d and %d: "
+                    "  How much damage should your attack have? Enter a value between %d and %d: "
             );
             accuracy = readIntBetween(
                     scanner, 0, 100,
-                    "Enter accuracy between %d and %d: "
+                    "  Enter accuracy between %d and %d: "
             );
             Attack attack = new Attack(attackName, baseDamage, accuracy, type);
             pokemon.addAttack(attack);
 
             attackCount++;
             if (attackCount == 4) {
-                System.out.println("Attack slots filled");
+                System.out.println("  Attack slots filled");
                 break;
             }
 
             String choice = readString(
                     scanner,
-                    "Do you want to enter another attack? (yes/no): "
+                    "  Do you want to enter another attack? (yes/no): "
             );
 
             if (choice.equalsIgnoreCase("no")) {
@@ -103,15 +124,15 @@ public class ActionMenu {
 
     public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
         if (pokedex.getPokemons().isEmpty()) {
-            System.out.println("No pokemons listed");
+            System.out.println("  No pokemons listed");
             return;
         }
-        System.out.println("Choose pokemon to customize: ");
+        System.out.println("  Choose pokemon to customize: ");
 
         for (int i = 0; i < pokedex.getPokemons().size(); i++) {
             System.out.println(pokedex.getPokemons().get(i).name);
         }
-        String choice = readString(scanner, "Choose pokemon to customize: ");
+        String choice = readString(scanner, "  Choose pokemon to customize: ");
 
         Pokemon pokemon;
 
@@ -123,79 +144,89 @@ public class ActionMenu {
         }
 
         while (true) {
-            System.out.println("Customize" + pokemon.name);
-            System.out.println(" --- Which parameter do you want to change? ---");
-            System.out.println("|                 1 - Name                     |");
-            System.out.println("|                 2 - Type                     |");
-            System.out.println("|                 3 - Hp                       |");
-            System.out.println("|                 4 - Add attack               |");
-            System.out.println("|                 5 - Remove attack            |");
-            System.out.println("|                 6 - Back to menu             |");
-            System.out.println(" ----------------------------------------------");
+            System.out.println();
+            System.out.println("+========================================+");
+            System.out.println("         CUSTOMIZE - " +  pokemon.name.toUpperCase(Locale.ROOT));
+            System.out.println("+========================================+");
+            System.out.println("|                                        |");
+            System.out.println("|        [1]. Change name                |");
+            System.out.println("|        [2]. Change type                |");
+            System.out.println("|        [3]. Change HP                  |");
+            System.out.println("|        [4]. Add attack                 |");
+            System.out.println("|        [5]. Remove attack              |");
+            System.out.println("|        [6]. Back to menu               |");
+            System.out.println("|                                        |");
+            System.out.println("+----------------------------------------+");
+            System.out.println();
 
-            int chooseOperation = readIntBetween(scanner, 1, 6, "Choose an option between %d and %d: ");
+            int chooseOperation = readIntBetween(scanner, 1, 6, "  Choose an option between %d and %d: ");
 
             switch (chooseOperation) {
                 case 1 -> {
-                    pokemon.name = readString(scanner, "Enter new name: ");
+                    pokemon.name = readString(scanner, "  Enter new name: ");
 
                 }
                 case 2 -> {
-                    pokemon.type = readType(scanner, "Enter new type: ");
+                    pokemon.type = readType(scanner, "  Enter new type: ");
                 }
                 case 3 -> {
-                    pokemon.maxHp = readIntBetween(scanner, 1, 100, "Enter new hp value");
+                    pokemon.maxHp = readIntBetween(scanner, 1, 100, "  Enter new hp value");
                 }
                 case 4 -> {
                     for (Attack attack : pokemon.attacks) {
                         System.out.println(attack.name);
                     }
-                    int attackCount = pokemon.attacks.size();
 
-                    while (attackCount < 4) {
-                        String attackName = readString(scanner, "Enter attack name: ");
+                    while (pokemon.attacks.size() < 4) {
+                        String attackName = readString(scanner, "  Enter attack name: ");
                         int baseDamage = readIntBetween(
                                 scanner, 0, 100,
-                                "How much damage should your attack have? Enter a value between %d and %d: "
+                                "  How much damage should your attack have? Enter a value between %d and %d: "
                         );
                         int accuracy = readIntBetween(
                                 scanner, 0, 100,
-                                "Enter accuracy between %d and %d: "
+                                "  Enter accuracy between %d and %d: "
                         );
                         Attack newAttack = new Attack(attackName, baseDamage, accuracy, pokemon.type);
                         pokemon.addAttack(newAttack);
 
-                        attackCount++;
-                        if (attackCount == 4) {
-                            System.out.println("Attack slots filled");
+                        if (pokemon.attacks.size() == 4) {
+                            System.out.println("  Attack slots filled");
                             break;
                         }
 
-                        String userChoice = readString(
-                                scanner,
-                                "Do you want to enter another attack? (yes/no): "
-                        );
+                        String userChoice;
+
+                        while (true) {
+                            userChoice = readString(
+                                    scanner,
+                                    "  Do you want to enter another attack? (yes/no): "
+                            );
+
+                            if (userChoice.equalsIgnoreCase("yes") ||
+                                    userChoice.equalsIgnoreCase("no")) {
+                                break;
+                            }
+
+                            System.out.println("  Please enter yes or no.");
+                        }
 
                         if (userChoice.equalsIgnoreCase("no")) {
-                            break;
-                        }
-
-                        if (!userChoice.equalsIgnoreCase("yes")) {
-                            System.out.println("Invalid input.");
                             break;
                         }
                     }
                 }
 
                 case 5 -> {
+                    System.out.println("  Current attacks:");
                     for (Attack attack : pokemon.attacks) {
                         System.out.println(attack.name);
                     }
-                    String attackToRemove = readString(scanner, "Which attack do you want to remove?: ");
+                    String attackToRemove = readString(scanner, "  Which attack do you want to remove?: ");
                     for (int i = 0; i < pokemon.attacks.size(); i++) {
                         if (pokemon.attacks.get(i).name.equalsIgnoreCase(attackToRemove)) {
                             pokemon.attacks.remove(i);
-                            System.out.println("Attack removed.");
+                            System.out.println(". Attack removed.");
                             break;
                         }
                     }
@@ -205,23 +236,45 @@ public class ActionMenu {
                     return;
                 }
 
-                default -> System.out.println("Invalid choice");
+                default -> System.out.println("  Invalid choice");
             }
         }
     }
 
     public static void showPokemons(Pokedex pokedex) {
-        for (Pokemon p : pokedex.getPokemons()) {
-            System.out.println(
-                    "Name: " + p.name +
-                            " type: " + p.type +
-                            " max HP: " + p.maxHp +
-                            " current HP: " + p.currentHp
-            );
+        if (pokedex.getPokemons().isEmpty()) {
+            System.out.println();
+            System.out.println("+========================================+");
+            System.out.println("|              POKEDEX EMPTY             |");
+            System.out.println("+========================================+");
+            System.out.println("|                                        |");
+            System.out.println("|             Nothing to show.           |");
+            System.out.println("|                                        |");
+            System.out.println("+----------------------------------------+");
+            return;
+        }
 
-            for (Attack attack : p.attacks) {
-                System.out.println("Attack: " + attack.name);
+        System.out.println();
+        System.out.println("+========================================+");
+        System.out.println("|             YOUR POKEMONS              |");
+        System.out.println("+========================================+");
+
+        for (Pokemon p : pokedex.getPokemons()) {
+            System.out.println();
+            System.out.println("  Name: " + p.name);
+            System.out.println("  Type: " + p.type);
+            System.out.println("  Max HP: " + p.maxHp);
+            System.out.println("  Current HP: " + p.currentHp);
+
+            if (p.attacks.isEmpty()) {
+                System.out.println("  Attacks: None");
+            } else {
+                System.out.println("  Attacks:");
+                for (Attack attack : p.attacks) {
+                    System.out.println("    - " + attack.name);
+                }
             }
+            System.out.println("------------------------------------------");
         }
     }
 
