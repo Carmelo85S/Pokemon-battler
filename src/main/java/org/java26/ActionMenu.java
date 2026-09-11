@@ -15,7 +15,7 @@ public class ActionMenu {
             System.out.println("|              POKEDEX EMPTY             |");
             System.out.println("+========================================+");
             System.out.println("|                                        |");
-            System.out.println("|        Nothing to show.               |");
+            System.out.println("|        Nothing to show.                |");
             System.out.println("|                                        |");
             System.out.println("|        Do you want to create           |");
             System.out.println("|        a Pokemon?                      |");
@@ -42,7 +42,7 @@ public class ActionMenu {
     }
 
     public static void insertNewPokemon(Scanner scanner, Pokedex pokedex) {
-        System.out.println("Insert new pokemon.");
+        System.out.println("  Insert new pokemon.");
         //Pokemon obj
         String name = "";
         int maxHp;
@@ -116,7 +116,7 @@ public class ActionMenu {
             }
 
             if (!choice.equalsIgnoreCase("yes")) {
-                System.out.println("Invalid input.");
+                System.out.println("  Invalid input.");
                 break;
             }
         }
@@ -137,7 +137,7 @@ public class ActionMenu {
         Pokemon pokemon;
 
         try {
-             pokemon = pokedex.getPokemon(choice);
+            pokemon = pokedex.getPokemon(choice);
         } catch (InvalidPokemonException e) {
             System.out.println(e.getMessage());
             return;
@@ -146,7 +146,7 @@ public class ActionMenu {
         while (true) {
             System.out.println();
             System.out.println("+========================================+");
-            System.out.println("         CUSTOMIZE - " +  pokemon.name.toUpperCase(Locale.ROOT));
+            System.out.println("         CUSTOMIZE - " + pokemon.name.toUpperCase(Locale.ROOT));
             System.out.println("+========================================+");
             System.out.println("|                                        |");
             System.out.println("|        [1]. Change name                |");
@@ -226,13 +226,13 @@ public class ActionMenu {
                     for (int i = 0; i < pokemon.attacks.size(); i++) {
                         if (pokemon.attacks.get(i).name.equalsIgnoreCase(attackToRemove)) {
                             pokemon.attacks.remove(i);
-                            System.out.println(". Attack removed.");
+                            System.out.println("  Attack removed.");
                             break;
                         }
                     }
                 }
                 case 6 -> {
-                    System.out.println("Back to menu");
+                    System.out.println("  Back to menu");
                     return;
                 }
 
@@ -242,6 +242,7 @@ public class ActionMenu {
     }
 
     public static void showPokemons(Pokedex pokedex) {
+
         if (pokedex.getPokemons().isEmpty()) {
             System.out.println();
             System.out.println("+========================================+");
@@ -255,27 +256,58 @@ public class ActionMenu {
         }
 
         System.out.println();
-        System.out.println("+========================================+");
-        System.out.println("|             YOUR POKEMONS              |");
-        System.out.println("+========================================+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+        System.out.println("|                                 YOUR POKEMONS                                      |");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+
+        System.out.printf(
+                "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                "Name", "Type", "Max HP", "Current HP", "Attacks"
+        );
+
+        System.out.println(
+                "+----------------+----------------+----------------+----------------+----------------+"
+        );
+        for (Pokemon p : pokedex.getPokemons()) {
+            System.out.printf(
+                    "| %-14s | %-14s | %-14d | %-14d | %-14d |%n",
+                    p.name,
+                    p.type,
+                    p.maxHp,
+                    p.currentHp,
+                    p.attacks.size()
+            );
+        }
+        System.out.println(
+                "+----------------+----------------+----------------+----------------+----------------+"
+        );
+
+        System.out.println();
+        System.out.println("+----------------------+----------------------+-----------------+-----------------+");
+        System.out.println("|                                    ATTACKS                                      |");
+        System.out.println("+----------------------+----------------------+-----------------+-----------------+");
+        System.out.printf(
+                "| %-20s | %-20s | %-15s | %-15s |%n",
+                "Pokemon", "Attack", "Damage", "Accuracy"
+        );
+
+        System.out.println(
+                "+----------------------+----------------------+-----------------+-----------------+"
+        );
 
         for (Pokemon p : pokedex.getPokemons()) {
-            System.out.println();
-            System.out.println("  Name: " + p.name);
-            System.out.println("  Type: " + p.type);
-            System.out.println("  Max HP: " + p.maxHp);
-            System.out.println("  Current HP: " + p.currentHp);
-
-            if (p.attacks.isEmpty()) {
-                System.out.println("  Attacks: None");
-            } else {
-                System.out.println("  Attacks:");
-                for (Attack attack : p.attacks) {
-                    System.out.println("    - " + attack.name);
-                }
+            for (Attack attack : p.attacks) {
+                System.out.printf(
+                        "| %-20s | %-20s | %-15s | %-15s |%n",
+                        p.name,
+                        attack.name,
+                        attack.baseDamage,
+                        attack.accuracy
+                );
             }
-            System.out.println("------------------------------------------");
         }
+        System.out.println("+----------------------+----------------------+-----------------+-----------------+");
+
     }
 
     public static void deletePokemon(Scanner scanner, Pokedex pokedex) {
@@ -310,14 +342,12 @@ public class ActionMenu {
         pikachu.addAttack(thunderbolt);
         pikachu.addAttack(quickAttack);
 
-
         Attack ember = new Attack("Ember", 40, 90, PokemonType.FIRE);
         Attack scratch = new Attack("Scratch", 35, 95, PokemonType.NORMAL);
 
         Pokemon charmander = new Pokemon("Charmander", PokemonType.FIRE, 100, 70);
         charmander.addAttack(ember);
         charmander.addAttack(scratch);
-
 
         Attack waterGun = new Attack("Water Gun", 40, 95, PokemonType.WATER);
         Attack tackle = new Attack("Tackle", 35, 95, PokemonType.NORMAL);
@@ -326,7 +356,6 @@ public class ActionMenu {
         squirtle.addAttack(waterGun);
         squirtle.addAttack(tackle);
 
-
         Attack vineWhip = new Attack("Vine Whip", 45, 90, PokemonType.GRASS);
         Attack headbutt = new Attack("Headbutt", 50, 85, PokemonType.NORMAL);
 
@@ -334,14 +363,12 @@ public class ActionMenu {
         bulbasaur.addAttack(vineWhip);
         bulbasaur.addAttack(headbutt);
 
-
         Attack flamethrower = new Attack("Flamethrower", 70, 85, PokemonType.FIRE);
         Attack wingAttack = new Attack("Wing Attack", 60, 90, PokemonType.NORMAL);
 
         Pokemon charizard = new Pokemon("Charizard", PokemonType.FIRE, 100, 100);
         charizard.addAttack(flamethrower);
         charizard.addAttack(wingAttack);
-
 
         Attack thunderShock = new Attack("Thunder Shock", 40, 95, PokemonType.ELECTRIC);
         Attack spark = new Attack("Spark", 50, 90, PokemonType.ELECTRIC);

@@ -38,41 +38,41 @@ public class InputHelper {
             try {
                 String userInput = scanner.nextLine().toUpperCase(Locale.ROOT);
                 if (userInput.isBlank()) {
-                    System.out.println("Type cannot be empty.");
+                    System.out.println("  Type cannot be empty.");
                     continue;
                 }
                 return PokemonType.valueOf(userInput);
             } catch (IllegalArgumentException e) {
-                System.out.println("Invalid input. Type not found in database...");
+                System.out.println("  Invalid input. Type not found in database...");
             }
         }
     }
 
     public static void validateName(String name) {
         if (name == null || name.isBlank()) {
-            throw new InvalidPokemonException("Name cannot be empty.");
+            throw new InvalidPokemonException("  Name cannot be empty.");
         }
         if (!name.matches("[a-zA-Z0-9 ]+")) {
-            throw new InvalidPokemonException("No special char allowed.");
+            throw new InvalidPokemonException("  No special char allowed.");
         }
         if (!name.matches(".*[a-zA-Z].*")) {
-            throw new InvalidPokemonException("Name must contain at least one letter.");
+            throw new InvalidPokemonException("  Name must contain at least one letter.");
         }
     }
 
     public static void validateInt(String userInput, int min, int max) {
         if (userInput.isBlank()) {
-            throw new InvalidPokemonException("Your input is blank");
+            throw new InvalidPokemonException("  Your input is blank");
         }
         int value;
         try {
             value = Integer.parseInt(userInput);
         } catch (NumberFormatException e) {
-            throw new InvalidPokemonException("Input must be a number");
+            throw new InvalidPokemonException("  Input must be a number");
         }
         if (value < min || value > max) {
             throw new InvalidPokemonException(
-                    "Value should be between " + min + " and " + max
+                    "  Value should be between " + min + " and " + max
             );
         }
     }

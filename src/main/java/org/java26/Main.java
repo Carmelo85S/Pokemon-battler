@@ -1,12 +1,16 @@
 package org.java26;
 
 import java.util.Scanner;
+
+import static org.java26.ActionMenu.resetToSeedData;
 import static org.java26.Menu.*;
 
 public class Main {
     public static void main(String[] args) {
 
         Pokedex pokedex = new Pokedex();
+        //Temporary: use resetToSeedData() to fill the ArrayList wih pokemons.
+        resetToSeedData(pokedex);
 
         Scanner scanner = new Scanner(System.in);
         int choice = 0;

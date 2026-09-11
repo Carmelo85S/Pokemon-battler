@@ -7,11 +7,17 @@ import static org.java26.ActionMenu.*;
 public class Menu {
 
     public static void printWelcome() {
-        System.out.println("+---------------------------+ ");
-        System.out.println("|     WELCOME TRAINER       |");
-        System.out.println("|            by             |");
-        System.out.println("|      Carmelo Salis        |");
-        System.out.println("+---------------------------+ ");
+        System.out.println("+----------------------------------------+");
+        System.out.println("|            WELCOME TRAINER             |");
+        System.out.println("|                                        |");
+        System.out.println("|              POKEDEX APP               |");
+        System.out.println("|                                        |");
+        System.out.println("|   Manage your Pokemon collection,      |");
+        System.out.println("|   customize their stats and attacks,   |");
+        System.out.println("|   and keep your Pokedex organized.     |");
+        System.out.println("|                                        |");
+        System.out.println("|            by Carmelo Salis.           |");
+        System.out.println("+----------------------------------------+");
         System.out.println();
     }
 
@@ -53,8 +59,12 @@ public class Menu {
             case 5 -> saveToFile();
             case 6 -> loadFromFile();
             case 7 -> resetToSeedData(pokedex);
-            case 8 -> System.out.println("Goodbye, Trainer!");
-            default -> System.out.println("Invalid input");
+            case 8 -> {
+                System.out.println("+========================================+");
+                System.out.println("|            GOOD BYE TRAINER            |");
+                System.out.println("+========================================+");
+            }
+            default -> System.out.println("  Invalid input");
         }
     }
 }
