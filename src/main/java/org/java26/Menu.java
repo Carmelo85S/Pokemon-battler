@@ -37,7 +37,6 @@ public class Menu {
         System.out.println("|        [8]. Exit                       |");
         System.out.println("|                                        |");
         System.out.println("+----------------------------------------+");
-        System.out.println();
     }
 
     public static int getChoice(Scanner scanner) {

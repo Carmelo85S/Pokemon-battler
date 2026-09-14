@@ -42,7 +42,6 @@ public class ActionMenu {
     }
 
     public static void insertNewPokemon(Scanner scanner, Pokedex pokedex) {
-        System.out.println("  Insert new pokemon.");
         //Pokemon obj
         String name = "";
         int maxHp;
@@ -127,7 +126,6 @@ public class ActionMenu {
             System.out.println("  No pokemons listed");
             return;
         }
-        System.out.println("  Choose pokemon to customize: ");
 
         for (int i = 0; i < pokedex.getPokemons().size(); i++) {
             System.out.println(pokedex.getPokemons().get(i).name);

@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class InputHelper {
     public static int readIntBetween(Scanner scanner, int min, int max, String prompt) {
         while (true) {
+            System.out.println();
             System.out.printf(prompt, min, max);
             try {
                 String userInput = scanner.nextLine().trim();
@@ -19,8 +20,8 @@ public class InputHelper {
 
     public static String readString(Scanner scanner, String prompt) {
         while (true) {
+            System.out.println();
             System.out.print(prompt);
-
             try {
                 String userInput = scanner.nextLine().trim();
                 validateName(userInput);
@@ -34,6 +35,7 @@ public class InputHelper {
 
     public static PokemonType readType(Scanner scanner, String prompt) {
         while (true) {
+            System.out.println();
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().toUpperCase(Locale.ROOT);
