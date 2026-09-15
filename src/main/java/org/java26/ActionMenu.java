@@ -127,9 +127,7 @@ public class ActionMenu {
             return;
         }
 
-        for (int i = 0; i < pokedex.getPokemons().size(); i++) {
-            System.out.println(pokedex.getPokemons().get(i).name);
-        }
+        showPokemons(pokedex);
         String choice = readString(scanner, "  Choose pokemon to customize: ");
 
         Pokemon pokemon;
@@ -254,57 +252,28 @@ public class ActionMenu {
         }
 
         System.out.println();
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
-        System.out.println("|                                 AVAILABLE POKEMONS                                 |");
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+        System.out.println("+----------------+----------------+");
+        System.out.println("|        AVAILABLE POKEMONS       |");
+        System.out.println("+----------------+----------------+");
 
         System.out.printf(
-                "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                "Name", "Type", "Max HP", "Current HP", "Attacks"
+                "| %-14s | %-14s |%n",
+                "Name", "Type"
         );
 
         System.out.println(
-                "+----------------+----------------+----------------+----------------+----------------+"
+                "+----------------+----------------+"
         );
         for (Pokemon p : pokedex.getPokemons()) {
             System.out.printf(
-                    "| %-14s | %-14s | %-14d | %-14d | %-14d |%n",
+                    "| %-14s | %-14s |%n",
                     p.name,
-                    p.type,
-                    p.maxHp,
-                    p.currentHp,
-                    p.attacks.size()
+                    p.type
             );
         }
         System.out.println(
-                "+----------------+----------------+----------------+----------------+----------------+"
+                "+----------------+----------------+"
         );
-
-        System.out.println();
-        System.out.println("+----------------------+----------------------+-----------------+-----------------+");
-        System.out.println("|                                    ATTACKS                                      |");
-        System.out.println("+----------------------+----------------------+-----------------+-----------------+");
-        System.out.printf(
-                "| %-20s | %-20s | %-15s | %-15s |%n",
-                "Pokemon", "Attack", "Damage", "Accuracy"
-        );
-
-        System.out.println(
-                "+----------------------+----------------------+-----------------+-----------------+"
-        );
-
-        for (Pokemon p : pokedex.getPokemons()) {
-            for (Attack attack : p.attacks) {
-                System.out.printf(
-                        "| %-20s | %-20s | %-15s | %-15s |%n",
-                        p.name,
-                        attack.name,
-                        attack.baseDamage,
-                        attack.accuracy
-                );
-            }
-        }
-        System.out.println("+----------------------+----------------------+-----------------+-----------------+");
 
     }
 
