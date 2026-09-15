@@ -39,16 +39,6 @@ public class Menu {
         System.out.println("+----------------------------------------+");
     }
 
-    public static int getChoice(Scanner scanner) {
-
-        return InputHelper.readIntBetween(
-                scanner,
-                1,
-                8,
-                "  Select an option: "
-        );
-    }
-
     public static void runAction(int choice, Scanner scanner, Pokedex pokedex) {
         switch (choice) {
             case 1 -> showAllPokemon(scanner, pokedex);
