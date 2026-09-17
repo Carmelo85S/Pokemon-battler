@@ -9,6 +9,9 @@ public class Main {
     public static void main(String[] args) {
 
         Pokedex pokedex = new Pokedex();
+
+        JsonHandler jsonHandler = new JsonHandler();
+
         //Temporary: use resetToSeedData() to fill the ArrayList wih pokemons.
         resetToSeedData(pokedex);
 
