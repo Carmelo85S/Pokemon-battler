@@ -1,10 +1,12 @@
 package org.java26;
 
 public class Attack {
-    String name;
-    int baseDamage;
-    int accuracy;
-    PokemonType type;
+    public String name;
+    public int baseDamage;
+    public int accuracy;
+    public PokemonType type;
+
+    public Attack(){}
 
     public Attack(String name, int baseDamage, int accuracy, PokemonType type){
         this.name = name;
@@ -12,6 +14,7 @@ public class Attack {
         this.accuracy = accuracy;
         this.type = type;
     }
+
 
 
 
