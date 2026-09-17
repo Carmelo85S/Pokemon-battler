@@ -1,5 +1,6 @@
 package org.java26;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static org.java26.ActionMenu.*;
@@ -19,6 +20,20 @@ public class Menu {
         System.out.println("|            by Carmelo Salis.           |");
         System.out.println("+----------------------------------------+");
         System.out.println();
+    }
+
+    public static void loadPokemonData(Pokedex pokedex, JsonHandler jsonHandler) {
+        try {
+            List<Pokemon> pokemon = jsonHandler.loadPokemon("pokemon.json");
+            if (pokemon.isEmpty()) {
+                pokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+            }
+            for (Pokemon p : pokemon) {
+                pokedex.addPokemon(p);
+            }
+        } catch (PokemonLoadException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void showMenu() {
@@ -47,7 +62,7 @@ public class Menu {
             case 4 -> deletePokemon(scanner, pokedex);
             case 5 -> saveToFile(pokedex, jsonHandler);
             case 6 -> loadFromFile(pokedex, jsonHandler);
-            case 7 -> resetToSeedData(pokedex);
+            case 7 -> resetToSeedData(pokedex, jsonHandler);
             case 8 -> {
                 System.out.println("+========================================+");
                 System.out.println("|            GOOD BYE TRAINER            |");

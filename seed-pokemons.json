@@ -1,9 +1,29 @@
 [
   {
     "name": "Pikachu",
-    "type": "FIRE",
+    "type": "ELECTRIC",
     "maxHp": 100,
     "currentHp": 100,
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "ELECTRIC"
+      },
+      {
+        "name": "Quick Attack",
+        "baseDamage": 50,
+        "accuracy": 90,
+        "type": "NORMAL"
+      }
+    ]
+  },
+  {
+    "name": "Charizard",
+    "type": "FIRE",
+    "maxHp": 90,
+    "currentHp": 90,
     "attacks": [
       {
         "name": "Flamethrower",
@@ -20,10 +40,50 @@
     ]
   },
   {
+    "name": "Blastoise",
+    "type": "WATER",
+    "maxHp": 95,
+    "currentHp": 95,
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "baseDamage": 50,
+        "accuracy": 95,
+        "type": "WATER"
+      },
+      {
+        "name": "Aqua Tail",
+        "baseDamage": 70,
+        "accuracy": 85,
+        "type": "WATER"
+      }
+    ]
+  },
+  {
+    "name": "Bulbasaur",
+    "type": "GRASS",
+    "maxHp": 85,
+    "currentHp": 85,
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "baseDamage": 45,
+        "accuracy": 95,
+        "type": "GRASS"
+      },
+      {
+        "name": "Razor Leaf",
+        "baseDamage": 55,
+        "accuracy": 90,
+        "type": "GRASS"
+      }
+    ]
+  },
+  {
     "name": "Raichu",
     "type": "ELECTRIC",
-    "maxHp": 100,
-    "currentHp": 100,
+    "maxHp": 90,
+    "currentHp": 90,
     "attacks": [
       {
         "name": "Thunder Shock",
@@ -36,6 +96,26 @@
         "baseDamage": 50,
         "accuracy": 90,
         "type": "ELECTRIC"
+      }
+    ]
+  },
+  {
+    "name": "Charmander",
+    "type": "FIRE",
+    "maxHp": 80,
+    "currentHp": 80,
+    "attacks": [
+      {
+        "name": "Ember",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "FIRE"
+      },
+      {
+        "name": "Scratch",
+        "baseDamage": 45,
+        "accuracy": 95,
+        "type": "NORMAL"
       }
     ]
   }
