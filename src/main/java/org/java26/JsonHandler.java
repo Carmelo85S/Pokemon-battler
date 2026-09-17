@@ -18,7 +18,7 @@ public class JsonHandler {
             );
         } catch (Exception e) {
             throw new PokemonLoadException(
-                    "Could not load Pokemon from file: " + filePath);
+                    "Could not load Pokemon from file " + filePath);
 
         }
     }

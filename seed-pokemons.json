@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Pikachu",
+    "type": "FIRE",
+    "maxHp": 100,
+    "currentHp": 100,
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "baseDamage": 70,
+        "accuracy": 85,
+        "type": "FIRE"
+      },
+      {
+        "name": "Wing Attack",
+        "baseDamage": 60,
+        "accuracy": 90,
+        "type": "NORMAL"
+      }
+    ]
+  },
+  {
+    "name": "Raichu",
+    "type": "ELECTRIC",
+    "maxHp": 100,
+    "currentHp": 100,
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "ELECTRIC"
+      },
+      {
+        "name": "Spark",
+        "baseDamage": 50,
+        "accuracy": 90,
+        "type": "ELECTRIC"
+      }
+    ]
+  }
+]

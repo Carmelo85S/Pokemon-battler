@@ -1,5 +1,6 @@
 package org.java26;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -293,12 +294,28 @@ public class ActionMenu {
         }
     }
 
-    //public static void saveToFile() {
-    //    System.out.println("Saving...");
-    //}
+    public static void saveToFile(Pokedex pokedex, JsonHandler jsonHandler) {
+        try {
+            jsonHandler.savePokemon(
+                    "pokemon.json",
+                    pokedex.getPokemons()
+            );
+            System.out.println("Pokemon saved successfully.");
+        } catch (PokemonSaveException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-    public static void loadFromFile() {
-        System.out.println("Loading...");
+    public static void loadFromFile(Pokedex pokedex, JsonHandler jsonHandler) {
+        try {
+            List<Pokemon> pokemons= jsonHandler.loadPokemon("pokemon.json");
+            for (Pokemon p : pokemons) {
+                pokedex.addPokemon(p);
+            }
+            System.out.println("Pokemon sloaded successfully.");
+        } catch (PokemonLoadException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     static void resetToSeedData(Pokedex pokemon) {

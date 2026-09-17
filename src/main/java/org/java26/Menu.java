@@ -45,18 +45,8 @@ public class Menu {
             case 2 -> insertNewPokemon(scanner, pokedex);
             case 3 -> customizePokemon(scanner, pokedex);
             case 4 -> deletePokemon(scanner, pokedex);
-            case 5 -> {
-                try {
-                    jsonHandler.savePokemon(
-                            "pokemon.json",
-                            pokedex.getPokemons()
-                    );
-                    System.out.println("Pokemon saved successfully.");
-                } catch (PokemonSaveException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-            case 6 -> loadFromFile();
+            case 5 -> saveToFile(pokedex, jsonHandler);
+            case 6 -> loadFromFile(pokedex, jsonHandler);
             case 7 -> resetToSeedData(pokedex);
             case 8 -> {
                 System.out.println("+========================================+");
