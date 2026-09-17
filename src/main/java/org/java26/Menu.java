@@ -39,13 +39,23 @@ public class Menu {
         System.out.println("+----------------------------------------+");
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokedex) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
         switch (choice) {
             case 1 -> showAllPokemon(scanner, pokedex);
             case 2 -> insertNewPokemon(scanner, pokedex);
             case 3 -> customizePokemon(scanner, pokedex);
             case 4 -> deletePokemon(scanner, pokedex);
-            case 5 -> saveToFile();
+            case 5 -> {
+                try {
+                    jsonHandler.savePokemon(
+                            "pokemon.json",
+                            pokedex.getPokemons()
+                    );
+                    System.out.println("Pokemon saved successfully.");
+                } catch (PokemonSaveException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
             case 6 -> loadFromFile();
             case 7 -> resetToSeedData(pokedex);
             case 8 -> {

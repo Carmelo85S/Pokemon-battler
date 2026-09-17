@@ -21,7 +21,7 @@ public class Main {
         do {
             showMenu();
             choice = InputHelper.readIntBetween(scanner,1,8,"Select an option:");
-            runAction(choice, scanner, pokedex);
+            runAction(choice, scanner, pokedex, jsonHandler);
         } while (choice != 8);
         scanner.close();
     }
