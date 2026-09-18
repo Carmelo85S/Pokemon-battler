@@ -7,13 +7,10 @@ public class Main {
     public static void main(String[] args) {
         Pokedex pokedex = new Pokedex();
         JsonHandler jsonHandler = new JsonHandler();
-
         loadPokemonData(pokedex, jsonHandler);
-
         Scanner scanner = new Scanner(System.in);
         int choice;
-
-        printWelcome();
+        //printWelcome();
         do {
             showMenu();
             choice = InputHelper.readIntBetween(scanner, 1, 8, "  Select an option %n  > ", "  Redirect to menu for operation ");

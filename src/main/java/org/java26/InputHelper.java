@@ -4,15 +4,18 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class InputHelper {
-    public static int readIntBetween(Scanner scanner, int min, int max, String prompt, String confirm) {
+    public static int readIntBetween(Scanner scanner, int min, int max, String prompt, String confirm) throws QuitPokemonOperationException {
         while (true) {
             System.out.println();
             System.out.printf(prompt, min, max);
             try {
                 String userInput = scanner.nextLine().trim();
+                if (userInput.equalsIgnoreCase("quit")) {
+                    throw new QuitPokemonOperationException("  Operation cancelled");
+                };
                 validateInt(userInput, min, max);
                 int value = Integer.parseInt(userInput);
-                System.out.println(confirm + " " + value);
+                System.out.println(confirm + value);
                 return value;
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
@@ -20,12 +23,15 @@ public class InputHelper {
         }
     }
 
-    public static String readString(Scanner scanner, String prompt, String confirm) {
+    public static String readString(Scanner scanner, String prompt, String confirm) throws QuitPokemonOperationException {
         while (true) {
             System.out.println();
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().trim();
+                if (userInput.equalsIgnoreCase("quit")) {
+                    throw new QuitPokemonOperationException("  Operation cancelled");
+                };
                 validateName(userInput);
                 System.out.println(confirm + userInput);
                 return userInput;
@@ -35,12 +41,15 @@ public class InputHelper {
         }
     }
 
-    public static PokemonType readType(Scanner scanner, String prompt) {
+    public static PokemonType readType(Scanner scanner, String prompt) throws QuitPokemonOperationException {
         while (true) {
             System.out.println();
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().toUpperCase(Locale.ROOT);
+                if (userInput.equalsIgnoreCase("quit")) {
+                    throw new QuitPokemonOperationException("  Operation cancelled");
+                };
                 if (userInput.isBlank()) {
                     System.out.println("  Type cannot be empty.");
                     continue;

@@ -18,7 +18,7 @@ public class JsonHandler {
             );
         } catch (Exception e) {
             throw new PokemonLoadException(
-                    "Could not load Pokemon from file " + filePath);
+                    "  Could not load Pokemon from file " + filePath);
 
         }
     }
@@ -28,7 +28,7 @@ public class JsonHandler {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), pokemons);
         }catch (Exception e){
             throw new PokemonSaveException(
-                    "Could not save Pokemon to file: " + filePath);
+                    "  Could not save Pokemon to file: " + filePath);
         }
     }
 }
