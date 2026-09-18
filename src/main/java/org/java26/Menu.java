@@ -49,26 +49,35 @@ public class Menu {
         System.out.println("|        [5]. Save to file               |");
         System.out.println("|        [6]. Load from file             |");
         System.out.println("|        [7]. Reset to seed data         |");
-        System.out.println("|        [8]. Exit                       |");
+        System.out.println("|        [8]. Pokemon info               |");
+        System.out.println("|        [9]. Exit                       |");
         System.out.println("|                                        |");
         System.out.println("+----------------------------------------+");
     }
 
     public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
-        switch (choice) {
-            case 1 -> showAllPokemon(scanner, pokedex);
-            case 2 -> insertNewPokemon(scanner, pokedex);
-            case 3 -> customizePokemon(scanner, pokedex);
-            case 4 -> deletePokemon(scanner, pokedex);
-            case 5 -> saveToFile(pokedex, jsonHandler);
-            case 6 -> loadFromFile(pokedex, jsonHandler);
-            case 7 -> resetToSeedData(pokedex, jsonHandler);
-            case 8 -> {
-                System.out.println("+========================================+");
-                System.out.println("|            GOOD BYE TRAINER            |");
-                System.out.println("+========================================+");
+        try {
+            switch (choice) {
+                case 1 -> showAllPokemon(scanner, pokedex);
+                case 2 -> insertNewPokemon(scanner, pokedex);
+                case 3 -> customizePokemon(scanner, pokedex);
+                case 4 -> deletePokemon(scanner, pokedex);
+                case 5 -> saveToFile(pokedex, jsonHandler);
+                case 6 -> loadFromFile(pokedex, jsonHandler);
+                case 7 -> resetToSeedData(pokedex, jsonHandler);
+                case 8 -> getPokemonInfo(scanner, pokedex);
+                case 9 -> {
+                    System.out.println("+========================================+");
+                    System.out.println("|            GOOD BYE TRAINER            |");
+                    System.out.println("+========================================+");
+                }
+                default -> System.out.println("  Invalid input");
             }
-            default -> System.out.println("  Invalid input");
+        }catch (QuitPokemonOperationException e) {
+            System.out.println(e.getMessage());
+            System.out.println("  Goodbye!");
+
         }
     }
 }
+
