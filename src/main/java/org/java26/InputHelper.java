@@ -51,6 +51,7 @@ public class InputHelper {
     }
 
     public static void validateName(String name) {
+
         if (name == null || name.isBlank()) {
             throw new InvalidPokemonException("  Name cannot be empty.");
         }
@@ -60,6 +61,7 @@ public class InputHelper {
         if (!name.matches(".*[a-zA-Z].*")) {
             throw new InvalidPokemonException("  Name must contain at least one letter.");
         }
+
     }
 
     public static void validateInt(String userInput, int min, int max) {

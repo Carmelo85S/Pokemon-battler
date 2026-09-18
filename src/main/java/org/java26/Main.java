@@ -13,7 +13,6 @@ public class Main {
 
         loadPokemonData(pokedex, jsonHandler);
 
-
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
 

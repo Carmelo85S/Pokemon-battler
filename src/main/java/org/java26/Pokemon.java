@@ -20,14 +20,6 @@ public class Pokemon {
         this.currentHp = currentHp;
     }
 
-    public Pokemon(String name) {
-        this.name = name;
-    }
-
-    public Pokemon(PokemonType type) {
-        this.type = type;
-    }
-
     public void addAttack(Attack attack) {
         attacks.add(attack);
     }

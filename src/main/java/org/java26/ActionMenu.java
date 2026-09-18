@@ -63,7 +63,18 @@ public class ActionMenu {
         System.out.println("|                                        |");
         System.out.println("+----------------------------------------+");
 
-        name = readString(scanner, "  Enter new pokemon name: ");
+
+        try {
+            name = readString(scanner, "  Enter new pokemon name: ");
+            if (name.length() > 11) {
+                throw new InvalidPokemonException(
+                        "  Pokemon name cannot be longer than 11 characters."
+                );
+            }
+        } catch (InvalidPokemonException e) {
+            System.out.println(e.getMessage());
+        }
+
         PokemonType type = readType(scanner, "  Which type is your new pokemon?: ");
         maxHp = readIntBetween(scanner, 1, 100, "  Enter max HP between %d and %d: ");
         currentHp = readIntBetween(scanner, 1, maxHp, "  Enter current HP between %d and %d: ");
@@ -308,7 +319,7 @@ public class ActionMenu {
 
     public static void loadFromFile(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
-            List<Pokemon> pokemons= jsonHandler.loadPokemon("pokemon.json");
+            List<Pokemon> pokemons = jsonHandler.loadPokemon("pokemon.json");
             for (Pokemon p : pokemons) {
                 pokedex.addPokemon(p);
             }
@@ -319,8 +330,9 @@ public class ActionMenu {
     }
 
     static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
+        pokedex.removeAllPokemon();
         try {
-            List<Pokemon> pokemons= jsonHandler.loadPokemon("seed-pokemons.json");
+            List<Pokemon> pokemons = jsonHandler.loadPokemon("seed-pokemons.json");
             for (Pokemon p : pokemons) {
                 pokedex.addPokemon(p);
             }
