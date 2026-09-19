@@ -63,7 +63,7 @@
     "type" : "GRASS"
   } ]
 }, {
-  "name" : "Raichu",
+  "name" : "razzo",
   "type" : "ELECTRIC",
   "maxHp" : 90,
   "currentHp" : 90,

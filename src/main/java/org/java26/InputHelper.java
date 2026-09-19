@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class InputHelper {
-    public static int readIntBetween(Scanner scanner, int min, int max, String prompt, String confirm) throws QuitPokemonOperationException {
+    public static int readIntBetween(Scanner scanner, int min, int max, String prompt) throws QuitPokemonOperationException {
         while (true) {
             System.out.println();
             System.out.printf(prompt, min, max);
@@ -14,9 +14,7 @@ public class InputHelper {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 };
                 validateInt(userInput, min, max);
-                int value = Integer.parseInt(userInput);
-                System.out.println(confirm + value);
-                return value;
+                return Integer.parseInt(userInput);
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
             }

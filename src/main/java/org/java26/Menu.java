@@ -55,29 +55,33 @@ public class Menu {
         System.out.println("+----------------------------------------+");
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
+    public static boolean runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
-                case 2 -> insertNewPokemon(scanner, pokedex);
-                case 3 -> customizePokemon(scanner, pokedex);
-                case 4 -> deletePokemon(scanner, pokedex);
+                case 2 -> {
+                    return insertNewPokemon(scanner, pokedex);
+                }
+                case 3 -> {
+                    return customizePokemon(scanner, pokedex);
+                }
+                case 4 -> {
+                    return deletePokemon(scanner, pokedex);
+                }
                 case 5 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler);
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> {
-                    System.out.println("+========================================+");
-                    System.out.println("|            GOOD BYE TRAINER            |");
-                    System.out.println("+========================================+");
+                    saveToFile(pokedex, jsonHandler);
+                    return false;
                 }
+
                 default -> System.out.println("  Invalid input");
-            }
+            }return false;
         }catch (QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
-            System.out.println("  Goodbye!");
-
-        }
+        } return false;
     }
 }
 
