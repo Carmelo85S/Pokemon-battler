@@ -130,9 +130,16 @@ public class ActionMenu {
                             type
                     );
 
+                    if(attackCount == 0){
+                        pokedex.addPokemon(pokemon);
+                        System.out.println("  Pokemon '" + pokemon.name + "' created successfully.");
+                    }
+
                     pokemon.addAttack(attack);
                     System.out.println("  Attack '" + attackName + "' added successfully.");
+
                     attackCount++;
+
                     if (attackCount == 4) {
                         System.out.println("  Attack slots filled");
                         break;
@@ -156,9 +163,6 @@ public class ActionMenu {
                         );
                     }
                 }
-                pokedex.addPokemon(pokemon);
-                System.out.println("  Pokemon '" + pokemon.name + "' created successfully.");
-
                 break;
             } catch (InvalidPokemonNameException e) {
                 System.out.println(e.getMessage());
