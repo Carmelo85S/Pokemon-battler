@@ -71,23 +71,13 @@ public class Menu {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
-                case 2 -> {
-                    insertNewPokemon(scanner, pokedex);
-                }
-                case 3 -> {
-                    customizePokemon(scanner, pokedex);
-                }
-                case 4 -> {
-                    deletePokemon(scanner, pokedex);
-                }
-                case 5 -> saveToFile(pokedex, jsonHandler);
+                case 2 -> insertNewPokemon(scanner, pokedex);
+                case 3 -> customizePokemon(scanner, pokedex);
+                case 4 -> deletePokemon(scanner, pokedex);
+                case 5, 9 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler);
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
-                case 9 -> {
-                    saveToFile(pokedex, jsonHandler);
-                }
-
                 default -> System.out.println("  Invalid input");
             }
         }catch (QuitPokemonOperationException e) {
