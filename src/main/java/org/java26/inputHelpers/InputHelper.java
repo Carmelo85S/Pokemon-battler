@@ -1,4 +1,8 @@
-package org.java26;
+package org.java26.inputHelpers;
+
+import org.java26.enums.PokemonType;
+import org.java26.exceptions.InvalidPokemonException;
+import org.java26.exceptions.QuitPokemonOperationException;
 
 import java.util.Locale;
 import java.util.Scanner;

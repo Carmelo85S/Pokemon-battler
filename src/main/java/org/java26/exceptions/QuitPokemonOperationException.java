@@ -1,4 +1,4 @@
-package org.java26;
+package org.java26.exceptions;
 
 public class QuitPokemonOperationException extends RuntimeException {
     public QuitPokemonOperationException(String message) {

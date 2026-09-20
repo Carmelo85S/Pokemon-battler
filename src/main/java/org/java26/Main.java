@@ -1,15 +1,19 @@
 package org.java26;
 
+import org.java26.exceptions.QuitPokemonOperationException;
+import org.java26.handlers.JsonHandler;
+import org.java26.models.Pokedex;
+import org.java26.inputHelpers.InputHelper;
+
 import java.util.Scanner;
 
-import static org.java26.ActionMenu.saveToFile;
-import static org.java26.Menu.*;
+import static org.java26.methods.Menu.*;
 
 public class Main {
     public static void main(String[] args) throws QuitPokemonOperationException {
         Pokedex pokedex = new Pokedex();
         JsonHandler jsonHandler = new JsonHandler();
-        loadPokemonData(pokedex, jsonHandler);
+        loadInitialPokemondata(pokedex, jsonHandler);
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {

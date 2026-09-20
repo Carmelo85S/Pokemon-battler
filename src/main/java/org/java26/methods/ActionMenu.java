@@ -1,11 +1,18 @@
-package org.java26;
+package org.java26.methods;
+
+import org.java26.models.Attack;
+import org.java26.models.Pokemon;
+import org.java26.enums.PokemonType;
+import org.java26.exceptions.*;
+import org.java26.handlers.JsonHandler;
+import org.java26.models.Pokedex;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 
-import static org.java26.InputHelper.*;
+import static org.java26.inputHelpers.InputHelper.*;
 
 public class ActionMenu {
 

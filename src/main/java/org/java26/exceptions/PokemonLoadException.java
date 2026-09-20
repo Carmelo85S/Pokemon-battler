@@ -1,4 +1,4 @@
-package org.java26;
+package org.java26.exceptions;
 
 public class PokemonLoadException extends RuntimeException {
     public PokemonLoadException(String message) {

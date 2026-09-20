@@ -1,4 +1,6 @@
-package org.java26;
+package org.java26.models;
+
+import org.java26.enums.PokemonType;
 
 public class Attack {
     public String name;

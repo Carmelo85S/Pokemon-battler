@@ -1,9 +1,18 @@
-package org.java26;
+package org.java26.methods;
 
+import org.java26.models.Pokemon;
+import org.java26.exceptions.PokemonLoadException;
+import org.java26.exceptions.QuitPokemonOperationException;
+import org.java26.handlers.JsonHandler;
+import org.java26.models.Pokedex;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.java26.ActionMenu.*;
+import static org.java26.methods.ActionMenu.*;
 
 public class Menu {
 
@@ -20,6 +29,33 @@ public class Menu {
         System.out.println("|            by Carmelo Salis.           |");
         System.out.println("+----------------------------------------+");
         System.out.println();
+    }
+
+public static void loa(Pokedex pokedex, JsonHandler jsonHandler) {
+        try {
+            List<Pokemon> pokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+            for (Pokemon p : pokemon) {
+                pokedex.addPokemon(p);
+            }
+        } catch (PokemonLoadException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void loadInitialPokemondata(Pokedex pokedex, JsonHandler jsonHandler) {
+        try {
+           Path path = Paths.get("pokemon.json");
+           List<Pokemon> listPokemon;
+           if(Files.exists(path)){
+               listPokemon = jsonHandler.loadPokemon("pokemon.json");
+           } else {
+               listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+           }for (Pokemon p : listPokemon) {
+                pokedex.addPokemon(p);
+            }
+        } catch (PokemonLoadException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void loadPokemonData(Pokedex pokedex, JsonHandler jsonHandler) {

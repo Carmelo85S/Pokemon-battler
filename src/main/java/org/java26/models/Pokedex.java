@@ -1,4 +1,6 @@
-package org.java26;
+package org.java26.models;
+
+import org.java26.exceptions.InvalidPokemonException;
 
 import java.util.ArrayList;
 
