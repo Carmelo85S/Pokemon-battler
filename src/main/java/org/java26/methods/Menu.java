@@ -31,17 +31,6 @@ public class Menu {
         System.out.println();
     }
 
-public static void loa(Pokedex pokedex, JsonHandler jsonHandler) {
-        try {
-            List<Pokemon> pokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-            for (Pokemon p : pokemon) {
-                pokedex.addPokemon(p);
-            }
-        } catch (PokemonLoadException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public static void loadInitialPokemondata(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
            Path path = Paths.get("pokemon.json");
@@ -58,19 +47,6 @@ public static void loa(Pokedex pokedex, JsonHandler jsonHandler) {
         }
     }
 
-    public static void loadPokemonData(Pokedex pokedex, JsonHandler jsonHandler) {
-        try {
-            List<Pokemon> pokemon = jsonHandler.loadPokemon("pokemon.json");
-            if (pokemon.isEmpty()) {
-                pokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-            }
-            for (Pokemon p : pokemon) {
-                pokedex.addPokemon(p);
-            }
-        } catch (PokemonLoadException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     public static void showMenu() {
         System.out.println();
@@ -91,18 +67,18 @@ public static void loa(Pokedex pokedex, JsonHandler jsonHandler) {
         System.out.println("+----------------------------------------+");
     }
 
-    public static boolean runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
                 case 2 -> {
-                    return insertNewPokemon(scanner, pokedex);
+                    insertNewPokemon(scanner, pokedex);
                 }
                 case 3 -> {
-                    return customizePokemon(scanner, pokedex);
+                    customizePokemon(scanner, pokedex);
                 }
                 case 4 -> {
-                    return deletePokemon(scanner, pokedex);
+                    deletePokemon(scanner, pokedex);
                 }
                 case 5 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler);
@@ -110,14 +86,13 @@ public static void loa(Pokedex pokedex, JsonHandler jsonHandler) {
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> {
                     saveToFile(pokedex, jsonHandler);
-                    return false;
                 }
 
                 default -> System.out.println("  Invalid input");
-            }return false;
+            }
         }catch (QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
-        } return false;
+        }
     }
 }
 

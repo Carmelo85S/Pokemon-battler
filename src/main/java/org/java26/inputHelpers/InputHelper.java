@@ -16,7 +16,7 @@ public class InputHelper {
                 String userInput = scanner.nextLine().trim();
                 if (userInput.equalsIgnoreCase("quit")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
-                };
+                }
                 validateInt(userInput, min, max);
                 return Integer.parseInt(userInput);
             } catch (InvalidPokemonException e) {
@@ -33,7 +33,7 @@ public class InputHelper {
                 String userInput = scanner.nextLine().trim();
                 if (userInput.equalsIgnoreCase("quit")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
-                };
+                }
                 validateName(userInput);
                 System.out.println(confirm + userInput);
                 return userInput;
@@ -51,7 +51,7 @@ public class InputHelper {
                 String userInput = scanner.nextLine().toUpperCase(Locale.ROOT);
                 if (userInput.equalsIgnoreCase("quit")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
-                };
+                }
                 if (userInput.isBlank()) {
                     System.out.println("  Type cannot be empty.");
                     continue;

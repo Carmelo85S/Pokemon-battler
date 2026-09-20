@@ -14,6 +14,7 @@ public class Main {
         Pokedex pokedex = new Pokedex();
         JsonHandler jsonHandler = new JsonHandler();
         loadInitialPokemondata(pokedex, jsonHandler);
+        printWelcome();
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
