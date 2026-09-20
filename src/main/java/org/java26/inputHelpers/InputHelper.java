@@ -8,6 +8,21 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class InputHelper {
+
+    public static int readMenuchoice(Scanner scanner, int min, int max, String prompt) {
+        while (true) {
+            System.out.println();
+            System.out.printf(prompt, min, max);
+            try {
+                String userInput = scanner.nextLine().trim();
+                validateInt(userInput, min, max);
+                return Integer.parseInt(userInput);
+            } catch (InvalidPokemonException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     public static int readIntBetween(Scanner scanner, int min, int max, String prompt) throws QuitPokemonOperationException {
         while (true) {
             System.out.println();
@@ -48,7 +63,7 @@ public class InputHelper {
             System.out.println();
             System.out.print(prompt);
             try {
-                String userInput = scanner.nextLine().toUpperCase(Locale.ROOT);
+                String userInput = scanner.nextLine().trim().toUpperCase(Locale.ROOT);
                 if (userInput.equalsIgnoreCase("quit")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
@@ -56,8 +71,9 @@ public class InputHelper {
                     System.out.println("  Type cannot be empty.");
                     continue;
                 }
-                System.out.println("  Your pokemon type is: "+ userInput.toUpperCase());
-                return PokemonType.valueOf(userInput);
+                PokemonType type = PokemonType.valueOf(userInput);
+                System.out.println("  Your pokemon type is: "+ type);
+                return type;
             } catch (IllegalArgumentException e) {
                 System.out.println("  Invalid input. Type not found in database...");
             }

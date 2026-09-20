@@ -20,7 +20,7 @@ public class Main {
         do {
             try {
                 showMenu();
-                choice = InputHelper.readIntBetween(
+                choice = InputHelper.readMenuchoice(
                         scanner,
                         1,
                         9,
