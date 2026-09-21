@@ -33,7 +33,7 @@ public class Menu {
 
     public static void loadInitialPokemondata(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
-           Path path = Paths.get("pokemon.json");
+           Path path = Path.of("pokemon.json");
            List<Pokemon> listPokemon;
            if(Files.exists(path)){
                listPokemon = jsonHandler.loadPokemon("pokemon.json");

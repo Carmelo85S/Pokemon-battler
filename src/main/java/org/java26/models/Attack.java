@@ -16,8 +16,4 @@ public class Attack {
         this.accuracy = accuracy;
         this.type = type;
     }
-
-
-
-
 }

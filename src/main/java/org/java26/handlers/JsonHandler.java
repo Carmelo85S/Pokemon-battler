@@ -7,6 +7,7 @@ import org.java26.exceptions.PokemonLoadException;
 import org.java26.exceptions.PokemonSaveException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class JsonHandler {
@@ -19,17 +20,16 @@ public class JsonHandler {
                     new TypeReference<List<Pokemon>>() {
                     }
             );
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new PokemonLoadException(
                     "  Could not load Pokemon from file " + filePath);
-
         }
     }
 
     public void savePokemon(String filePath, List<Pokemon> pokemons) throws PokemonSaveException {
         try{
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), pokemons);
-        }catch (Exception e){
+        }catch (IOException e){
             throw new PokemonSaveException(
                     "  Could not save Pokemon to file: " + filePath);
         }
