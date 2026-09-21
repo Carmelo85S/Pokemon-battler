@@ -29,6 +29,15 @@ public class Pokedex {
         pokemons.remove(pokemon);
     }
 
+    public void removePokemonIndex(int index) {
+        if (index < 0 || index >= pokemons.size()) {
+            throw new InvalidPokemonException(
+                    "  Pokemon index [" + index + "] not found."
+            );
+        }
+
+        pokemons.remove(index);
+    }
     public void removeAllPokemon() {
         pokemons.clear();
     }

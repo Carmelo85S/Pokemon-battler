@@ -137,7 +137,7 @@ public class ActionMenu {
                             type
                     );
 
-                    if(attackCount == 0){
+                    if (attackCount == 0) {
                         pokedex.addPokemon(pokemon);
                         System.out.println("  Pokemon '" + pokemon.name + "' created successfully.");
                     }
@@ -223,8 +223,7 @@ public class ActionMenu {
             switch (chooseOperation) {
                 case 1 -> pokemon.name = readString(scanner, "  Enter new name: ", "  New name is ");
                 case 2 -> pokemon.type = readType(scanner, "  Enter new type: ");
-                case 3 ->
-                    pokemon.maxHp = readIntBetween(scanner, 1, 100, "  Enter new hp value");
+                case 3 -> pokemon.maxHp = readIntBetween(scanner, 1, 100, "  Enter new hp value");
                 case 4 -> {
                     System.out.println("  Current attacks:");
                     for (Attack attack : pokemon.attacks) {
@@ -363,21 +362,78 @@ public class ActionMenu {
     }
 
     public static void deletePokemon(Scanner scanner, Pokedex pokedex) throws QuitPokemonOperationException {
+
         showPokemons(pokedex);
 
-        while (true) {
-            String pokemonToRemove = readString(scanner, "  Which Pokemon do you wanna delete?: ", "  You wanna delete ");
-            try {
-                pokedex.removePokemon(pokemonToRemove);
-                System.out.println("  " + pokemonToRemove + " has been removed from list.");
-                return;
-            } catch (InvalidPokemonException e) {
-                System.out.println(e.getMessage());
-                System.out.println("  Try again.");
-            } catch (QuitPokemonOperationException e) {
-                System.out.println(e.getMessage());
+        if (pokedex.getPokemons().isEmpty()) {
+            System.out.println("  There are no Pokemon to delete.");
+            return;
+        }
+
+        System.out.println("+========================================+");
+        System.out.println("|              DELETE POKEMON            |");
+        System.out.println("+========================================+");
+        System.out.println("|                                        |");
+        System.out.println("|    Which method do you want to use?    |");
+        System.out.println("|                                        |");
+        System.out.println("|        [1]. String                     |");
+        System.out.println("|        [2]. Index                      |");
+        System.out.println("|                                        |");
+        System.out.println("+----------------------------------------+");
+
+        int chooseMethod = readIntBetween(
+                scanner,
+                1,
+                2,
+                "  Choose your method (%d-%d): "
+        );
+
+        if (chooseMethod == 1) {
+
+            while (true) {
+                String pokemonToRemove = readString(
+                        scanner,
+                        "  Which Pokemon do you wanna delete?: ",
+                        "  You wanna delete "
+                );
+
+                try {
+                    pokedex.removePokemon(pokemonToRemove);
+
+                    System.out.println(
+                            "  " + pokemonToRemove + " has been removed from list."
+                    );
+                    return;
+
+                } catch (InvalidPokemonException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("  Try again.");
+                }
+            }
+
+        } else {
+            while (true) {
+                try {
+                    int indexToRemove = readIntBetween(
+                            scanner,
+                            0,
+                            pokedex.getPokemons().size() - 1,
+                            "  Which Pokemon index do you wanna delete? (%d-%d): "
+                    );
+
+                    pokedex.removePokemonIndex(indexToRemove);
+
+                    System.out.println(
+                            "  Pokemon with index [" + indexToRemove
+                                    + "] has been removed from list."
+                    );
+                    return;
+                } catch (InvalidPokemonException e) {
+                    System.out.println(e.getMessage());
+                }
                 return;
             }
+
         }
     }
 
