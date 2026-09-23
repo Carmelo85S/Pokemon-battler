@@ -533,9 +533,10 @@ public class ActionMenu {
     }
 
     static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
-        pokedex.removeAllPokemon();
         try {
             List<Pokemon> pokemons = jsonHandler.loadPokemon("seed-pokemons.json");
+            pokedex.removeAllPokemon();
+
             for (Pokemon p : pokemons) {
                 pokedex.addPokemon(p);
             }
