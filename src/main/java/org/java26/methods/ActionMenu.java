@@ -7,6 +7,8 @@ import org.java26.exceptions.*;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingFormatArgumentException;
@@ -475,6 +477,11 @@ public class ActionMenu {
 
     public static void loadFromFile(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
+            Path path = Path.of("pokemon.json");
+            if (!Files.exists(path)) {
+                System.out.println("  File pokemon.json does not exist.");
+                return;
+            }
             List<Pokemon> pokemons = jsonHandler.loadPokemon("pokemon.json");
             pokedex.removeAllPokemon();
             for (Pokemon p : pokemons) {
@@ -512,60 +519,62 @@ public class ActionMenu {
         }
 
         showPokemons(pokedex);
-
-        String choice = readString(
-                scanner,
-                "  Retrieve pokemon info: ",
-                "  Your chosen pokemon is "
-        );
-
-
-        try {
-            Pokemon pokemon = pokedex.getPokemon(choice);
-            System.out.println();
-            System.out.println("+----------------+----------------+----------------+----------------+");
-            System.out.printf(
-                    "| %-14s | %-14s | %-14s | %-14s |%n",
-                    "Name", "Type", "Max HP", "Current HP"
-            );
-            System.out.println("+----------------+----------------+----------------+----------------+");
-
-            System.out.printf(
-                    "| %-14s | %-14s | %-14d | %-14d |%n",
-                    pokemon.name,
-                    pokemon.type,
-                    pokemon.maxHp,
-                    pokemon.currentHp
+        while (true) {
+            String choice = readString(
+                    scanner,
+                    "  Retrieve pokemon info: ",
+                    "  Pokemon "
             );
 
-            System.out.println("+----------------+----------------+----------------+----------------+");
 
-            // Attack information
-            System.out.println();
-            System.out.println("  ATTACKS");
-            System.out.println("+----------------+----------------+----------------+----------------+");
-            System.out.printf(
-                    "| %-14s | %-14s | %-14s | %-14s |%n",
-                    "Name", "Damage", "Accuracy", "Type"
-            );
-            System.out.println("+----------------+----------------+----------------+----------------+");
-
-            for (Attack attack : pokemon.attacks) {
+            try {
+                Pokemon pokemon = pokedex.getPokemon(choice);
+                System.out.println();
+                System.out.println("+----------------+----------------+----------------+----------------+");
                 System.out.printf(
-                        "| %-14s | %-14d | %-14d | %-14s |%n",
-                        attack.name,
-                        attack.baseDamage,
-                        attack.accuracy,
-                        attack.type
+                        "| %-14s | %-14s | %-14s | %-14s |%n",
+                        "Name", "Type", "Max HP", "Current HP"
                 );
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+                System.out.printf(
+                        "| %-14s | %-14s | %-14d | %-14d |%n",
+                        pokemon.name,
+                        pokemon.type,
+                        pokemon.maxHp,
+                        pokemon.currentHp
+                );
+
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+                // Attack information
+                System.out.println();
+                System.out.println("  ATTACKS");
+                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.printf(
+                        "| %-14s | %-14s | %-14s | %-14s |%n",
+                        "Name", "Damage", "Accuracy", "Type"
+                );
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+                for (Attack attack : pokemon.attacks) {
+                    System.out.printf(
+                            "| %-14s | %-14d | %-14d | %-14s |%n",
+                            attack.name,
+                            attack.baseDamage,
+                            attack.accuracy,
+                            attack.type
+                    );
+                }
+
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+            } catch (InvalidPokemonException e) {
+                System.out.println(e.getMessage());
+            } catch (QuitPokemonOperationException e) {
+                System.out.println("  Operation cancelled.");
+                return;
             }
-
-            System.out.println("+----------------+----------------+----------------+----------------+");
-
-        } catch (InvalidPokemonException e) {
-            System.out.println(e.getMessage());
-        } catch (MissingFormatArgumentException e) {
-            System.out.println("  Missing data");
         }
     }
 }

@@ -50,7 +50,7 @@ public class InputHelper {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
                 validateName(userInput);
-                System.out.print(confirm + userInput + "\n");
+                System.out.print(confirm + userInput);
                 return userInput;
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
@@ -60,6 +60,7 @@ public class InputHelper {
 
     public static PokemonType readType(Scanner scanner, String prompt) throws QuitPokemonOperationException {
         while (true) {
+            System.out.println();
             System.out.println();
             System.out.print(prompt);
             try {
@@ -72,7 +73,7 @@ public class InputHelper {
                     continue;
                 }
                 PokemonType type = PokemonType.valueOf(userInput);
-                System.out.println("  Your pokemon type is: "+ type);
+                System.out.println("  Your pokemon type is: " + type);
                 return type;
             } catch (IllegalArgumentException e) {
 
@@ -95,7 +96,7 @@ public class InputHelper {
         if (!userInput.matches(".*[a-zA-Z].*")) {
             throw new InvalidPokemonException("  Input must contain at least one letter.");
         }
-        if(userInput.length() > 11 || userInput.length() < 2) {
+        if (userInput.length() > 11 || userInput.length() < 2) {
             throw new InvalidPokemonException(" Input must be between 2 and 11 characters. ");
         }
 
