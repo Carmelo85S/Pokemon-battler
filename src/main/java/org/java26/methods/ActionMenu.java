@@ -38,7 +38,7 @@ public class ActionMenu {
                     scanner,
                     1,
                     2,
-                    "  Select an option: "
+                    "  Select an option %d or %d: "
             );
             if (choice == 1) {
                 insertNewPokemon(scanner, pokedex);
@@ -430,10 +430,9 @@ public class ActionMenu {
                     return;
                 } catch (InvalidPokemonException e) {
                     System.out.println(e.getMessage());
+                    System.out.println("  Try again.");
                 }
-                return;
             }
-
         }
     }
 

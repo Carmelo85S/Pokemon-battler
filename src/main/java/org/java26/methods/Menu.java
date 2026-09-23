@@ -1,11 +1,13 @@
 package org.java26.methods;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import org.java26.models.Pokemon;
 import org.java26.exceptions.PokemonLoadException;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,16 +35,27 @@ public class Menu {
 
     public static void loadInitialPokemondata(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
-           Path path = Path.of("pokemon.json");
-           List<Pokemon> listPokemon;
-           if(Files.exists(path)){
-               listPokemon = jsonHandler.loadPokemon("pokemon.json");
-           } else {
-               listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-           }for (Pokemon p : listPokemon) {
+            Path path = Path.of("pokemon.json");
+
+            List<Pokemon> listPokemon;
+
+            if (Files.exists(path)) {
+                String json = Files.readString(path);
+
+                if (jsonHandler.isValidJSON(json)) {
+                    listPokemon = jsonHandler.loadPokemon("pokemon.json");
+                } else {
+                    listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+                }
+            } else {
+                listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+            }
+
+            for (Pokemon p : listPokemon) {
                 pokedex.addPokemon(p);
             }
-        } catch (PokemonLoadException e) {
+
+        } catch (PokemonLoadException | IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -80,7 +93,7 @@ public class Menu {
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 default -> System.out.println("  Invalid input");
             }
-        }catch (QuitPokemonOperationException e) {
+        } catch (QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
         }
     }

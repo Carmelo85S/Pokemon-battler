@@ -1,5 +1,8 @@
 package org.java26.handlers;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.java26.models.Pokemon;
@@ -34,4 +37,18 @@ public class JsonHandler {
                     "  Could not save Pokemon to file: " + filePath);
         }
     }
+
+    public boolean isValidJSON(final String json) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.readTree(json);
+            return true;
+
+        } catch (JsonProcessingException e) {
+            System.out.println("Json file is corrupted. Load seed data");
+            System.out.println();
+            return false;
+        }
+    }
+
 }

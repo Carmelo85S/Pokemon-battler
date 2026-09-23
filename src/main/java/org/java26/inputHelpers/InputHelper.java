@@ -75,7 +75,11 @@ public class InputHelper {
                 System.out.println("  Your pokemon type is: "+ type);
                 return type;
             } catch (IllegalArgumentException e) {
-                System.out.println("  Invalid input. Type not found in database...");
+
+                System.out.println("  Invalid input. Choose between: ");
+                for (PokemonType type : PokemonType.values()) {
+                    System.out.println("  - " + type);
+                }
             }
         }
     }
