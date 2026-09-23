@@ -50,7 +50,7 @@ public class InputHelper {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
                 validateName(userInput);
-                System.out.println(confirm + userInput);
+                System.out.print(confirm + userInput + "\n");
                 return userInput;
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
@@ -84,16 +84,19 @@ public class InputHelper {
         }
     }
 
-    public static void validateName(String name) {
+    public static void validateName(String userInput) {
 
-        if (name == null || name.isBlank()) {
-            throw new InvalidPokemonException("  Name cannot be empty.");
+        if (userInput == null || userInput.isBlank()) {
+            throw new InvalidPokemonException("  Input cannot be empty.");
         }
-        if (!name.matches("[a-zA-Z0-9 ]+")) {
+        if (!userInput.matches("[a-zA-Z0-9 ]+")) {
             throw new InvalidPokemonException("  No special char allowed.");
         }
-        if (!name.matches(".*[a-zA-Z].*")) {
-            throw new InvalidPokemonException("  Name must contain at least one letter.");
+        if (!userInput.matches(".*[a-zA-Z].*")) {
+            throw new InvalidPokemonException("  Input must contain at least one letter.");
+        }
+        if(userInput.length() > 11 || userInput.length() < 2) {
+            throw new InvalidPokemonException(" Input must be between 2 and 11 characters. ");
         }
 
     }

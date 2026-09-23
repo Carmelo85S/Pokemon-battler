@@ -51,13 +51,13 @@ public class ActionMenu {
     }
 
     public static void insertNewPokemon(Scanner scanner, Pokedex pokedex) {
-        //Pokemon obj
+        // Pokemon obj
         String name;
         PokemonType type;
         int maxHp;
         int currentHp;
 
-        //Attack obj
+        // Attack obj
         String attackName;
         int baseDamage;
         int accuracy;
@@ -73,110 +73,135 @@ public class ActionMenu {
         System.out.println("+----------------------------------------+");
 
         System.out.println("  Back to main menu by entering 'quit'.");
-        while (true) {
-            try {
-                name = readString(scanner, "  Enter new pokemon name: ", "  Chosen name: ");
-                if (name.length() > 11) {
-                    throw new InvalidPokemonNameException(
-                            "  Pokemon name cannot be longer than 11 characters."
-                    );
-                } else if (name.length() < 2) {
-                    throw new InvalidPokemonNameException(
-                            "  Pokemon name cannot be shorter than 2 characters."
-                    );
-                }
-                type = readType(scanner, "  Which type is your new pokemon?: ");
-                maxHp = readIntBetween(scanner, 1, 100, "  Enter max HP between %d and %d: ");
-                currentHp = readIntBetween(scanner, 1, maxHp, "  Enter current HP between %d and %d: ");
-                while (true) {
 
-                    String answer = readString(
-                            scanner,
-                            "  Do you want to enter attacks? Yes / No: ",
-                            "  You choose "
-                    );
+        try {
+            name = readString(
+                    scanner,
+                    "  Enter new pokemon name: ",
+                    "  Chosen name: "
+            );
 
-                    if (answer.equalsIgnoreCase("Yes")) {
-                        break;
-                    } else if (answer.equalsIgnoreCase("No")) {
-                        System.out.println("  You can not create a pokemons without attacks.");
-                        System.out.println("  Redirect to 'Main' menu");
-                        return;
-                    } else {
-                        System.out.println("  Invalid input. Please enter Yes or No.");
-                    }
-                }
-                //Attack
-                Pokemon pokemon = new Pokemon(name, type, maxHp, currentHp);
-                boolean addAttack = true;
-                while (attackCount < 4 && addAttack) {
-                    attackName = readString(
-                            scanner,
-                            "  Enter attack name: ",
-                            "  Your attack name is "
-                    );
+            type = readType(
+                    scanner,
+                    "  Which type is your new pokemon?: "
+            );
 
-                    baseDamage = readIntBetween(
-                            scanner,
-                            0,
-                            100,
-                            "  How much damage should your attack have? Enter a value between %d and %d: "
-                    );
+            maxHp = readIntBetween(
+                    scanner,
+                    1,
+                    100,
+                    "  Enter max HP between %d and %d: "
+            );
 
-                    accuracy = readIntBetween(
-                            scanner,
-                            0,
-                            100,
-                            "  Enter accuracy between %d and %d: "
-                    );
+            currentHp = readIntBetween(
+                    scanner,
+                    1,
+                    maxHp,
+                    "  Enter current HP between %d and %d: "
+            );
 
-                    Attack attack = new Attack(
-                            attackName,
-                            baseDamage,
-                            accuracy,
-                            type
-                    );
+            int answer = readIntBetween(
+                    scanner,
+                    1,
+                    2,
+                    "  Do you want to enter attacks? [1] Yes / [2] No: "
+            );
 
-                    if (attackCount == 0) {
-                        pokedex.addPokemon(pokemon);
-                        System.out.println("  Pokemon '" + pokemon.name + "' created successfully.");
-                    }
-
-                    pokemon.addAttack(attack);
-                    System.out.println("  Attack '" + attackName + "' added successfully.");
-
-                    attackCount++;
-
-                    if (attackCount == 4) {
-                        System.out.println("  Attack slots filled");
-                        break;
-                    }
-                    while (true) {
-                        String choice = readString(
-                                scanner,
-                                "  Do you want to enter another attack? (yes/no): ",
-                                "  You choose "
-                        );
-                        if (choice.equalsIgnoreCase("yes")) {
-                            break;
-                        }
-                        if (choice.equalsIgnoreCase("no")) {
-                            System.out.println("  Back to main menu.");
-                            addAttack = false;
-                            break;
-                        }
-                        System.out.println(
-                                "  Invalid input. Please enter Yes or No."
-                        );
-                    }
-                }
-                break;
-            } catch (InvalidPokemonNameException e) {
-                System.out.println(e.getMessage());
-            } catch (QuitPokemonOperationException e) {
-                System.out.println("  Operation cancelled.");
+            if (answer == 2) {
+                System.out.println("  You cannot create a Pokemon without attacks.");
+                System.out.println("  Redirect to 'Main' menu");
                 return;
             }
+
+            // Create Pokemon
+            Pokemon pokemon = new Pokemon(
+                    name,
+                    type,
+                    maxHp,
+                    currentHp
+            );
+
+            boolean addAttack = true;
+
+            while (attackCount < 4 && addAttack) {
+
+                attackName = readString(
+                        scanner,
+                        "  Enter attack name: ",
+                        "  Your attack name is "
+                );
+
+                baseDamage = readIntBetween(
+                        scanner,
+                        0,
+                        100,
+                        "  Enter attack damage. Value between %d and %d: "
+                );
+
+                accuracy = readIntBetween(
+                        scanner,
+                        0,
+                        100,
+                        "  Enter attack accuracy. Value between %d and %d: "
+                );
+
+                Attack attack = new Attack(
+                        attackName,
+                        baseDamage,
+                        accuracy,
+                        type
+                );
+
+                pokemon.addAttack(attack);
+
+                System.out.println(
+                        "  Attack '" + attackName + "' added successfully."
+                );
+
+                attackCount++;
+
+                if (attackCount == 4) {
+                    System.out.println("  Attack slots filled");
+                    break;
+                }
+
+                System.out.println("+========================================+");
+                System.out.println("|             POKEMON ATTACKS            |");
+                System.out.println("+========================================+");
+                System.out.println("|                                        |");
+                System.out.println("|        Do you want to add more         |");
+                System.out.println("|        attacks?                        |");
+                System.out.println("|                                        |");
+                System.out.println("|        [1]. Yes                        |");
+                System.out.println("|        [2]. No                         |");
+                System.out.println("|                                        |");
+                System.out.println("+----------------------------------------+");
+
+                int choice = readIntBetween(
+                        scanner,
+                        1,
+                        2,
+                        "  Select an option %d or %d: "
+                );
+
+                if (choice == 2) {
+                    System.out.println("  Back to main menu.");
+                    addAttack = false;
+                }
+            }
+
+            // Add Pokemon only after it has at least one attack
+            pokedex.addPokemon(pokemon);
+
+            System.out.println(
+                    "  Pokemon '" + pokemon.name + "' created successfully."
+            );
+
+        } catch (InvalidPokemonException e) {
+            System.out.println(e.getMessage());
+
+        } catch (QuitPokemonOperationException e) {
+            System.out.println("  Operation cancelled.");
         }
     }
 
@@ -187,7 +212,7 @@ public class ActionMenu {
         }
 
         showPokemons(pokedex);
-        String choice = readString(scanner, "  Choose pokemon to customize: ", "  Your chosen pokemon is ");
+        String choice = readString(scanner, "  Choose pokemon to customize: ", "  Pokemon: ");
 
         Pokemon pokemon;
 
@@ -493,6 +518,7 @@ public class ActionMenu {
                 "  Retrieve pokemon info: ",
                 "  Your chosen pokemon is "
         );
+
 
         try {
             Pokemon pokemon = pokedex.getPokemon(choice);
