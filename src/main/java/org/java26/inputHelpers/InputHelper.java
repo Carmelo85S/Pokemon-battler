@@ -25,7 +25,6 @@ public class InputHelper {
 
     public static int readIntBetween(Scanner scanner, int min, int max, String prompt) throws QuitPokemonOperationException {
         while (true) {
-            System.out.println();
             System.out.printf(prompt, min, max);
             try {
                 String userInput = scanner.nextLine().trim();
@@ -42,7 +41,6 @@ public class InputHelper {
 
     public static String readString(Scanner scanner, String prompt, String confirm) throws QuitPokemonOperationException {
         while (true) {
-            System.out.println();
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().trim();
@@ -60,8 +58,6 @@ public class InputHelper {
 
     public static PokemonType readType(Scanner scanner, String prompt) throws QuitPokemonOperationException {
         while (true) {
-            System.out.println();
-            System.out.println();
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().trim().toUpperCase(Locale.ROOT);
