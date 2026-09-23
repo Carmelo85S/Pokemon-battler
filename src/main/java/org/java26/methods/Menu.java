@@ -1,6 +1,5 @@
 package org.java26.methods;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import org.java26.models.Pokemon;
 import org.java26.exceptions.PokemonLoadException;
 import org.java26.exceptions.QuitPokemonOperationException;
@@ -10,11 +9,11 @@ import org.java26.models.Pokedex;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
 import static org.java26.methods.ActionMenu.*;
+import static org.java26.methods.PokemonCRUD.*;
 
 public class Menu {
 
