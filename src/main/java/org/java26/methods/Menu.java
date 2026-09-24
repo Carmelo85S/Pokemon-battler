@@ -12,24 +12,22 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.java26.consoleLayout.Layout.*;
 import static org.java26.methods.ActionMenu.*;
 import static org.java26.methods.PokemonCRUD.*;
 
 public class Menu {
 
     public static void printWelcome() {
-        System.out.println("+----------------------------------------+");
-        System.out.println("|            WELCOME TRAINER             |");
-        System.out.println("|                                        |");
-        System.out.println("|              POKEDEX APP               |");
-        System.out.println("|                                        |");
-        System.out.println("|   Manage your Pokemon collection,      |");
-        System.out.println("|   customize their stats and attacks,   |");
-        System.out.println("|   and keep your Pokedex organized.     |");
-        System.out.println("|                                        |");
-        System.out.println("|            by Carmelo Salis.           |");
-        System.out.println("+----------------------------------------+");
-        System.out.println();
+        title("WELCOME TRAINER");
+        separator();
+        title("POKEDEX APP");
+        separator();
+        subTitle("Manage your Pokemon collection");
+        subTitle("customize their stats and attacks,");
+        subTitle("and keep your Pokedex organized");
+        subTitle("by Carmelo Salis.");
+        separator();
     }
 
     public static void loadInitialPokemondata(Pokedex pokedex, JsonHandler jsonHandler) {
@@ -61,22 +59,17 @@ public class Menu {
 
 
     public static void showMenu() {
-        System.out.println();
-        System.out.println("+========================================+");
-        System.out.println("|                POKEDEX                 |");
-        System.out.println("+========================================+");
-        System.out.println("|                                        |");
-        System.out.println("|        [1]. Show all Pokemon           |");
-        System.out.println("|        [2]. Insert a new Pokemon       |");
-        System.out.println("|        [3]. Customize your Pokemon     |");
-        System.out.println("|        [4]. Delete your Pokemon        |");
-        System.out.println("|        [5]. Save to file               |");
-        System.out.println("|        [6]. Load from file             |");
-        System.out.println("|        [7]. Reset to seed data         |");
-        System.out.println("|        [8]. Pokemon info               |");
-        System.out.println("|        [9]. Exit                       |");
-        System.out.println("|                                        |");
-        System.out.println("+----------------------------------------+");
+        title("Pokedex");
+        menuOption(1, "Show all Pokemon");
+        menuOption(2, "Insert a new Pokemon");
+        menuOption(3, "Customize your Pokemon");
+        menuOption(4, "Delete your Pokemon");
+        menuOption(5, "Save to file");
+        menuOption(6, "Load from file");
+        menuOption(7, "Reset to seed data");
+        menuOption(8, "Pokemon info");
+        menuOption(9, "Exit");
+
     }
 
     public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {

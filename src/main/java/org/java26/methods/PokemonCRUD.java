@@ -2,6 +2,7 @@ package org.java26.methods;
 
 import org.java26.enums.PokemonType;
 import org.java26.exceptions.InvalidPokemonException;
+import org.java26.exceptions.PokemonNotFoundException;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
@@ -10,6 +11,7 @@ import org.java26.models.Pokemon;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.inputHelpers.InputHelper.readString;
@@ -29,16 +31,11 @@ public class PokemonCRUD {
         int accuracy;
         int attackCount = 0;
 
-        System.out.println();
-        System.out.println("+========================================+");
-        System.out.println("|            CREATE POKEMON              |");
-        System.out.println("+========================================+");
-        System.out.println("|                                        |");
-        System.out.println("|        Enter the Pokemon details       |");
-        System.out.println("|                                        |");
-        System.out.println("+----------------------------------------+");
-
-        System.out.println("  Back to main menu by entering 'quit'.");
+        separator();
+        title("Create pokemon");
+        subTitle("Enter pokemon details.");
+        separator();
+        backOption();
 
         try {
             name = readString(
@@ -139,17 +136,12 @@ public class PokemonCRUD {
                     break;
                 }
 
-                System.out.println("+========================================+");
-                System.out.println("|             POKEMON ATTACKS            |");
-                System.out.println("+========================================+");
-                System.out.println("|                                        |");
-                System.out.println("|        Do you want to add more         |");
-                System.out.println("|        attacks?                        |");
-                System.out.println("|                                        |");
-                System.out.println("|        [1]. Yes                        |");
-                System.out.println("|        [2]. No                         |");
-                System.out.println("|                                        |");
-                System.out.println("+----------------------------------------+");
+                separator();
+                title("Pokemon attacks");
+                subTitle("Do you want to add more attacks?");
+                menuOption(1, "yes");
+                menuOption(2, "No");
+                separator();
 
                 int choice = readIntBetween(
                         scanner,
@@ -157,8 +149,7 @@ public class PokemonCRUD {
                         2,
                         "  Select an option %d or %d: "
                 );
-                System.out.println();
-                System.out.println();
+                separator();
 
                 if (choice == 2) {
                     System.out.println("  Back to main menu.");
@@ -169,9 +160,7 @@ public class PokemonCRUD {
             // Add Pokemon only after it has at least one attack
             pokedex.addPokemon(pokemon);
 
-            System.out.println(
-                    "  Pokemon '" + pokemon.name + "' created successfully."
-            );
+            System.out.println("  Pokemon '" + pokemon.name + "' created successfully.");
 
         } catch (InvalidPokemonException e) {
             System.out.println(e.getMessage());
@@ -188,116 +177,142 @@ public class PokemonCRUD {
         }
 
         showPokemons(pokedex);
-        String choice = readString(scanner, "  Choose pokemon to customize: ", "  Pokemon: ");
-        System.out.println();
+        backOption();
 
-        Pokemon pokemon;
+        String choice = "";
+        Pokemon pokemon = null;
 
-        try {
-            pokemon = pokedex.getPokemon(choice);
-        } catch (InvalidPokemonException e) {
-            System.out.println(e.getMessage());
-            return;
+        while (pokemon == null) {
+
+            try {
+                choice = readString(scanner, "  Choose pokemon to customize: ", "  Pokemon: ");
+                System.out.println();
+            } catch (QuitPokemonOperationException e) {
+                System.out.println("  Operation cancelled.");
+                return;
+            }
+
+            try {
+                pokemon = pokedex.getPokemon(choice);
+            } catch (InvalidPokemonException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         while (true) {
-            System.out.println();
-            System.out.println("+========================================+");
-            System.out.println("         CUSTOMIZE - " + pokemon.name.toUpperCase(Locale.ROOT));
-            System.out.println("+========================================+");
-            System.out.println("|                                        |");
-            System.out.println("|        [1]. Change name                |");
-            System.out.println("|        [2]. Change type                |");
-            System.out.println("|        [3]. Change HP                  |");
-            System.out.println("|        [4]. Add attack                 |");
-            System.out.println("|        [5]. Remove attack              |");
-            System.out.println("|        [6]. Back to menu               |");
-            System.out.println("|                                        |");
-            System.out.println("+----------------------------------------+");
-            System.out.println();
-
-            int chooseOperation = readIntBetween(
-                    scanner,
-                    1,
-                    6,
-                    "  Choose an option between %d and %d%n  > ");
+            title("CUSTOMIZE " + pokemon.name.toUpperCase(Locale.ROOT));
+            menuOption(1, "Change name");
+            menuOption(2, "Change type");
+            menuOption(3, "Change HP");
+            menuOption(4, "Add attack");
+            menuOption(5, "Remove attack");
+            menuOption(6, "Back to menu");
+            separator();
+            int chooseOperation;
+            try {
+                chooseOperation = readIntBetween(
+                        scanner,
+                        1,
+                        6,
+                        "  Choose an option between %d and %d%n  > ");
+            } catch (QuitPokemonOperationException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
 
             switch (chooseOperation) {
                 case 1 -> {
-                    pokemon.name = readString(scanner, "  Enter new name: ", "  New name is ");
-                    System.out.println();
+                    try {
+                        pokemon.name = readString(scanner, "  Enter new name: ", "  New name is ");
+                        System.out.println();
+
+                    } catch (QuitPokemonOperationException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
+
                 case 2 -> {
-                    pokemon.type = readType(scanner, "  Enter new type: ");
-                    System.out.println();
+                    try {
+                        pokemon.type = readType(scanner, "  Enter new type: ");
+                        System.out.println();
+                    } catch (QuitPokemonOperationException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 case 3 -> {
-                    pokemon.maxHp = readIntBetween(scanner, 1, 100, "  Enter new hp value: ");
-                    if (pokemon.currentHp > pokemon.maxHp) {
-                        pokemon.currentHp = pokemon.maxHp;
+                    try {
+                        pokemon.maxHp = readIntBetween(scanner, 1, 100, "  Enter new hp value: ");
+                        if (pokemon.currentHp > pokemon.maxHp) {
+                            pokemon.currentHp = pokemon.maxHp;
+                        }
+                        System.out.println();
+                    } catch (QuitPokemonOperationException e) {
+                        System.out.println(e.getMessage());
                     }
-                    System.out.println();
                 }
                 case 4 -> {
-                    System.out.println("  Current attacks:");
-                    for (Attack attack : pokemon.attacks) {
-                        System.out.println("  - " + attack.name);
-                    }
-                    if (pokemon.attacks.size() == 4) {
-                        System.out.println("  Attack slots are already full.");
-                        break;
-                    }
-                    while (pokemon.attacks.size() < 4) {
-                        String attackName = readString(
-                                scanner,
-                                "  Enter attack name: ",
-                                "  Attack name: "
-                        );
-                        System.out.println();
-                        int baseDamage = readIntBetween(
-                                scanner,
-                                1,
-                                100,
-                                "  Enter attack base damage, value between %d and %d: "
-                        );
-                        System.out.println();
-                        int accuracy = readIntBetween(
-                                scanner,
-                                1,
-                                100,
-                                "  Enter attack accuracy, value between %d and %d: "
-                        );
-                        System.out.println();
-                        Attack newAttack = new Attack(
-                                attackName,
-                                baseDamage,
-                                accuracy,
-                                pokemon.type
-                        );
-                        pokemon.addAttack(newAttack);
-
-                        System.out.println(
-                                "  Attack '" + attackName + "' added successfully."
-                        );
+                    try {
+                        System.out.println("  Current attacks:");
+                        for (Attack attack : pokemon.attacks) {
+                            System.out.println("  - " + attack.name);
+                        }
                         if (pokemon.attacks.size() == 4) {
-                            System.out.println("  Attack slots filled");
+                            System.out.println("  Attack slots are already full.");
                             break;
                         }
+                        while (pokemon.attacks.size() < 4) {
+                            String attackName = readString(
+                                    scanner,
+                                    "  Enter attack name: ",
+                                    "  Attack name: "
+                            );
+                            System.out.println();
+                            int baseDamage = readIntBetween(
+                                    scanner,
+                                    1,
+                                    100,
+                                    "  Enter attack base damage, value between %d and %d: "
+                            );
+                            System.out.println();
+                            int accuracy = readIntBetween(
+                                    scanner,
+                                    1,
+                                    100,
+                                    "  Enter attack accuracy, value between %d and %d: "
+                            );
+                            System.out.println();
+                            Attack newAttack = new Attack(
+                                    attackName,
+                                    baseDamage,
+                                    accuracy,
+                                    pokemon.type
+                            );
+                            pokemon.addAttack(newAttack);
 
-                        int userChoice = readIntBetween(
-                                scanner,
-                                1,
-                                2,
-                                "  Do you want to enter another attack? [1] Yes / [2] No: "
-                        );
-                        System.out.println();
+                            System.out.println(
+                                    "  Attack '" + attackName + "' added successfully."
+                            );
+                            if (pokemon.attacks.size() == 4) {
+                                System.out.println("  Attack slots filled");
+                                break;
+                            }
 
-                        if (userChoice == 2) {
-                            break;
+                            int userChoice = readIntBetween(
+                                    scanner,
+                                    1,
+                                    2,
+                                    "  Do you want to enter another attack? [1] Yes / [2] No: "
+                            );
+                            separator();
+                            if (userChoice == 2) {
+                                break;
+                            }
                         }
-
+                    } catch (QuitPokemonOperationException e) {
+                        System.out.println(e.getMessage());
                     }
                 }
+
                 case 5 -> {
                     System.out.println("  Current attacks:");
 
@@ -345,8 +360,14 @@ public class PokemonCRUD {
                     }
                 }
                 case 6 -> {
-                    System.out.println("  Back to menu");
-                    return;
+                    try {
+
+
+                        System.out.println("  Back to menu");
+                        return;
+                    } catch (QuitPokemonOperationException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 default -> System.out.println("  Invalid choice");
             }
@@ -426,16 +447,11 @@ public class PokemonCRUD {
             return;
         }
 
-        System.out.println("+========================================+");
-        System.out.println("|              DELETE POKEMON            |");
-        System.out.println("+========================================+");
-        System.out.println("|                                        |");
-        System.out.println("|    Which method do you want to use?    |");
-        System.out.println("|                                        |");
-        System.out.println("|        [1]. String                     |");
-        System.out.println("|        [2]. Index                      |");
-        System.out.println("|                                        |");
-        System.out.println("+----------------------------------------+");
+        title("Delete pokemon");
+        subTitle("Which method do you want to use?");
+        menuOption(1, "String");
+        menuOption(2, "Index");
+        separator();
 
         int chooseMethod = readIntBetween(
                 scanner,
@@ -443,7 +459,7 @@ public class PokemonCRUD {
                 2,
                 "  Choose your method (%d-%d): "
         );
-        System.out.println();
+        separator();
 
         if (chooseMethod == 1) {
 
@@ -455,9 +471,8 @@ public class PokemonCRUD {
                 );
                 try {
                     pokedex.removePokemon(pokemonToRemove);
-                    System.out.print(
-                            " has been removed from list."
-                    );
+
+                    System.out.println("  " + pokemonToRemove + " has been removed from list.");
                     return;
 
                 } catch (InvalidPokemonException e) {

@@ -20,7 +20,7 @@ public class Pokedex {
             }
         }
         throw new InvalidPokemonException(
-                " not found."
+                "  Pokemon '" + choice + "' not found."
         );
     }
 

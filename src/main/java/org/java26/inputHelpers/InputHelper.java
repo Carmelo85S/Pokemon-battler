@@ -28,7 +28,7 @@ public class InputHelper {
             System.out.printf(prompt, min, max);
             try {
                 String userInput = scanner.nextLine().trim();
-                if (userInput.equalsIgnoreCase("quit")) {
+                if (userInput.equalsIgnoreCase("B")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
                 validateInt(userInput, min, max);
@@ -44,7 +44,7 @@ public class InputHelper {
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().trim();
-                if (userInput.equalsIgnoreCase("quit")) {
+                if (userInput.equalsIgnoreCase("B")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
                 validateName(userInput);
@@ -61,7 +61,7 @@ public class InputHelper {
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().trim().toUpperCase(Locale.ROOT);
-                if (userInput.equalsIgnoreCase("quit")) {
+                if (userInput.equalsIgnoreCase("B")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
                 if (userInput.isBlank()) {
@@ -93,7 +93,7 @@ public class InputHelper {
             throw new InvalidPokemonException("  Input must contain at least one letter.");
         }
         if (userInput.length() > 11 || userInput.length() < 2) {
-            throw new InvalidPokemonException(" Input must be between 2 and 11 characters. ");
+            throw new InvalidPokemonException("  Input must be between 2 and 11 characters. ");
         }
 
     }
