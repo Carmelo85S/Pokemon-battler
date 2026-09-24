@@ -4,10 +4,6 @@ import java.util.Locale;
 
 public class Layout {
 
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String RESET = "\u001B[0m";
-
     public static void title(String text) {
         System.out.println();
         String t = text.toUpperCase(Locale.ROOT);
@@ -35,7 +31,4 @@ public class Layout {
         System.out.println("--- Back to main menu by entering: 'B'---\n");
     }
 
-    public static void errorMessage(String text){
-        System.out.println("  " + RED + text + RESET);
-    }
 }
