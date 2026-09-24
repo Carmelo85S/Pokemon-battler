@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class InputHelper {
 
-    public static int readMenuchoice(Scanner scanner, int min, int max, String prompt) {
+    public static int readMenuChoice(Scanner scanner, int min, int max, String prompt) {
         while (true) {
             System.out.println();
             System.out.printf(prompt, min, max);

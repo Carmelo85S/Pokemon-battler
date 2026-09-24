@@ -18,9 +18,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
-            try {
                 showMenu();
-                choice = InputHelper.readMenuchoice(
+                choice = InputHelper.readMenuChoice(
                         scanner,
                         1,
                         9,
@@ -28,10 +27,6 @@ public class Main {
                 );
                 runAction(choice, scanner, pokedex, jsonHandler);
 
-            } catch (QuitPokemonOperationException e) {
-                System.out.println(e.getMessage());
-                break;
-            }
         } while (choice != 9);
         scanner.close();
     }
