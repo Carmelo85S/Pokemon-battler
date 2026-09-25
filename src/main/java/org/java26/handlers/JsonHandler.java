@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class JsonHandler {
-    ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public List<Pokemon> loadPokemon(String filePath) throws PokemonLoadException {
         try {
@@ -38,7 +38,6 @@ public class JsonHandler {
 
     public boolean isValidJSON(final String json) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
             mapper.readTree(json);
             return true;
 

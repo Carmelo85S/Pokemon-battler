@@ -47,7 +47,7 @@ public class InputHelper {
                 if (userInput.equalsIgnoreCase("B")) {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
-                validateName(userInput);
+                validateString(userInput);
                 System.out.print(confirm + userInput);
                 return userInput;
             } catch (InvalidPokemonException e) {
@@ -81,7 +81,7 @@ public class InputHelper {
         }
     }
 
-    public static void validateName(String userInput) {
+    public static void validateString(String userInput) {
 
         if (userInput == null || userInput.isBlank()) {
             throw new InvalidPokemonException("  Input cannot be empty.");

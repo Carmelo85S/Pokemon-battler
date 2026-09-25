@@ -2,7 +2,6 @@ package org.java26.methods;
 
 import org.java26.enums.PokemonType;
 import org.java26.exceptions.InvalidPokemonException;
-import org.java26.exceptions.PokemonNotFoundException;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
@@ -13,8 +12,6 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.*;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
-import static org.java26.inputHelpers.InputHelper.readString;
 import static org.java26.methods.ActionMenu.showPokemons;
 
 public class PokemonCRUD {
@@ -53,15 +50,15 @@ public class PokemonCRUD {
 
             maxHp = readIntBetween(
                     scanner,
-                    1,
-                    100,
+                    10,
+                    1000,
                     "  Enter max HP between %d and %d: "
             );
             System.out.println();
 
             currentHp = readIntBetween(
                     scanner,
-                    1,
+                    10,
                     maxHp,
                     "  Enter current HP between %d and %d: "
             );
@@ -102,7 +99,7 @@ public class PokemonCRUD {
 
                 baseDamage = readIntBetween(
                         scanner,
-                        0,
+                        10,
                         100,
                         "  Enter attack damage. Value between %d and %d: "
                 );
@@ -110,7 +107,7 @@ public class PokemonCRUD {
 
                 accuracy = readIntBetween(
                         scanner,
-                        0,
+                        10,
                         100,
                         "  Enter attack accuracy. Value between %d and %d: "
                 );
@@ -162,11 +159,9 @@ public class PokemonCRUD {
 
             System.out.println("  Pokemon '" + pokemon.name + "' created successfully.");
 
-        } catch (InvalidPokemonException e) {
+        } catch (InvalidPokemonException | QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
 
-        } catch (QuitPokemonOperationException e) {
-            System.out.println("  Operation cancelled.");
         }
     }
 
@@ -241,7 +236,7 @@ public class PokemonCRUD {
                 }
                 case 3 -> {
                     try {
-                        pokemon.maxHp = readIntBetween(scanner, 1, 100, "  Enter new hp value: ");
+                        pokemon.maxHp = readIntBetween(scanner, 10, 1000, "  Enter new hp value: ");
                         if (pokemon.currentHp > pokemon.maxHp) {
                             pokemon.currentHp = pokemon.maxHp;
                         }
@@ -269,14 +264,14 @@ public class PokemonCRUD {
                             System.out.println();
                             int baseDamage = readIntBetween(
                                     scanner,
-                                    1,
+                                    10,
                                     100,
                                     "  Enter attack base damage, value between %d and %d: "
                             );
                             System.out.println();
                             int accuracy = readIntBetween(
                                     scanner,
-                                    1,
+                                    10,
                                     100,
                                     "  Enter attack accuracy, value between %d and %d: "
                             );
@@ -360,14 +355,8 @@ public class PokemonCRUD {
                     }
                 }
                 case 6 -> {
-                    try {
-
-
                         System.out.println("  Back to menu");
                         return;
-                    } catch (QuitPokemonOperationException e) {
-                        System.out.println(e.getMessage());
-                    }
                 }
                 default -> System.out.println("  Invalid choice");
             }
@@ -381,6 +370,7 @@ public class PokemonCRUD {
         }
 
         showPokemons(pokedex);
+        back();
         while (true) {
             String choice = readString(
                     scanner,
@@ -432,7 +422,7 @@ public class PokemonCRUD {
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
             } catch (QuitPokemonOperationException e) {
-                System.out.println("  Operation cancelled.");
+                System.out.println(e.getMessage());
                 return;
             }
         }
@@ -440,12 +430,11 @@ public class PokemonCRUD {
 
     public static void deletePokemon(Scanner scanner, Pokedex pokedex) throws QuitPokemonOperationException {
 
-        showPokemons(pokedex);
-
         if (pokedex.getPokemons().isEmpty()) {
             System.out.println("  There are no Pokemon to delete.");
             return;
         }
+        showPokemons(pokedex);
 
         title("Delete pokemon");
         subTitle("Which method do you want to use?");
@@ -457,7 +446,7 @@ public class PokemonCRUD {
                 scanner,
                 1,
                 2,
-                "  Choose your method (%d-%d): "
+                "  Choose your method (%d - %d): "
         );
         separator();
 
@@ -503,5 +492,4 @@ public class PokemonCRUD {
             }
         }
     }
-
 }

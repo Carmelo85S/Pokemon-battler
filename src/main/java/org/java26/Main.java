@@ -13,8 +13,9 @@ public class Main {
     public static void main(String[] args) throws QuitPokemonOperationException {
         Pokedex pokedex = new Pokedex();
         JsonHandler jsonHandler = new JsonHandler();
-        loadInitialPokemondata(pokedex, jsonHandler);
         printWelcome();
+        loadInitialPokemonData(pokedex, jsonHandler);
+
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {

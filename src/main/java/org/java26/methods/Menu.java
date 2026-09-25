@@ -30,7 +30,7 @@ public class Menu {
         separator();
     }
 
-    public static void loadInitialPokemondata(Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
             Path path = Path.of("pokemon.json");
 
@@ -41,11 +41,18 @@ public class Menu {
 
                 if (jsonHandler.isValidJSON(json)) {
                     listPokemon = jsonHandler.loadPokemon("pokemon.json");
+                    title("Loading..");
+                    subTitle("Data loaded successful");
                 } else {
                     listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+                    title("Loading..");
+                    subTitle("Seed data loaded successfully.");
+
                 }
             } else {
                 listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+                title("Loading..");
+                subTitle("File not found, load seed data");
             }
 
             for (Pokemon p : listPokemon) {

@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.*;
 import static org.java26.methods.PokemonCRUD.insertNewPokemon;
 
@@ -17,20 +18,14 @@ public class ActionMenu {
     public static void showAllPokemon(Scanner scanner, Pokedex pokedex) {
 
         if (pokedex.getPokemons().isEmpty()) {
-            System.out.println();
-            System.out.println("+========================================+");
-            System.out.println("|              POKEDEX EMPTY             |");
-            System.out.println("+========================================+");
-            System.out.println("|                                        |");
-            System.out.println("|        Nothing to show.                |");
-            System.out.println("|                                        |");
-            System.out.println("|        Do you want to create           |");
-            System.out.println("|        a Pokemon?                      |");
-            System.out.println("|                                        |");
-            System.out.println("|        [1]. Yes                        |");
-            System.out.println("|        [2]. No                         |");
-            System.out.println("|                                        |");
-            System.out.println("+----------------------------------------+");
+            separator();
+           title("Pokedex empty");
+           subTitle("Nothing to show. ");
+           subTitle("Do you want to create");
+           subTitle("a pokemon?");
+           menuOption(1, "yes");
+           menuOption(2, "No");
+           separator();
 
             int choice = readIntBetween(
                     scanner,
@@ -52,14 +47,9 @@ public class ActionMenu {
     public static void showPokemons(Pokedex pokedex) {
 
         if (pokedex.getPokemons().isEmpty()) {
-            System.out.println();
-            System.out.println("+========================================+");
-            System.out.println("|              POKEDEX EMPTY             |");
-            System.out.println("+========================================+");
-            System.out.println("|                                        |");
-            System.out.println("|             Nothing to show.           |");
-            System.out.println("|                                        |");
-            System.out.println("+----------------------------------------+");
+            separator();
+            title("Pokedex empty");
+            subTitle("Nothing to show. ");
             return;
         }
 
