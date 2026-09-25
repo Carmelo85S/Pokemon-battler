@@ -48,7 +48,7 @@ public class InputHelper {
                     throw new QuitPokemonOperationException("  Operation cancelled");
                 }
                 validateString(userInput);
-                System.out.print(confirm + userInput);
+                System.out.println(confirm + userInput);
                 return userInput;
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());

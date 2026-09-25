@@ -136,7 +136,7 @@ public class PokemonCRUD {
                 separator();
                 title("Pokemon attacks");
                 subTitle("Do you want to add more attacks?");
-                menuOption(1, "yes");
+                menuOption(1, "Yes");
                 menuOption(2, "No");
                 separator();
 
@@ -144,7 +144,7 @@ public class PokemonCRUD {
                         scanner,
                         1,
                         2,
-                        "  Select an option %d or %d: "
+                        "  Select an option [%d] or [%d]: "
                 );
                 separator();
 
@@ -174,7 +174,7 @@ public class PokemonCRUD {
         showPokemons(pokedex);
         backOption();
 
-        String choice = "";
+        String choice;
         Pokemon pokemon = null;
 
         while (pokemon == null) {

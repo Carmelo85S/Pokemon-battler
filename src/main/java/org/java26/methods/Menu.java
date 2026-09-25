@@ -39,15 +39,24 @@ public class Menu {
             if (Files.exists(path)) {
                 String json = Files.readString(path);
 
-                if (jsonHandler.isValidJSON(json)) {
+                if (!json.isBlank() && jsonHandler.isValidJSON(json)) {
+
                     listPokemon = jsonHandler.loadPokemon("pokemon.json");
-                    title("Loading..");
-                    subTitle("Data loaded successful");
+
+                    if (listPokemon.isEmpty()) {
+                        listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+                        title("Loading..");
+                        subTitle("Seed data loaded successfully.");
+                    } else {
+                        title("Loading..");
+                        subTitle("Data loaded successfully.");
+                    }
+
                 } else {
+
                     listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
                     title("Loading..");
                     subTitle("Seed data loaded successfully.");
-
                 }
             } else {
                 listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
