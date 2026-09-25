@@ -54,7 +54,7 @@ public class Menu {
             } else {
                 listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
                 title("Loading..");
-                subTitle("File not found, load seed data");
+                subTitle("No saved data, load seed data");
             }
 
             for (Pokemon p : listPokemon) {
