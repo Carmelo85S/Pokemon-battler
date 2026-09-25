@@ -26,13 +26,20 @@ Then run the `Main` class.
 When the application starts, the user is shown the main menu:
 
 ![Pokédex Menu](docs/images/menu.png)
-The application load the pokemons from a JSON file. Option 1 from menu displays the Pokémon stored in the Pokédex:
+
+The application load the pokemons from a JSON file.
+
+Option 1 from menu displays the Pokémon stored in the Pokédex:
 
 ![Stored Pokemons](docs/images/available.png)
+
+
 Invalid input is handled without crashing the application:
 
 The application allow to Create, Edit and Delete Pokemons
+
 ![Create Pokemons](docs/images/create.png)
+
 ![Create Pokemons](docs/images/create-two.png)
 
 Every pokemon can have max 4 attacks. Reaching 4 attacks will show a message:
