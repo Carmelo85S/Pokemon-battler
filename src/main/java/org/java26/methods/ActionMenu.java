@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.*;
-import static org.java26.methods.PokemonCRUD.insertNewPokemon;
+import static org.java26.methods.PokemonCRUD.*;
 
 public class ActionMenu {
 
@@ -35,7 +35,7 @@ public class ActionMenu {
             );
             System.out.println();
             if (choice == 1) {
-                insertNewPokemon(scanner, pokedex);
+                createPokemon(scanner, pokedex);
             } else {
                 return;
             }
