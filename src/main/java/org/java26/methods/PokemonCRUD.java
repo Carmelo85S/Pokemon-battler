@@ -370,7 +370,7 @@ public class PokemonCRUD {
         }
 
         showPokemons(pokedex);
-        back();
+        backOption();
         while (true) {
             String choice = readString(
                     scanner,
@@ -435,7 +435,7 @@ public class PokemonCRUD {
             return;
         }
         showPokemons(pokedex);
-        back();
+        backOption();
         title("Delete pokemon");
         subTitle("Which method do you want to use?");
         menuOption(1, "String");

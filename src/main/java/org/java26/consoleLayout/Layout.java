@@ -15,10 +15,6 @@ public class Layout {
         System.out.println("--- " + text + " ---");
     }
 
-    public static void back(){
-        System.out.println("  Back to main menu by entering 'B'.");
-    }
-
     public static void separator() {
         System.out.println();
     }
