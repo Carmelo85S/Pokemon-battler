@@ -15,7 +15,7 @@ import static org.java26.inputHelpers.InputHelper.*;
 import static org.java26.methods.ActionMenu.showPokemons;
 
 public class PokemonCRUD {
-    public static void insertNewPokemon(Scanner scanner, Pokedex pokedex) {
+    public static void createPokemon(Scanner scanner, Pokedex pokedex) {
         // Pokemon obj
         String name;
         PokemonType type;
@@ -165,7 +165,7 @@ public class PokemonCRUD {
         }
     }
 
-    public static void customizePokemon(Scanner scanner, Pokedex pokedex) {
+    public static void updatePokemon(Scanner scanner, Pokedex pokedex) {
         if (pokedex.getPokemons().isEmpty()) {
             System.out.println("  No pokemons listed");
             return;
@@ -355,8 +355,8 @@ public class PokemonCRUD {
                     }
                 }
                 case 6 -> {
-                        System.out.println("  Back to menu");
-                        return;
+                    System.out.println("  Back to menu");
+                    return;
                 }
                 default -> System.out.println("  Invalid choice");
             }
@@ -435,7 +435,7 @@ public class PokemonCRUD {
             return;
         }
         showPokemons(pokedex);
-
+        back();
         title("Delete pokemon");
         subTitle("Which method do you want to use?");
         menuOption(1, "String");

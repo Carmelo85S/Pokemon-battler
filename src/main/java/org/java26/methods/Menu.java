@@ -73,7 +73,6 @@ public class Menu {
         }
     }
 
-
     public static void showMenu() {
         title("Pokedex");
         menuOption(1, "Show all Pokemon");
@@ -84,7 +83,7 @@ public class Menu {
         menuOption(6, "Load from file");
         menuOption(7, "Reset to seed data");
         menuOption(8, "Pokemon info");
-        menuOption(9, "Exit");
+        menuOption(9, "Exit & Save");
 
     }
 
@@ -92,8 +91,8 @@ public class Menu {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
-                case 2 -> insertNewPokemon(scanner, pokedex);
-                case 3 -> customizePokemon(scanner, pokedex);
+                case 2 -> createPokemon(scanner, pokedex);
+                case 3 -> updatePokemon(scanner, pokedex);
                 case 4 -> deletePokemon(scanner, pokedex);
                 case 5, 9 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler);
