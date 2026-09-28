@@ -24,13 +24,13 @@ public class Main {
                 showMenu();
                 choice = InputHelper.readMenuChoice(
                         scanner,
-                        1,
-                        9,
+                        0,
+                        10,
                         "  Select an option %n  > "
                 );
                 runAction(choice, scanner, pokedex, jsonHandler);
 
-        } while (choice != 9);
+        } while (choice != 0);
         scanner.close();
     }
 }

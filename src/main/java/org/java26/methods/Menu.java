@@ -36,7 +36,9 @@ public class Menu {
         menuOption(6, "Load from file");
         menuOption(7, "Reset to seed data");
         menuOption(8, "Pokemon info");
-        menuOption(9, "Exit & Save");
+        menuOption(9, "Start battle");
+        menuOption(10, "Show stats");
+        menuOption(0, "Exit & Save");
 
     }
 
@@ -47,10 +49,12 @@ public class Menu {
                 case 2 -> createPokemon(scanner, pokedex);
                 case 3 -> updatePokemon(scanner, pokedex);
                 case 4 -> deletePokemon(scanner, pokedex);
-                case 5, 9 -> saveToFile(pokedex, jsonHandler);
+                case 5, 0 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler);
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
+                case 9 -> System.out.println("Start battle");
+                case 10 -> System.out.println("Show stats");
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {
