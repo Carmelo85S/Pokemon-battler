@@ -56,12 +56,8 @@ public class PokemonCreator {
             );
             System.out.println();
 
-            currentHp = readIntBetween(
-                    scanner,
-                    10,
-                    maxHp,
-                    "  Enter current HP between %d and %d: "
-            );
+            currentHp = maxHp;
+
             System.out.println();
 
             int answer = readIntBetween(
@@ -90,7 +86,7 @@ public class PokemonCreator {
 
             while (attackCount < 4 && addAttack) {
 
-               Attack attack = AttackCreator.createAttack(scanner, type);
+                Attack attack = AttackCreator.createAttack(scanner, type);
 
                 pokemon.addAttack(attack);
 
