@@ -26,9 +26,6 @@ public class PokemonCreator {
         int currentHp;
 
         // Attack obj
-        String attackName;
-        int baseDamage;
-        int accuracy;
         int attackCount = 0;
 
         separator();
@@ -93,41 +90,9 @@ public class PokemonCreator {
 
             while (attackCount < 4 && addAttack) {
 
-                attackName = readString(
-                        scanner,
-                        "  Enter attack name: ",
-                        "  Your attack name is "
-                );
-                System.out.println();
-
-                baseDamage = readIntBetween(
-                        scanner,
-                        10,
-                        100,
-                        "  Enter attack damage. Value between %d and %d: "
-                );
-                System.out.println();
-
-                accuracy = readIntBetween(
-                        scanner,
-                        10,
-                        100,
-                        "  Enter attack accuracy. Value between %d and %d: "
-                );
-                System.out.println();
-
-                Attack attack = new Attack(
-                        attackName,
-                        baseDamage,
-                        accuracy,
-                        type
-                );
+               Attack attack = AttackCreator.createAttack(scanner, type);
 
                 pokemon.addAttack(attack);
-
-                System.out.println(
-                        "  Attack '" + attackName + "' added successfully."
-                );
 
                 attackCount++;
 
@@ -167,5 +132,4 @@ public class PokemonCreator {
 
         }
     }
-
 }
