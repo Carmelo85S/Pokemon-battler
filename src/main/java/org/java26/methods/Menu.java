@@ -13,8 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
-import static org.java26.methods.ActionMenu.*;
-import static org.java26.methods.PokemonCRUD.*;
+import static org.java26.methods.PokemonFileService.*;
+import static org.java26.methods.PokemonCreator.createPokemon;
+import static org.java26.methods.PokemonEditor.*;
+import static org.java26.methods.PokemonViewer.*;
 
 public class Menu {
 
@@ -28,42 +30,6 @@ public class Menu {
         subTitle("and keep your Pokedex organized");
         subTitle("by Carmelo Salis.");
         separator();
-    }
-
-    public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler) {
-        try {
-            Path path = Path.of("pokemon.json");
-            List<Pokemon> listPokemon;
-            if (Files.exists(path)) {
-                String json = Files.readString(path);
-                if (!json.isBlank() && jsonHandler.isValidJSON(json)) {
-                    listPokemon = jsonHandler.loadPokemon("pokemon.json");
-                    if (listPokemon.isEmpty()) {
-                        listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-                        title("Loading..");
-                        subTitle("Seed data loaded successfully.");
-                    } else {
-                        title("Loading..");
-                        subTitle("Data loaded successfully.");
-                    }
-                } else {
-                    listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-                    title("Loading..");
-                    subTitle("Seed data loaded successfully.");
-                }
-            } else {
-                listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-                title("Loading..");
-                subTitle("No saved data, load seed data");
-            }
-
-            for (Pokemon p : listPokemon) {
-                pokedex.addPokemon(p);
-            }
-
-        } catch (PokemonLoadException | IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public static void showMenu() {

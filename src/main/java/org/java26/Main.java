@@ -8,6 +8,7 @@ import org.java26.inputHelpers.InputHelper;
 import java.util.Scanner;
 
 import static org.java26.methods.Menu.*;
+import static org.java26.methods.PokemonFileService.loadInitialPokemonData;
 
 public class Main {
     public static void main(String[] args) throws QuitPokemonOperationException {

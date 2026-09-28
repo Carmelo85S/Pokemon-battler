@@ -4,6 +4,7 @@ import org.java26.exceptions.*;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -11,9 +12,10 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.*;
-import static org.java26.methods.PokemonCRUD.*;
+import static org.java26.methods.PokemonCreator.createPokemon;
+import static org.java26.methods.PokemonViewer.showPokemons;
 
-public class ActionMenu {
+public class PokemonFileService {
 
     public static void showAllPokemon(Scanner scanner, Pokedex pokedex) {
 
@@ -42,41 +44,6 @@ public class ActionMenu {
         }
 
         showPokemons(pokedex);
-    }
-
-    public static void showPokemons(Pokedex pokedex) {
-
-        if (pokedex.getPokemons().isEmpty()) {
-            separator();
-            title("Pokedex empty");
-            subTitle("Nothing to show. ");
-            return;
-        }
-
-        System.out.println();
-        System.out.println("+----------------+----------------+");
-        System.out.println("|        AVAILABLE POKEMONS       |");
-        System.out.println("+----------------+----------------+");
-
-        System.out.printf(
-                "| %-14s | %-14s |%n",
-                "Name", "Type"
-        );
-
-        System.out.println(
-                "+----------------+----------------+"
-        );
-        for (Pokemon p : pokedex.getPokemons()) {
-            System.out.printf(
-                    "| %-14s | %-14s |%n",
-                    p.name,
-                    p.type
-            );
-        }
-        System.out.println(
-                "+----------------+----------------+"
-        );
-
     }
 
     public static void saveToFile(Pokedex pokedex, JsonHandler jsonHandler) {
@@ -109,6 +76,42 @@ public class ActionMenu {
         }
     }
 
+    public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler) {
+        try {
+            Path path = Path.of("pokemon.json");
+            List<Pokemon> listPokemon;
+            if (Files.exists(path)) {
+                String json = Files.readString(path);
+                if (!json.isBlank() && jsonHandler.isValidJSON(json)) {
+                    listPokemon = jsonHandler.loadPokemon("pokemon.json");
+                    if (listPokemon.isEmpty()) {
+                        listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+                        title("Loading..");
+                        subTitle("Seed data loaded successfully.");
+                    } else {
+                        title("Loading..");
+                        subTitle("Data loaded successfully.");
+                    }
+                } else {
+                    listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+                    title("Loading..");
+                    subTitle("Seed data loaded successfully.");
+                }
+            } else {
+                listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+                title("Loading..");
+                subTitle("No saved data, load seed data");
+            }
+
+            for (Pokemon p : listPokemon) {
+                pokedex.addPokemon(p);
+            }
+
+        } catch (PokemonLoadException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
             List<Pokemon> pokemons = jsonHandler.loadPokemon("seed-pokemons.json");
@@ -128,6 +131,5 @@ public class ActionMenu {
             System.out.println(e.getMessage());
         }
     }
-
 }
 

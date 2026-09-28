@@ -1,0 +1,117 @@
+package org.java26.methods;
+
+import org.java26.exceptions.InvalidPokemonException;
+import org.java26.exceptions.QuitPokemonOperationException;
+import org.java26.models.Attack;
+import org.java26.models.Pokedex;
+import org.java26.models.Pokemon;
+
+import java.util.Scanner;
+
+import static org.java26.consoleLayout.Layout.*;
+import static org.java26.consoleLayout.Layout.separator;
+import static org.java26.consoleLayout.Layout.subTitle;
+import static org.java26.inputHelpers.InputHelper.readString;
+
+public class PokemonViewer {
+    public static void getPokemonInfo(Scanner scanner, Pokedex pokedex) {
+        if (pokedex.getPokemons().isEmpty()) {
+            System.out.println("  No pokemons listed");
+            return;
+        }
+
+        showPokemons(pokedex);
+        backOption();
+        while (true) {
+            String choice = readString(
+                    scanner,
+                    "  Retrieve pokemon info: ",
+                    "  Pokemon "
+            );
+            System.out.println();
+            try {
+                Pokemon pokemon = pokedex.getPokemon(choice);
+                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.printf(
+                        "| %-14s | %-14s | %-14s | %-14s |%n",
+                        "Name", "Type", "Max HP", "Current HP"
+                );
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+                System.out.printf(
+                        "| %-14s | %-14s | %-14d | %-14d |%n",
+                        pokemon.name,
+                        pokemon.type,
+                        pokemon.maxHp,
+                        pokemon.currentHp
+                );
+
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+                // Attack information
+                System.out.println();
+                System.out.println("  ATTACKS");
+                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.printf(
+                        "| %-14s | %-14s | %-14s | %-14s |%n",
+                        "Name", "Damage", "Accuracy", "Type"
+                );
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+                for (Attack attack : pokemon.attacks) {
+                    System.out.printf(
+                            "| %-14s | %-14d | %-14d | %-14s |%n",
+                            attack.name,
+                            attack.baseDamage,
+                            attack.accuracy,
+                            attack.type
+                    );
+                }
+
+                System.out.println("+----------------+----------------+----------------+----------------+");
+
+            } catch (InvalidPokemonException e) {
+                System.out.println(e.getMessage());
+            } catch (QuitPokemonOperationException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+        }
+    }
+
+    public static void showPokemons(Pokedex pokedex) {
+
+        if (pokedex.getPokemons().isEmpty()) {
+            separator();
+            title("Pokedex empty");
+            subTitle("Nothing to show. ");
+            return;
+        }
+
+        System.out.println();
+        System.out.println("+----------------+----------------+");
+        System.out.println("|        AVAILABLE POKEMONS       |");
+        System.out.println("+----------------+----------------+");
+
+        System.out.printf(
+                "| %-14s | %-14s |%n",
+                "Name", "Type"
+        );
+
+        System.out.println(
+                "+----------------+----------------+"
+        );
+        for (Pokemon p : pokedex.getPokemons()) {
+            System.out.printf(
+                    "| %-14s | %-14s |%n",
+                    p.name,
+                    p.type
+            );
+        }
+        System.out.println(
+                "+----------------+----------------+"
+        );
+
+    }
+
+}
