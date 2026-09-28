@@ -165,7 +165,7 @@ public class PokemonEditor {
                     System.out.println("  Current attacks:");
 
                     for (Attack attack : pokemon.getAttacks()) {
-                        System.out.println("  - " + attack.getAttackName());
+                        System.out.println("  - " + attack.getName());
                     }
 
                     while (true) {
@@ -181,7 +181,7 @@ public class PokemonEditor {
                             boolean attackRemoved = false;
 
                             for (int i = 0; i < pokemon.getAttacks().size(); i++) {
-                                if (pokemon.getAttacks().get(i).getAttackName().equalsIgnoreCase(attackToRemove)) {
+                                if (pokemon.getAttacks().get(i).getName().equalsIgnoreCase(attackToRemove)) {
                                     pokemon.getAttacks().remove(i);
                                     System.out.println(
                                             "  Attack '" + attackToRemove + "' removed."

@@ -13,7 +13,7 @@ public class Pokemon {
     private PokemonType type;
     private int maxHp;
     private int currentHp;
-    final ArrayList<Attack> attacks = new ArrayList<>();
+    private ArrayList<Attack> attacks = new ArrayList<>();
 
     public Pokemon() {
     }
@@ -36,6 +36,16 @@ public class Pokemon {
 
     public List<Attack> getAttacks(){
         return attacks;
+    }
+
+    public void setAttacks(List<Attack> attacks) {
+        if (attacks == null || attacks.size() > MAX_ATTACKS) {
+            throw new IllegalArgumentException(
+                    "  Pokemon cannot have more than " + MAX_ATTACKS + " attacks."
+            );
+        }
+
+        this.attacks = new ArrayList<>(attacks);
     }
 
     public String getName() {

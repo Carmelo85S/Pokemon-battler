@@ -22,7 +22,9 @@ public class JsonHandler {
                     }
             );
         } catch (IOException e) {
+            e.printStackTrace();
             throw new PokemonLoadException(
+
                     "  Could not load Pokemon from file " + filePath);
         }
     }

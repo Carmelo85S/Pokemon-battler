@@ -8,21 +8,21 @@ public class Attack {
     private int accuracy;
     private PokemonType type;
 
-    public Attack() {
+    private Attack() {
     }
 
     public Attack(String name, int baseDamage, int accuracy, PokemonType type) {
-        setAttackName(name);
+        setName(name);
         setBaseDamage(baseDamage);
         setAccuracy(accuracy);
         setAttackType(type);
     }
 
-    public String getAttackName() {
+    public String getName() {
         return name;
     }
 
-    public void setAttackName(String name) {
+    public void setName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(
                     "  Invalid input. Field can't be empty"
@@ -57,7 +57,7 @@ public class Attack {
         this.accuracy = accuracy;
     }
 
-    public PokemonType getAttackType() {
+    public PokemonType getType() {
         return type;
     }
 

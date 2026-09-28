@@ -61,10 +61,10 @@ public class PokemonViewer {
                 for (Attack attack : pokemon.getAttacks()) {
                     System.out.printf(
                             "| %-14s | %-14d | %-14d | %-14s |%n",
-                            attack.getAttackName(),
+                            attack.getName(),
                             attack.getBaseDamage(),
                             attack.getAccuracy(),
-                            attack.getAttackType()
+                            attack.getType()
                     );
                 }
 
