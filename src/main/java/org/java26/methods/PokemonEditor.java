@@ -46,7 +46,7 @@ public class PokemonEditor {
         }
 
         while (true) {
-            title("CUSTOMIZE " + pokemon.name.toUpperCase(Locale.ROOT));
+            title("CUSTOMIZE " + pokemon.getName().toUpperCase(Locale.ROOT));
             menuOption(1, "Change name");
             menuOption(2, "Change type");
             menuOption(3, "Change HP");
@@ -69,7 +69,7 @@ public class PokemonEditor {
             switch (chooseOperation) {
                 case 1 -> {
                     try {
-                        pokemon.name = readString(scanner, "  Enter new name: ", "  New name is ");
+                        pokemon.setName(readString(scanner, "  Enter new name: ", "  New name is "));
                         System.out.println();
 
                     } catch (QuitPokemonOperationException e) {
@@ -79,7 +79,7 @@ public class PokemonEditor {
 
                 case 2 -> {
                     try {
-                        pokemon.type = readType(scanner, "  Enter new type: ");
+                        pokemon.setType(readType(scanner, "  Enter new type: "));
                         System.out.println();
                     } catch (QuitPokemonOperationException e) {
                         System.out.println(e.getMessage());
@@ -87,11 +87,13 @@ public class PokemonEditor {
                 }
                 case 3 -> {
                     try {
-                        pokemon.maxHp = readIntBetween(scanner, 10, 1000, "  Enter new hp value: ");
-                        if (pokemon.currentHp > pokemon.maxHp) {
-                            pokemon.currentHp = pokemon.maxHp;
+                        pokemon.setMaxHp(readIntBetween(scanner, 10, 1000, "  Enter new hp value: "));
+                        if (pokemon.getCurrentHp() > pokemon.getMaxHp()) {
+                            pokemon.setCurrentHp(pokemon.getMaxHp());
                         }
+
                         System.out.println();
+
                     } catch (QuitPokemonOperationException e) {
                         System.out.println(e.getMessage());
                     }
@@ -99,14 +101,13 @@ public class PokemonEditor {
                 case 4 -> {
                     try {
                         System.out.println("  Current attacks:");
-                        for (Attack attack : pokemon.attacks) {
-                            System.out.println("  - " + attack.name);
-                        }
-                        if (pokemon.attacks.size() == 4) {
+                        System.out.println(pokemon);
+
+                        if(pokemon.hasMaxAttacks()){
                             System.out.println("  Attack slots are already full.");
                             break;
                         }
-                        while (pokemon.attacks.size() < 4) {
+                        while (!pokemon.hasMaxAttacks()) {
                             String attackName = readString(
                                     scanner,
                                     "  Enter attack name: ",
@@ -127,18 +128,19 @@ public class PokemonEditor {
                                     "  Enter attack accuracy, value between %d and %d: "
                             );
                             System.out.println();
+
                             Attack newAttack = new Attack(
                                     attackName,
                                     baseDamage,
                                     accuracy,
-                                    pokemon.type
+                                    pokemon.getType()
                             );
                             pokemon.addAttack(newAttack);
 
                             System.out.println(
                                     "  Attack '" + attackName + "' added successfully."
                             );
-                            if (pokemon.attacks.size() == 4) {
+                            if (pokemon.hasMaxAttacks()) {
                                 System.out.println("  Attack slots filled");
                                 break;
                             }
@@ -162,8 +164,8 @@ public class PokemonEditor {
                 case 5 -> {
                     System.out.println("  Current attacks:");
 
-                    for (Attack attack : pokemon.attacks) {
-                        System.out.println("  - " + attack.name);
+                    for (Attack attack : pokemon.getAttacks()) {
+                        System.out.println("  - " + attack.getAttackName());
                     }
 
                     while (true) {
@@ -178,9 +180,9 @@ public class PokemonEditor {
 
                             boolean attackRemoved = false;
 
-                            for (int i = 0; i < pokemon.attacks.size(); i++) {
-                                if (pokemon.attacks.get(i).name.equalsIgnoreCase(attackToRemove)) {
-                                    pokemon.attacks.remove(i);
+                            for (int i = 0; i < pokemon.getAttacks().size(); i++) {
+                                if (pokemon.getAttacks().get(i).getAttackName().equalsIgnoreCase(attackToRemove)) {
+                                    pokemon.getAttacks().remove(i);
                                     System.out.println(
                                             "  Attack '" + attackToRemove + "' removed."
                                     );

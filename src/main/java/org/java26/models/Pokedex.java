@@ -15,7 +15,7 @@ public class Pokedex {
 
     public Pokemon getPokemon(String choice) {
         for (Pokemon pokemon : pokemons) {
-            if (pokemon.name.equalsIgnoreCase(choice)) {
+            if (pokemon.getName().equalsIgnoreCase(choice)) {
                 return pokemon;
             }
         }

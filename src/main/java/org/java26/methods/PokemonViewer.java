@@ -40,10 +40,10 @@ public class PokemonViewer {
 
                 System.out.printf(
                         "| %-14s | %-14s | %-14d | %-14d |%n",
-                        pokemon.name,
-                        pokemon.type,
-                        pokemon.maxHp,
-                        pokemon.currentHp
+                        pokemon.getName(),
+                        pokemon.getType(),
+                        pokemon.getMaxHp(),
+                        pokemon.getCurrentHp()
                 );
 
                 System.out.println("+----------------+----------------+----------------+----------------+");
@@ -58,13 +58,13 @@ public class PokemonViewer {
                 );
                 System.out.println("+----------------+----------------+----------------+----------------+");
 
-                for (Attack attack : pokemon.attacks) {
+                for (Attack attack : pokemon.getAttacks()) {
                     System.out.printf(
                             "| %-14s | %-14d | %-14d | %-14s |%n",
-                            attack.name,
-                            attack.baseDamage,
-                            attack.accuracy,
-                            attack.type
+                            attack.getAttackName(),
+                            attack.getBaseDamage(),
+                            attack.getAccuracy(),
+                            attack.getAttackType()
                     );
                 }
 
@@ -104,8 +104,8 @@ public class PokemonViewer {
         for (Pokemon p : pokedex.getPokemons()) {
             System.out.printf(
                     "| %-14s | %-14s |%n",
-                    p.name,
-                    p.type
+                    p.getName(),
+                    p.getType()
             );
         }
         System.out.println(

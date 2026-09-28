@@ -4,6 +4,7 @@ import org.java26.enums.PokemonType;
 import org.java26.exceptions.InvalidPokemonException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pokemon {
 
@@ -12,7 +13,7 @@ public class Pokemon {
     private PokemonType type;
     private int maxHp;
     private int currentHp;
-    private ArrayList<Attack> attacks = new ArrayList<>();
+    final ArrayList<Attack> attacks = new ArrayList<>();
 
     public Pokemon() {
     }
@@ -31,6 +32,10 @@ public class Pokemon {
             );
         }
         attacks.add(attack);
+    }
+
+    public List<Attack> getAttacks(){
+        return attacks;
     }
 
     public String getName() {
@@ -84,5 +89,16 @@ public class Pokemon {
 
     public void setType(PokemonType type) {
         this.type = type;
+    }
+
+    public boolean hasMaxAttacks(){
+        return attacks.size() >= MAX_ATTACKS;
+    }
+
+    @Override
+    public String toString(){
+        return "Pokemon: " + name +
+                " | Type: " + type +
+                " | HP: " + currentHp + " / " + maxHp;
     }
 }

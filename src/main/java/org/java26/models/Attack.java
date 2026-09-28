@@ -3,19 +3,70 @@ package org.java26.models;
 import org.java26.enums.PokemonType;
 
 public class Attack {
-    public String name;
-    public int baseDamage;
-    public int accuracy;
-    public PokemonType type;
+    private String name;
+    private int baseDamage;
+    private int accuracy;
+    private PokemonType type;
 
-    public Attack(){}
-
-    public Attack(String name, int baseDamage, int accuracy, PokemonType type){
-        this.name = name;
-        this.baseDamage = baseDamage;
-        this.accuracy = accuracy;
-        this.type = type;
+    public Attack() {
     }
 
+    public Attack(String name, int baseDamage, int accuracy, PokemonType type) {
+        setAttackName(name);
+        setBaseDamage(baseDamage);
+        setAccuracy(accuracy);
+        setAttackType(type);
+    }
 
+    public String getAttackName() {
+        return name;
+    }
+
+    public void setAttackName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(
+                    "  Invalid input. Field can't be empty"
+            );
+        }
+        this.name = name;
+    }
+
+    public int getBaseDamage() {
+        return baseDamage;
+    }
+
+    public void setBaseDamage(int baseDamage) {
+        if (baseDamage < 10 || baseDamage > 100) {
+            throw new IllegalArgumentException(
+                    "  Base damage must be between 10 and 1000"
+            );
+        }
+        this.baseDamage = baseDamage;
+    }
+
+    public int getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(int accuracy) {
+        if (accuracy < 10 || accuracy > 100) {
+            throw new IllegalArgumentException(
+                    "  Accuracy must be between 10 and 1000"
+            );
+        }
+        this.accuracy = accuracy;
+    }
+
+    public PokemonType getAttackType() {
+        return type;
+    }
+
+    public void setAttackType(PokemonType type) {
+        if (type == null) {
+            throw new IllegalArgumentException(
+                    "  Pokemon type cannot be null"
+            );
+        }
+        this.type = type;
+    }
 }
