@@ -17,11 +17,11 @@ public class Pokemon {
     public Pokemon() {
     }
 
-    public Pokemon(String name, PokemonType type, int maxHp, int currentHp) {
+    public Pokemon(String name, PokemonType type, int maxHp) {
         setName(name);
         setType(type);
         setMaxHp(maxHp);
-        setCurrentHp(currentHp);
+        setCurrentHp(maxHp);
     }
 
     public void addAttack(Attack attack) {

@@ -23,7 +23,6 @@ public class PokemonCreator {
         String name;
         PokemonType type;
         int maxHp;
-        int currentHp;
 
         // Attack obj
         int attackCount = 0;
@@ -56,10 +55,6 @@ public class PokemonCreator {
             );
             System.out.println();
 
-            currentHp = maxHp;
-
-            System.out.println();
-
             int answer = readIntBetween(
                     scanner,
                     1,
@@ -74,13 +69,9 @@ public class PokemonCreator {
                 return;
             }
 
-            // Create Pokemon
-            Pokemon pokemon = new Pokemon(
-                    name,
-                    type,
-                    maxHp,
-                    currentHp
-            );
+
+            Pokemon pokemon = new Pokemon(name, type, maxHp);
+
 
             boolean addAttack = true;
 
@@ -121,7 +112,7 @@ public class PokemonCreator {
             // Add Pokemon only after it has at least one attack
             pokedex.addPokemon(pokemon);
 
-            System.out.println("  Pokemon '" + pokemon.name + "' created successfully.");
+            System.out.println("  Pokemon '" + pokemon.getName() + "' created successfully.");
 
         } catch (InvalidPokemonException | QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
