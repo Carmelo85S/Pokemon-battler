@@ -52,11 +52,6 @@ public class Pokemon {
     }
 
     public PokemonType getType() {
-        if(type == null){
-            throw new IllegalArgumentException(
-                    "  Pokemon type cannot be null"
-            );
-        }
         return type;
     }
 
@@ -88,6 +83,11 @@ public class Pokemon {
     }
 
     public void setType(PokemonType type) {
+        if(type == null){
+            throw new IllegalArgumentException(
+                    "  Pokemon type cannot be null"
+            );
+        }
         this.type = type;
     }
 
