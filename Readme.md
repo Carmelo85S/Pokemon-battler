@@ -1,49 +1,107 @@
-# Pokédex
+# Pokémon Battler
 
-A Java console application for managing a collection of Pokémon.
+A Java console application where the player can manage Pokémon and battle against computer-controlled opponents.
 
-The application allows the user to view, create, edit and delete Pokémon, as well as save and load data from a file. The application also includes input validation to prevent crashes caused by invalid user input.
+This project is an extension of my previous **Pokédex CRUD application**. 
+The original functionality has been refactored and extended with a turn-based battle system.
+
+## Features
+
+### Pokédex
+
+* Create Pokémon
+* View Pokémon
+* Update Pokémon
+* Delete Pokémon
+* Add and remove attacks
+* Save and load Pokémon data
+* Input validation and error handling
+
+### Battle System
+
+* Choose a Pokémon to battle with
+* Fight against a random wild Pokémon
+* Turn-based battles
+* Choose attacks
+* CPU chooses attacks randomly
+* Accuracy affects whether attacks hit
+* Damage includes a random factor
+* Type effectiveness
+* Critical hits
+* Battle log
+* Win/loss result
+
+## Damage Formula
+
+```text
+Damage = Base Damage × Type Effectiveness × Random Factor
+```
+
+Critical hits can multiply the final damage.
+
+## Type Effectiveness
+
+| Attack   | Against | Effect |
+| -------- | ------- | -----: |
+| Fire     | Grass   |     2× |
+| Water    | Fire    |     2× |
+| Grass    | Water   |     2× |
+| Electric | Water   |     2× |
+| Fire     | Water   |   0.5× |
+| Water    | Grass   |   0.5× |
+| Grass    | Fire    |   0.5× |
+| Normal   | Any     |     1× |
+
+## Persistence
+
+Pokémon and battle statistics are saved between sessions using **JSON and Jackson**.
+
+## OOP
+
+The project uses object-oriented programming with:
+
+* Classes and objects
+* Encapsulation
+* Getters and setters
+* Enums
+* Collections
+* Exceptions
+* Inheritance / polymorphism where appropriate
+
+The project has been refactored from the previous Pokédex to improve separation of responsibilities and encapsulation.
+
+## Technologies
+
+* Java 21
+* Maven
+* Jackson
+* JUnit 5
+* IntelliJ IDEA
+* Git / GitHub
 
 ## How to Run
 
-### IntelliJ IDEA
+Clone the repository and open the project in IntelliJ IDEA.
 
-1. Clone the repository.
-2. Open the project in IntelliJ IDEA.
-3. Make sure Java 21 is configured.
-4. Run `Main.java`.
+Make sure Java 21 is installed, then run the `Main` class.
 
-### Maven
-From the project root, run:
+Alternatively:
 
 ```bash
 mvn clean compile
 ```
 
-Then run the `Main` class.
+## VG Requirements
 
-## Example Usage
-When the application starts, the user is shown the main menu:
+* [x] Type effectiveness
+* [x] JSON persistence
+* [x] Critical hits
+* [x] Persistent battle statistics
+* [ ] Unit tests
 
-![Pokédex Menu](docs/images/menu.png)
+## Course
 
-The application load the pokemons from a JSON file.
+**Programmering med Java, grund — Inlämning 2**
 
-Option 1 from menu displays the Pokémon stored in the Pokédex:
-
-![Stored Pokemons](docs/images/available.png)
-
-
-Invalid input is handled without crashing the application:
-
-The application allow to Create, Edit and Delete Pokemons
-
-![Create Pokemons](docs/images/create.png)
-
-![Create Pokemons](docs/images/create-two.png)
-
-Every pokemon can have max 4 attacks. Reaching 4 attacks will show a message:
-![Slot filled](docs/images/saved.png)
-
-Option 8 show all pokemons with respective attacks
-![Pokemons](docs/images/info.png)
+**Project:** Pokémon Battler
+**Student:** Carmelo Salis
