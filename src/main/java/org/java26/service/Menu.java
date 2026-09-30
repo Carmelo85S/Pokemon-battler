@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.repository.SaveLoadPokemons.*;
+import static org.java26.service.BattleMenu.battleMenu;
 import static org.java26.service.PokemonCreator.createPokemon;
 import static org.java26.service.PokemonEditor.deletePokemon;
 import static org.java26.service.PokemonEditor.updatePokemon;
@@ -55,7 +56,7 @@ public class Menu {
                 case 6 -> loadFromFile(pokedex, jsonHandler);
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
-                case 9 -> System.out.println("Start battle");
+                case 9 -> battleMenu(scanner, pokedex, jsonHandler);
                 case 10 -> System.out.println("Show stats");
                 default -> System.out.println("  Invalid input");
             }
