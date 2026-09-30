@@ -1,6 +1,6 @@
 package org.java26.inputHelpers;
 
-import org.java26.enums.PokemonType;
+import org.java26.models.PokemonType;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
 

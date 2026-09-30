@@ -1,4 +1,4 @@
-package org.java26.methods;
+package org.java26.service;
 
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.handlers.JsonHandler;
@@ -7,10 +7,12 @@ import org.java26.models.Pokedex;
 import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
-import static org.java26.methods.PokemonFileService.*;
-import static org.java26.methods.PokemonCreator.createPokemon;
-import static org.java26.methods.PokemonEditor.*;
-import static org.java26.methods.PokemonViewer.*;
+import static org.java26.repository.SaveLoadPokemons.*;
+import static org.java26.service.PokemonCreator.createPokemon;
+import static org.java26.service.PokemonEditor.deletePokemon;
+import static org.java26.service.PokemonEditor.updatePokemon;
+import static org.java26.service.PokemonViewer.getPokemonInfo;
+import static org.java26.service.PokemonViewer.showAllPokemon;
 
 public class Menu {
 

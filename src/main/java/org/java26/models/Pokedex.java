@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Pokedex {
 
-
     private ArrayList<Pokemon> pokemons = new ArrayList<>();
 
     public void addPokemon(Pokemon pokemon) {
@@ -38,6 +37,7 @@ public class Pokedex {
 
         pokemons.remove(index);
     }
+
     public void removeAllPokemon() {
         pokemons.clear();
     }

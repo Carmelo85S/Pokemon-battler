@@ -1,6 +1,5 @@
 package org.java26.models;
 
-import org.java26.enums.PokemonType;
 import org.java26.exceptions.InvalidPokemonException;
 
 import java.util.ArrayList;

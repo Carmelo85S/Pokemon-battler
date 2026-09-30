@@ -1,4 +1,4 @@
-package org.java26.methods;
+package org.java26.service;
 
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
@@ -11,7 +11,9 @@ import java.util.Scanner;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.consoleLayout.Layout.separator;
 import static org.java26.consoleLayout.Layout.subTitle;
+import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.inputHelpers.InputHelper.readString;
+import static org.java26.service.PokemonCreator.createPokemon;
 
 public class PokemonViewer {
     public static void getPokemonInfo(Scanner scanner, Pokedex pokedex) {
@@ -113,5 +115,35 @@ public class PokemonViewer {
         );
 
     }
+
+    public static void showAllPokemon(Scanner scanner, Pokedex pokedex) {
+
+        if (pokedex.getPokemons().isEmpty()) {
+            separator();
+            title("Pokedex empty");
+            subTitle("Nothing to show. ");
+            subTitle("Do you want to create");
+            subTitle("a pokemon?");
+            menuOption(1, "yes");
+            menuOption(2, "No");
+            separator();
+
+            int choice = readIntBetween(
+                    scanner,
+                    1,
+                    2,
+                    "  Select an option %d or %d: "
+            );
+            System.out.println();
+            if (choice == 1) {
+                createPokemon(scanner, pokedex);
+            } else {
+                return;
+            }
+        }
+
+        showPokemons(pokedex);
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package org.java26.enums;
+package org.java26.models;
 
 public enum PokemonType {
     GRASS,

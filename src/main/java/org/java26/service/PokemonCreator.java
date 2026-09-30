@@ -1,6 +1,6 @@
-package org.java26.methods;
+package org.java26.service;
 
-import org.java26.enums.PokemonType;
+import org.java26.models.PokemonType;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;

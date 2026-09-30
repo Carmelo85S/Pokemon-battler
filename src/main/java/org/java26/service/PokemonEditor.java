@@ -1,4 +1,4 @@
-package org.java26.methods;
+package org.java26.service;
 
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
@@ -13,7 +13,7 @@ import static org.java26.consoleLayout.Layout.*;
 import static org.java26.consoleLayout.Layout.menuOption;
 import static org.java26.consoleLayout.Layout.separator;
 import static org.java26.inputHelpers.InputHelper.*;
-import static org.java26.methods.PokemonViewer.showPokemons;
+import static org.java26.service.PokemonViewer.showPokemons;
 
 public class PokemonEditor {
     public static void updatePokemon(Scanner scanner, Pokedex pokedex) {

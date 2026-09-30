@@ -1,4 +1,4 @@
-package org.java26.methods;
+package org.java26.repository;
 import org.java26.models.Pokemon;
 import org.java26.exceptions.*;
 import org.java26.handlers.JsonHandler;
@@ -8,43 +8,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
-import static org.java26.inputHelpers.InputHelper.*;
-import static org.java26.methods.PokemonCreator.createPokemon;
-import static org.java26.methods.PokemonViewer.showPokemons;
 
-public class PokemonFileService {
-
-    public static void showAllPokemon(Scanner scanner, Pokedex pokedex) {
-
-        if (pokedex.getPokemons().isEmpty()) {
-            separator();
-           title("Pokedex empty");
-           subTitle("Nothing to show. ");
-           subTitle("Do you want to create");
-           subTitle("a pokemon?");
-           menuOption(1, "yes");
-           menuOption(2, "No");
-           separator();
-
-            int choice = readIntBetween(
-                    scanner,
-                    1,
-                    2,
-                    "  Select an option %d or %d: "
-            );
-            System.out.println();
-            if (choice == 1) {
-                createPokemon(scanner, pokedex);
-            } else {
-                return;
-            }
-        }
-
-        showPokemons(pokedex);
-    }
+public class SaveLoadPokemons {
 
     public static void saveToFile(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
@@ -112,7 +79,7 @@ public class PokemonFileService {
         }
     }
 
-    static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
         try {
             List<Pokemon> pokemons = jsonHandler.loadPokemon("seed-pokemons.json");
             pokedex.removeAllPokemon();
