@@ -49,5 +49,4 @@ public class JsonHandler {
             return false;
         }
     }
-
 }

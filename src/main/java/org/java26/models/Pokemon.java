@@ -107,7 +107,7 @@ public class Pokemon {
     @Override
     public String toString(){
         return "Pokemon: " + name +
-                " | Type: " + type +
+                " | Type: " + type.getType() +
                 " | HP: " + currentHp + " / " + maxHp;
     }
 }

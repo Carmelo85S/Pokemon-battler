@@ -53,7 +53,7 @@ public class Menu {
                 case 3 -> updatePokemon(scanner, pokedex);
                 case 4 -> deletePokemon(scanner, pokedex);
                 case 5, 0 -> saveToFile(pokedex, jsonHandler);
-                case 6 -> loadFromFile(pokedex, jsonHandler);
+                case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> battleMenu(scanner, pokedex, jsonHandler);

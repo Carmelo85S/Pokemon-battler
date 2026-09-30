@@ -3,11 +3,15 @@ package org.java26.service;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
+import org.java26.models.Pokemon;
+import org.java26.service.battle.RegularBattle;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
+import static org.java26.repository.SaveLoadPokemons.loadPokemonList;
 
 public class BattleMenu {
     public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
@@ -34,7 +38,16 @@ public class BattleMenu {
     public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
         try {
             switch (choice) {
-                case 1 -> System.out.println("Start regular battle");
+                case 1 -> {
+                    List<Pokemon> wildPokemons =
+                            loadPokemonList(jsonHandler, "wild-pokemons.json");
+
+                    RegularBattle.startBattle(
+                            scanner,
+                            pokedex,
+                            wildPokemons
+                    );
+                }
                 case 2 -> System.out.println("Start Handicap match battle");
                 case 3 -> System.out.println("Start survival battle");
                 default -> System.out.println("  Invalid input");

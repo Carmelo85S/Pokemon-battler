@@ -12,4 +12,8 @@ public enum PokemonType {
     private PokemonType(String label){
         this.label = label;
     }
+
+    public String getType() {
+        return label;
+    }
 }
