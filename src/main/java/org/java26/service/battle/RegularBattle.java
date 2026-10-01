@@ -5,6 +5,7 @@ import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.inputHelpers.InputHelper.readString;
+import static org.java26.service.Menu.runAction;
 import static org.java26.service.PokemonCreator.createPokemon;
 import static org.java26.service.PokemonViewer.showPokemons;
 
@@ -25,7 +27,7 @@ public class RegularBattle {
                 title("No wild pokemons available");
                 return;
             }
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
 
@@ -60,37 +62,13 @@ public class RegularBattle {
 
         title("---Random Start---");
         boolean playerTurn = random.nextBoolean();
-        System.out.println(playerTurn);
 
-        while (myPokemon.getCurrentHp() > 0 && opponent.getCurrentHp() > 0) {
+        while (!isFainted(myPokemon) && !isFainted(opponent)) {
             //PLAYER TURN
             if (playerTurn) {
                 subTitle(myPokemon.getName() + " Starts");
 
-                System.out.println();
-                System.out.println("  ATTACKS");
-                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
-                System.out.printf(
-                        "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                        "Choice", "Name", "Damage", "Accuracy", "Type"
-                );
-                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
-
-                for (int i = 0; i < myPokemon.getAttacks().size(); i++) {
-
-                    Attack attack = myPokemon.getAttacks().get(i);
-
-                    System.out.printf(
-                            "| %-14d | %-14s | %-14d | %-14d | %-14s |%n",
-                            i + 1,
-                            attack.getName(),
-                            attack.getBaseDamage(),
-                            attack.getAccuracy(),
-                            attack.getType()
-                    );
-                }
-
-                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+                showAttacks(myPokemon);
 
                 int choice;
                 while (true) {
@@ -101,53 +79,52 @@ public class RegularBattle {
                                 myPokemon.getAttacks().size(),
                                 "Choose attack: "
                         );
+                        separator();
                         break;
                     } catch (InvalidPokemonException e) {
                         System.out.println(e.getMessage());
                     }
                 }
                 Attack selectedAttack = myPokemon.getAttacks().get(choice - 1);
-                int damage = selectedAttack.getBaseDamage();
 
-                int newHp = Math.max(
-                        0,
-                        opponent.getCurrentHp() - damage
-                );
+                boolean isHit = random.nextBoolean();
+                if (!isHit) {
+                    System.out.println("  You missed!");
+                    separator();
+                } else {
+                    int damageOpponent = selectedAttack.getBaseDamage();
 
-                opponent.setCurrentHp(newHp);
-                System.out.println(
-                        myPokemon.getName() +
-                                " used " +
-                                selectedAttack.getName()
-                );
-
-                System.out.println(
-                        opponent.getName() +
-                                " HP: " +
-                                opponent.getCurrentHp() +
-                                "/" +
-                                opponent.getMaxHp()
-                );
+                    takeDamage(opponent, damageOpponent);
+                    System.out.println(
+                            myPokemon.getName() +
+                                    " used " +
+                                    selectedAttack.getName()
+                    );
+                    separator();
+                    System.out.println(
+                            opponent.getName() +
+                                    " HP: " +
+                                    opponent.getCurrentHp() +
+                                    "/" +
+                                    opponent.getMaxHp()
+                    );
+                }
 
                 playerTurn = !playerTurn;
-            } else{
+
+            } else {
                 int randomAttack = random.nextInt(opponent.getAttacks().size());
                 Attack selectedAttack = opponent.getAttacks().get(randomAttack);
 
                 int damagePlayer = selectedAttack.getBaseDamage();
 
-                int newHp = Math.max(
-                        0,
-                        myPokemon.getCurrentHp() - damagePlayer
-                );
-
-                myPokemon.setCurrentHp(newHp);
+                takeDamage(myPokemon, damagePlayer);
                 System.out.println(
                         opponent.getName() +
                                 " used " +
                                 selectedAttack.getName()
                 );
-
+                separator();
                 System.out.println(
                         myPokemon.getName() +
                                 " HP: " +
@@ -156,7 +133,40 @@ public class RegularBattle {
                                 myPokemon.getMaxHp()
                 );
                 playerTurn = !playerTurn;
+            }
+        }
+        if (isFainted(myPokemon)) {
+            separator();
+            System.out.println("  " + myPokemon.getName() + " lost the battle");
 
+            //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
+            healPokemons(myPokemon, opponent, 1000);
+        } else {
+            separator();
+            System.out.println("  " + myPokemon.getName() + " won the battle.");
+
+            //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
+            healPokemons(myPokemon, opponent, 1000);
+
+            subTitle("Gotta catch them all!");
+            menuOption(1, "Yes");
+            menuOption(2, "No");
+            int choice = readIntBetween(scanner, 1, 2, "  Do you want to catch opponent's pokemon?");
+            if (choice == 1) {
+                pokedex.addPokemon(wildPokemons.get(randomOpponent));
+            } else {
+                subTitle("Play again");
+                menuOption(1, "Yes");
+                menuOption(2, "Exit");
+                choice = readIntBetween(scanner, 1, 2, "  Play again?");
+
+                if (choice == 1) {
+                    startBattle(scanner, pokedex, wildPokemons);
+                    return;
+                } else {
+                    System.out.println("  Returning to menu");
+                    return;
+                }
             }
         }
     }
@@ -177,6 +187,54 @@ public class RegularBattle {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public static void healPokemons(Pokemon myPokemon, Pokemon opponent, int amount) {
+        if (amount < 0)
+            throw new IllegalArgumentException(
+                    "  Heal value can not be negative"
+            );
+        myPokemon.setCurrentHp(Math.min(myPokemon.getMaxHp(), myPokemon.getCurrentHp() + amount));
+        opponent.setCurrentHp(Math.min(opponent.getMaxHp(), opponent.getCurrentHp() + amount));
+
+    }
+
+    public static void takeDamage(Pokemon pokemon, int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("  Damage value can not be negative");
+        }
+        pokemon.setCurrentHp(Math.max(0, pokemon.getCurrentHp() - amount));
+    }
+
+    public static boolean isFainted(Pokemon pokemon) {
+        return pokemon.getCurrentHp() == 0;
+    }
+
+    public static void showAttacks(Pokemon pokemon) {
+        System.out.println();
+        System.out.println("  ATTACKS");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+        System.out.printf(
+                "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                "Choice", "Name", "Damage", "Accuracy", "Type"
+        );
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+
+        for (int i = 0; i < pokemon.getAttacks().size(); i++) {
+
+            Attack attack = pokemon.getAttacks().get(i);
+
+            System.out.printf(
+                    "| %-14d | %-14s | %-14d | %-14d | %-14s |%n",
+                    i + 1,
+                    attack.getName(),
+                    attack.getBaseDamage(),
+                    attack.getAccuracy(),
+                    attack.getType()
+            );
+        }
+
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
     }
 
 }
