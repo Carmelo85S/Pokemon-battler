@@ -8,6 +8,10 @@ import java.util.List;
 public class Pokemon {
 
     private static final int MAX_ATTACKS = 4;
+
+    private int win = 0;
+    private int loss = 0;
+
     private String name;
     private PokemonType type;
     private int maxHp;
@@ -17,11 +21,13 @@ public class Pokemon {
     public Pokemon() {
     }
 
-    public Pokemon(String name, PokemonType type, int maxHp) {
+    public Pokemon(String name, PokemonType type, int maxHp, int win, int loss) {
         setName(name);
         setType(type);
         setMaxHp(maxHp);
         setCurrentHp(maxHp);
+        setWin(win);
+        setLoss(loss);
     }
 
     public void addAttack(Attack attack) {
@@ -33,7 +39,7 @@ public class Pokemon {
         attacks.add(attack);
     }
 
-    public List<Attack> getAttacks(){
+    public List<Attack> getAttacks() {
         return attacks;
     }
 
@@ -92,7 +98,7 @@ public class Pokemon {
     }
 
     public void setType(PokemonType type) {
-        if(type == null){
+        if (type == null) {
             throw new IllegalArgumentException(
                     "  Pokemon type cannot be null"
             );
@@ -100,12 +106,36 @@ public class Pokemon {
         this.type = type;
     }
 
-    public boolean hasMaxAttacks(){
+    public boolean hasMaxAttacks() {
         return attacks.size() >= MAX_ATTACKS;
     }
 
+    public void addWin() {
+        win++;
+    }
+
+    public void addLoss() {
+        loss++;
+    }
+
+    public int getLoss() {
+        return loss;
+    }
+
+    public void setLoss(int loss) {
+        this.loss = loss++;
+    }
+
+    public int getWin() {
+        return win;
+    }
+
+    public void setWin(int win) {
+        this.win = win++;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Pokemon: " + name +
                 " | Type: " + type.getType() +
                 " | HP: " + currentHp + " / " + maxHp;

@@ -70,7 +70,7 @@ public class PokemonCreator {
             }
 
 
-            Pokemon pokemon = new Pokemon(name, type, maxHp);
+            Pokemon pokemon = new Pokemon(name, type, maxHp, 0, 0);
 
 
             boolean addAttack = true;

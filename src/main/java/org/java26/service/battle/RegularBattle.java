@@ -138,12 +138,15 @@ public class RegularBattle {
         if (isFainted(myPokemon)) {
             separator();
             System.out.println("  " + myPokemon.getName() + " lost the battle");
+            myPokemon.addLoss();
 
             //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
             healPokemons(myPokemon, opponent, 1000);
         } else {
             separator();
             System.out.println("  " + myPokemon.getName() + " won the battle.");
+            myPokemon.addWin();
+
 
             //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
             healPokemons(myPokemon, opponent, 1000);
