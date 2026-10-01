@@ -28,6 +28,10 @@ public class RegularBattle {
 
         if (pokedex.getPokemons().isEmpty()) {
             showOptions(scanner, pokedex);
+
+            if (pokedex.getPokemons().isEmpty()) {
+                return;
+            }
         }
 
         title("Choose your pokemon");
