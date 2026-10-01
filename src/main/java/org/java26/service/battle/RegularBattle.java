@@ -1,6 +1,7 @@
 package org.java26.service.battle;
 
 import org.java26.exceptions.InvalidPokemonException;
+import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
@@ -19,9 +20,13 @@ public class RegularBattle {
             Scanner scanner,
             Pokedex pokedex,
             List<Pokemon> wildPokemons) {
-
-        if (wildPokemons.isEmpty()) {
-            title("No wild pokemons available");
+        try {
+            if (wildPokemons.isEmpty()) {
+                title("No wild pokemons available");
+                return;
+            }
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
         }
 
         if (pokedex.getPokemons().isEmpty()) {
@@ -44,15 +49,8 @@ public class RegularBattle {
 
         title("Choose your pokemon");
         showPokemons(pokedex);
-        while (true) {
-            try {
-                Pokemon myPokemon = pokedex.getPokemon(readString(scanner, "  Choose your Pokemon for the battle: ", "  You choose "));
-                System.out.println("MY POKEMON: " + myPokemon);
-                break;
-            } catch (InvalidPokemonException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+
+        Pokemon myPokemon = choosePokemon(scanner, pokedex);
 
         Random random = new Random();
         int randomOpponent = random.nextInt(wildPokemons.size());
@@ -63,12 +61,123 @@ public class RegularBattle {
         title("---Random Start---");
         boolean playerTurn = random.nextBoolean();
         System.out.println(playerTurn);
-        if (playerTurn) {
-            subTitle("Player Starts");
-        } else {
-            subTitle("Opponent Starts");
+
+        while (myPokemon.getCurrentHp() > 0 && opponent.getCurrentHp() > 0) {
+            //PLAYER TURN
+            if (playerTurn) {
+                subTitle(myPokemon.getName() + " Starts");
+
+                System.out.println();
+                System.out.println("  ATTACKS");
+                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+                System.out.printf(
+                        "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                        "Choice", "Name", "Damage", "Accuracy", "Type"
+                );
+                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+
+                for (int i = 0; i < myPokemon.getAttacks().size(); i++) {
+
+                    Attack attack = myPokemon.getAttacks().get(i);
+
+                    System.out.printf(
+                            "| %-14d | %-14s | %-14d | %-14d | %-14s |%n",
+                            i + 1,
+                            attack.getName(),
+                            attack.getBaseDamage(),
+                            attack.getAccuracy(),
+                            attack.getType()
+                    );
+                }
+
+                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+
+                int choice;
+                while (true) {
+                    try {
+                        choice = readIntBetween(
+                                scanner,
+                                1,
+                                myPokemon.getAttacks().size(),
+                                "Choose attack: "
+                        );
+                        break;
+                    } catch (InvalidPokemonException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                Attack selectedAttack = myPokemon.getAttacks().get(choice - 1);
+                int damage = selectedAttack.getBaseDamage();
+
+                int newHp = Math.max(
+                        0,
+                        opponent.getCurrentHp() - damage
+                );
+
+                opponent.setCurrentHp(newHp);
+                System.out.println(
+                        myPokemon.getName() +
+                                " used " +
+                                selectedAttack.getName()
+                );
+
+                System.out.println(
+                        opponent.getName() +
+                                " HP: " +
+                                opponent.getCurrentHp() +
+                                "/" +
+                                opponent.getMaxHp()
+                );
+
+                playerTurn = !playerTurn;
+            } else{
+                int randomAttack = random.nextInt(opponent.getAttacks().size());
+                Attack selectedAttack = opponent.getAttacks().get(randomAttack);
+
+                int damagePlayer = selectedAttack.getBaseDamage();
+
+                int newHp = Math.max(
+                        0,
+                        myPokemon.getCurrentHp() - damagePlayer
+                );
+
+                myPokemon.setCurrentHp(newHp);
+                System.out.println(
+                        opponent.getName() +
+                                " used " +
+                                selectedAttack.getName()
+                );
+
+                System.out.println(
+                        myPokemon.getName() +
+                                " HP: " +
+                                myPokemon.getCurrentHp() +
+                                "/" +
+                                myPokemon.getMaxHp()
+                );
+                playerTurn = !playerTurn;
+
+            }
         }
-
-
     }
+
+    private static Pokemon choosePokemon(Scanner scanner, Pokedex pokedex) {
+
+        while (true) {
+            try {
+                String choice = readString(
+                        scanner,
+                        "  Choose your Pokemon for the battle: ",
+                        "  You choose "
+                );
+
+                return pokedex.getPokemon(choice);
+
+            } catch (InvalidPokemonException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 }
+
