@@ -5,7 +5,6 @@ import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,7 +12,6 @@ import java.util.Scanner;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.inputHelpers.InputHelper.readString;
-import static org.java26.service.Menu.runAction;
 import static org.java26.service.PokemonCreator.createPokemon;
 import static org.java26.service.PokemonViewer.showPokemons;
 
@@ -22,14 +20,12 @@ public class RegularBattle {
             Scanner scanner,
             Pokedex pokedex,
             List<Pokemon> wildPokemons) {
-        try {
-            if (wildPokemons.isEmpty()) {
-                title("No wild pokemons available");
-                return;
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+
+        if (wildPokemons.isEmpty()) {
+            title("No wild pokemons available");
+            return;
         }
+
 
         if (pokedex.getPokemons().isEmpty()) {
             title("No pokemons available");
@@ -41,11 +37,11 @@ public class RegularBattle {
                 int choice = readIntBetween(scanner, 1, 2, "Select one option: ");
                 if (choice == 1) {
                     createPokemon(scanner, pokedex);
-                    return;
                 }
-                ;
+                return;
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
+                return;
             }
         }
 
@@ -63,7 +59,7 @@ public class RegularBattle {
         title("---Random Start---");
         boolean playerTurn = random.nextBoolean();
 
-        while (!isFainted(myPokemon) && !isFainted(opponent)) {
+        while (!myPokemon.isFainted() && !opponent.isFainted()) {
             //PLAYER TURN
             if (playerTurn) {
                 subTitle(myPokemon.getName() + " Starts");
@@ -94,7 +90,7 @@ public class RegularBattle {
                 } else {
                     int damageOpponent = selectedAttack.getBaseDamage();
 
-                    takeDamage(opponent, damageOpponent);
+                    opponent.takeDamage(damageOpponent);
                     System.out.println(
                             myPokemon.getName() +
                                     " used " +
@@ -118,7 +114,7 @@ public class RegularBattle {
 
                 int damagePlayer = selectedAttack.getBaseDamage();
 
-                takeDamage(myPokemon, damagePlayer);
+                myPokemon.takeDamage(damagePlayer);
                 System.out.println(
                         opponent.getName() +
                                 " used " +
@@ -132,24 +128,26 @@ public class RegularBattle {
                                 "/" +
                                 myPokemon.getMaxHp()
                 );
+
                 playerTurn = !playerTurn;
             }
         }
-        if (isFainted(myPokemon)) {
+        if (myPokemon.isFainted()) {
             separator();
             System.out.println("  " + myPokemon.getName() + " lost the battle");
             myPokemon.addLoss();
-
             //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
-            healPokemons(myPokemon, opponent, 1000);
+            myPokemon.heal(1000);
+
         } else {
             separator();
             System.out.println("  " + myPokemon.getName() + " won the battle.");
             myPokemon.addWin();
 
-
             //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
-            healPokemons(myPokemon, opponent, 1000);
+            myPokemon.heal(100);
+            opponent.heal(100);
+
 
             subTitle("Gotta catch them all!");
             menuOption(1, "Yes");
@@ -192,27 +190,6 @@ public class RegularBattle {
         }
     }
 
-    public static void healPokemons(Pokemon myPokemon, Pokemon opponent, int amount) {
-        if (amount < 0)
-            throw new IllegalArgumentException(
-                    "  Heal value can not be negative"
-            );
-        myPokemon.setCurrentHp(Math.min(myPokemon.getMaxHp(), myPokemon.getCurrentHp() + amount));
-        opponent.setCurrentHp(Math.min(opponent.getMaxHp(), opponent.getCurrentHp() + amount));
-
-    }
-
-    public static void takeDamage(Pokemon pokemon, int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("  Damage value can not be negative");
-        }
-        pokemon.setCurrentHp(Math.max(0, pokemon.getCurrentHp() - amount));
-    }
-
-    public static boolean isFainted(Pokemon pokemon) {
-        return pokemon.getCurrentHp() == 0;
-    }
-
     public static void showAttacks(Pokemon pokemon) {
         System.out.println();
         System.out.println("  ATTACKS");
@@ -239,6 +216,7 @@ public class RegularBattle {
 
         System.out.println("+----------------+----------------+----------------+----------------+----------------+");
     }
+
 
 }
 

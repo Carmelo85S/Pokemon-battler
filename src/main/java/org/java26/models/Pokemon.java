@@ -123,7 +123,7 @@ public class Pokemon {
     }
 
     public void setLoss(int loss) {
-        this.loss = loss++;
+        this.loss = loss;
     }
 
     public int getWin() {
@@ -131,7 +131,30 @@ public class Pokemon {
     }
 
     public void setWin(int win) {
-        this.win = win++;
+        this.win = win;
+    }
+
+
+    public void heal(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException(
+                    "  Heal value can not be negative"
+            );
+        }
+        currentHp = Math.min(maxHp, currentHp + amount);
+    }
+
+    public void takeDamage(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException(
+                    "  Damage value can not be negative"
+            );
+        }
+        currentHp = Math.max(0, currentHp - amount);
+    }
+
+    public boolean isFainted() {
+        return currentHp == 0;
     }
 
     @Override
