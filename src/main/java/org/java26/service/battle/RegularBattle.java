@@ -4,6 +4,7 @@ import org.java26.exceptions.InvalidPokemonException;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.models.PokemonType;
 
 import java.util.List;
 import java.util.Random;
@@ -47,13 +48,16 @@ public class RegularBattle {
         boolean playerTurn = random.nextBoolean();
 
         while (!myPokemon.isFainted() && !opponent.isFainted()) {
+
             title("ROUND " + round);
             if (playerTurn) {
+                subTitle(myPokemon.getName() + " turn.");
                 runPlayerTurn(scanner, myPokemon, opponent, random);
-                round ++;
+                round++;
             } else {
+                subTitle(opponent.getName() + " turn.");
                 runOpponentTurn(opponent, myPokemon, random);
-                round ++;
+                round++;
             }
             playerTurn = !playerTurn;
         }
@@ -141,9 +145,7 @@ public class RegularBattle {
     }
 
     private static void runPlayerTurn(Scanner scanner, Pokemon myPokemon, Pokemon opponent, Random random) {
-        subTitle(myPokemon.getName() + " Starts");
         Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
-
         int hitChance = random.nextInt(100) + 1;
         boolean isHit = hitChance <= selectedPlayerAttack.getAccuracy();
         if (!isHit) {
@@ -154,7 +156,15 @@ public class RegularBattle {
             );
             separator();
         } else {
-            opponent.takeDamage(selectedPlayerAttack.getBaseDamage());
+            double effect = effectiveness(opponent, selectedPlayerAttack);
+            double randomFactor = 0.85 + random.nextDouble() * 0.15;
+            int damage = (int) (
+                    selectedPlayerAttack.getBaseDamage()
+                            * effect
+                            * randomFactor
+            );
+            opponent.takeDamage(damage);
+
             System.out.println(
                     "  " + myPokemon.getName() +
                             " used " + selectedPlayerAttack.getName() + "!"
@@ -172,7 +182,6 @@ public class RegularBattle {
 
     private static void runOpponentTurn(Pokemon opponent, Pokemon myPokemon, Random random) {
         Attack selectedOpponentAttack = chooseRandomAttack(opponent, random);
-
         int hitChance = random.nextInt(100) + 1;
         boolean isHit = hitChance <= selectedOpponentAttack.getAccuracy();
         if (!isHit) {
@@ -182,13 +191,29 @@ public class RegularBattle {
                             " but missed!"
             );
             separator();
+
         } else {
-            myPokemon.takeDamage(selectedOpponentAttack.getBaseDamage());
+            double effect = effectiveness(myPokemon, selectedOpponentAttack);
+
+            double randomFactor = 0.85 + random.nextDouble() * 0.15;
+
+            int damage = (int) (
+                    selectedOpponentAttack.getBaseDamage()
+                            * effect
+                            * randomFactor
+            );
+
+            myPokemon.takeDamage(damage);
 
             System.out.println(
                     "  " + opponent.getName() +
                             " used " + selectedOpponentAttack.getName() + "!"
             );
+
+            System.out.println(
+                    "  Damage: " + damage
+            );
+
             System.out.println(
                     "  " + myPokemon.getName() +
                             " HP: " +
@@ -196,10 +221,10 @@ public class RegularBattle {
                             "/" +
                             myPokemon.getMaxHp()
             );
+
             separator();
         }
     }
-
     public static void showAttacks(Pokemon pokemon) {
         System.out.println();
         System.out.println("  ATTACKS");
@@ -265,5 +290,42 @@ public class RegularBattle {
         System.out.println("  Returning to menu");
     }
 
-}
+    public static double effectiveness(Pokemon opponent, Attack attack) {
+        PokemonType attackType = attack.getType();
+        PokemonType opponentType = opponent.getType();
+
+        if (attackType == PokemonType.FIRE && opponentType == PokemonType.GRASS) {
+            return 2.0;
+        }
+
+        if (attackType == PokemonType.WATER && opponentType == PokemonType.FIRE) {
+            return 2.0;
+        }
+
+        if (attackType == PokemonType.GRASS && opponentType == PokemonType.WATER) {
+            return 2.0;
+        }
+
+        if (attackType == PokemonType.ELECTRIC && opponentType == PokemonType.WATER) {
+            return 2.0;
+        }
+
+        if (attackType == PokemonType.FIRE && opponentType == PokemonType.WATER) {
+            return 0.5;
+        }
+
+        if (attackType == PokemonType.WATER && opponentType == PokemonType.GRASS) {
+            return 0.5;
+        }
+
+        if (attackType == PokemonType.GRASS && opponentType == PokemonType.FIRE) {
+            return 0.5;
+        }
+
+        if (attackType == PokemonType.ELECTRIC && opponentType == PokemonType.GRASS) {
+            return 0.5;
+        }
+
+        return 1.0;
+    }}
 
