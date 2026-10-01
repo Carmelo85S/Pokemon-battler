@@ -1,5 +1,6 @@
 package org.java26.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.java26.exceptions.InvalidPokemonException;
 
 import java.util.ArrayList;
@@ -152,7 +153,7 @@ public class Pokemon {
         }
         currentHp = Math.max(0, currentHp - amount);
     }
-
+    @JsonIgnore
     public boolean isFainted() {
         return currentHp == 0;
     }

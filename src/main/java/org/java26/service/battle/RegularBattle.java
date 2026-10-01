@@ -16,43 +16,26 @@ import static org.java26.service.PokemonCreator.createPokemon;
 import static org.java26.service.PokemonViewer.showPokemons;
 
 public class RegularBattle {
-    public static void startBattle(
-            Scanner scanner,
-            Pokedex pokedex,
-            List<Pokemon> wildPokemons) {
+    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons) {
+        int round = 1;
+
+        Random random = new Random();
 
         if (wildPokemons.isEmpty()) {
             title("No wild pokemons available");
             return;
         }
 
-
         if (pokedex.getPokemons().isEmpty()) {
-            title("No pokemons available");
-            subTitle("Do you wanna create pokemons?");
-            menuOption(1, "Yes");
-            menuOption(2, "No");
-            separator();
-            try {
-                int choice = readIntBetween(scanner, 1, 2, "Select one option: ");
-                if (choice == 1) {
-                    createPokemon(scanner, pokedex);
-                }
-                return;
-            } catch (InvalidPokemonException e) {
-                System.out.println(e.getMessage());
-                return;
-            }
+            showOptions(scanner, pokedex);
         }
 
         title("Choose your pokemon");
         showPokemons(pokedex);
 
-        Pokemon myPokemon = choosePokemon(scanner, pokedex);
+        Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
 
-        Random random = new Random();
-        int randomOpponent = random.nextInt(wildPokemons.size());
-        Pokemon opponent = wildPokemons.get(randomOpponent);
+        Pokemon opponent = chooseOpponent(random, wildPokemons);
 
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
@@ -60,119 +43,54 @@ public class RegularBattle {
         boolean playerTurn = random.nextBoolean();
 
         while (!myPokemon.isFainted() && !opponent.isFainted()) {
-            //PLAYER TURN
+            title("ROUND " + round);
             if (playerTurn) {
-                subTitle(myPokemon.getName() + " Starts");
-
-                showAttacks(myPokemon);
-
-                int choice;
-                while (true) {
-                    try {
-                        choice = readIntBetween(
-                                scanner,
-                                1,
-                                myPokemon.getAttacks().size(),
-                                "Choose attack: "
-                        );
-                        separator();
-                        break;
-                    } catch (InvalidPokemonException e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
-                Attack selectedAttack = myPokemon.getAttacks().get(choice - 1);
-
-                boolean isHit = random.nextBoolean();
-                if (!isHit) {
-                    System.out.println("  You missed!");
-                    separator();
-                } else {
-                    int damageOpponent = selectedAttack.getBaseDamage();
-
-                    opponent.takeDamage(damageOpponent);
-                    System.out.println(
-                            myPokemon.getName() +
-                                    " used " +
-                                    selectedAttack.getName()
-                    );
-                    separator();
-                    System.out.println(
-                            opponent.getName() +
-                                    " HP: " +
-                                    opponent.getCurrentHp() +
-                                    "/" +
-                                    opponent.getMaxHp()
-                    );
-                }
-
-                playerTurn = !playerTurn;
-
+                runPlayerTurn(scanner, myPokemon, opponent, random);
+                round ++;
             } else {
-                int randomAttack = random.nextInt(opponent.getAttacks().size());
-                Attack selectedAttack = opponent.getAttacks().get(randomAttack);
-
-                int damagePlayer = selectedAttack.getBaseDamage();
-
-                myPokemon.takeDamage(damagePlayer);
-                System.out.println(
-                        opponent.getName() +
-                                " used " +
-                                selectedAttack.getName()
-                );
-                separator();
-                System.out.println(
-                        myPokemon.getName() +
-                                " HP: " +
-                                myPokemon.getCurrentHp() +
-                                "/" +
-                                myPokemon.getMaxHp()
-                );
-
-                playerTurn = !playerTurn;
+                runOpponentTurn(opponent, myPokemon, random);
+                round ++;
             }
+            playerTurn = !playerTurn;
         }
         if (myPokemon.isFainted()) {
-            separator();
-            System.out.println("  " + myPokemon.getName() + " lost the battle");
-            myPokemon.addLoss();
-            //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
-            myPokemon.heal(1000);
-
+            handleEndFight(
+                    " lost the battle",
+                    myPokemon,
+                    opponent,
+                    false
+            );
         } else {
-            separator();
-            System.out.println("  " + myPokemon.getName() + " won the battle.");
-            myPokemon.addWin();
+            handleEndFight(
+                    " won the battle",
+                    myPokemon,
+                    opponent,
+                    true
+            );
 
-            //GOOD FOR NOW, IF THERE IS TIME, ADD POKEMON HEAL CENTER
-            myPokemon.heal(100);
-            opponent.heal(100);
-
-
-            subTitle("Gotta catch them all!");
-            menuOption(1, "Yes");
-            menuOption(2, "No");
-            int choice = readIntBetween(scanner, 1, 2, "  Do you want to catch opponent's pokemon?");
-            if (choice == 1) {
-                pokedex.addPokemon(wildPokemons.get(randomOpponent));
-            } else {
-                subTitle("Play again");
-                menuOption(1, "Yes");
-                menuOption(2, "Exit");
-                choice = readIntBetween(scanner, 1, 2, "  Play again?");
-
-                if (choice == 1) {
-                    startBattle(scanner, pokedex, wildPokemons);
-                    return;
-                } else {
-                    System.out.println("  Returning to menu");
-                    return;
-                }
-            }
+            handleVictory(scanner, pokedex, opponent, wildPokemons);
         }
     }
 
-    private static Pokemon choosePokemon(Scanner scanner, Pokedex pokedex) {
+    public static void showOptions(Scanner scanner, Pokedex pokedex) {
+        title("No pokemons available");
+        subTitle("Do you wanna create pokemons?");
+        menuOption(1, "Yes");
+        menuOption(2, "No");
+        separator();
+        try {
+            int choice = readIntBetween(scanner, 1, 2, "Select one option: ");
+            if (choice == 1) {
+                createPokemon(scanner, pokedex);
+            }
+            return;
+        } catch (InvalidPokemonException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+    }
+
+    private static Pokemon chooseMyPokemon(Scanner scanner, Pokedex pokedex) {
 
         while (true) {
             try {
@@ -187,6 +105,104 @@ public class RegularBattle {
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
+
+    private static Pokemon chooseOpponent(Random random, List<Pokemon> wildPokemons) {
+        int randomOpponent = random.nextInt(wildPokemons.size());
+        return wildPokemons.get(randomOpponent);
+    }
+
+    private static Attack chooseAttack(Scanner scanner, Pokemon pokemon) {
+        showAttacks(pokemon);
+        while (true) {
+            try {
+                int choice = readIntBetween(
+                        scanner,
+                        1,
+                        pokemon.getAttacks().size(),
+                        "Choose attack: "
+                );
+                separator();
+                return pokemon.getAttacks().get(choice - 1);
+            } catch (InvalidPokemonException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private static Attack chooseRandomAttack(Pokemon pokemon, Random random) {
+        int randomAttack = random.nextInt(pokemon.getAttacks().size());
+        return pokemon.getAttacks().get(randomAttack);
+    }
+
+    private static void runPlayerTurn(Scanner scanner, Pokemon myPokemon, Pokemon opponent, Random random) {
+        subTitle(myPokemon.getName() + " Starts");
+        Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
+
+        boolean isHit;
+        int hitChance = random.nextInt(100) + 1;
+        if (selectedPlayerAttack.getAccuracy() == 100) {
+            isHit = true;
+        } else {
+            isHit = hitChance <= selectedPlayerAttack.getAccuracy();
+        }
+        if (!isHit) {
+            System.out.println(
+                    "  " + myPokemon.getName() +
+                            " used " + selectedPlayerAttack.getName() +
+                            " but missed!"
+            );
+            separator();
+        } else {
+            opponent.takeDamage(selectedPlayerAttack.getBaseDamage());
+            System.out.println(
+                    "  " + myPokemon.getName() +
+                            " used " + selectedPlayerAttack.getName() + "!"
+            );
+            System.out.println(
+                    "  " + opponent.getName() +
+                            " HP: " +
+                            opponent.getCurrentHp() +
+                            "/" +
+                            opponent.getMaxHp()
+            );
+            separator();
+        }
+    }
+
+    private static void runOpponentTurn(Pokemon opponent, Pokemon myPokemon, Random random) {
+        Attack selectedOpponentAttack = chooseRandomAttack(opponent, random);
+        int damagePlayer = selectedOpponentAttack.getBaseDamage();
+        boolean isHit;
+        int hitChance = random.nextInt(100) + 1;
+        if (selectedOpponentAttack.getAccuracy() == 100) {
+            isHit = true;
+        } else {
+            isHit = hitChance <= selectedOpponentAttack.getAccuracy();
+        }
+        if (!isHit) {
+            System.out.println(
+                    "  " + opponent.getName() +
+                            " used " + selectedOpponentAttack.getName() +
+                            " but missed!"
+            );
+            separator();
+        } else {
+            myPokemon.takeDamage(damagePlayer);
+
+            System.out.println(
+                    "  " + opponent.getName() +
+                            " used " + selectedOpponentAttack.getName() + "!"
+            );
+            System.out.println(
+                    "  " + myPokemon.getName() +
+                            " HP: " +
+                            myPokemon.getCurrentHp() +
+                            "/" +
+                            myPokemon.getMaxHp()
+            );
+            separator();
         }
     }
 
@@ -217,6 +233,43 @@ public class RegularBattle {
         System.out.println("+----------------+----------------+----------------+----------------+----------------+");
     }
 
+    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won) {
+
+        separator();
+        System.out.println("  " + myPokemon.getName() + prompt);
+        if (won) {
+            myPokemon.addWin();
+            myPokemon.heal(myPokemon.getMaxHp());
+            opponent.heal(opponent.getMaxHp());
+        } else {
+            myPokemon.addLoss();
+            myPokemon.heal(myPokemon.getMaxHp());
+        }
+    }
+
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon opponent, List<Pokemon> wildPokemon) {
+        subTitle("Gotta catch them all!");
+        menuOption(1, "Yes");
+        menuOption(2, "No");
+        int choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
+        separator();
+        if (choice == 1) {
+            pokedex.addPokemon(opponent);
+        }
+        ;
+        subTitle("Play again");
+        menuOption(1, "Yes");
+        menuOption(2, "Exit");
+        separator();
+        choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
+        separator();
+
+        if (choice == 1) {
+            startBattle(scanner, pokedex, wildPokemon);
+            return;
+        }
+        System.out.println("  Returning to menu");
+    }
 
 }
 
