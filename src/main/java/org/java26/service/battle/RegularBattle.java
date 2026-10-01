@@ -140,13 +140,8 @@ public class RegularBattle {
         subTitle(myPokemon.getName() + " Starts");
         Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
 
-        boolean isHit;
         int hitChance = random.nextInt(100) + 1;
-        if (selectedPlayerAttack.getAccuracy() == 100) {
-            isHit = true;
-        } else {
-            isHit = hitChance <= selectedPlayerAttack.getAccuracy();
-        }
+        boolean isHit = hitChance <= selectedPlayerAttack.getAccuracy();
         if (!isHit) {
             System.out.println(
                     "  " + myPokemon.getName() +
