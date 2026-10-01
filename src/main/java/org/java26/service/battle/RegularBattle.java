@@ -169,13 +169,9 @@ public class RegularBattle {
     private static void runOpponentTurn(Pokemon opponent, Pokemon myPokemon, Random random) {
         Attack selectedOpponentAttack = chooseRandomAttack(opponent, random);
         int damagePlayer = selectedOpponentAttack.getBaseDamage();
-        boolean isHit;
+
         int hitChance = random.nextInt(100) + 1;
-        if (selectedOpponentAttack.getAccuracy() == 100) {
-            isHit = true;
-        } else {
-            isHit = hitChance <= selectedOpponentAttack.getAccuracy();
-        }
+        boolean isHit = hitChance <= selectedOpponentAttack.getAccuracy();
         if (!isHit) {
             System.out.println(
                     "  " + opponent.getName() +
