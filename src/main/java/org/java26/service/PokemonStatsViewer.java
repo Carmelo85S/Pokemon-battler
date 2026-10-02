@@ -7,6 +7,9 @@ import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.service.battle.BattleStatistics;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.java26.consoleLayout.Layout.backOption;
 import static org.java26.service.PokemonViewer.showPokemons;
 
@@ -20,16 +23,16 @@ public class PokemonStatsViewer {
         }
 
         System.out.println(
-                "+----------------+----------------+--------+--------+--------+"
+                "+----------------+----------------+--------+--------+--------+----------------+--------+"
         );
 
         System.out.printf(
-                "| %-14s | %-14s | %-6s | %-6s | %-6s |%n",
-                "Name", "Type", "Win", "Loss", "Ratio"
+                "| %-14s | %-14s | %-6s | %-6s | %-6s | %-14s | %-6s | %n",
+                "Name", "Type", "Win", "Loss", "Ratio", "Attack used", "Times"
         );
 
         System.out.println(
-                "+----------------+----------------+--------+--------+--------+"
+                "+----------------+----------------+--------+--------+--------+----------------+--------+"
         );
 
         for (Pokemon pokemon : pokedex.getPokemons()) {
@@ -41,18 +44,32 @@ public class PokemonStatsViewer {
             double ratio = (wins + losses) == 0
                     ? 0.0
                     : (double) wins / (wins + losses);
+            HashMap<String, Integer> attacks =
+                    statistics.getPokemonAttackUse()
+                            .getOrDefault(pokemon.getName(), new HashMap<>());
+
+            String mostUsedAttack = attacks.entrySet()
+                    .stream()
+                    .max(Map.Entry.comparingByValue())
+                    .map(Map.Entry::getKey)
+                    .orElse("None");
+
+            int attackUsed = attacks.getOrDefault(mostUsedAttack, 0);
+
             System.out.printf(
-                    "| %-14s | %-14s | %-6d | %-6d | %-6.2f |%n",
+                    "| %-14s | %-14s | %-6d | %-6d | %-6.2f | %-14s | %-6d |%n",
                     pokemon.getName(),
                     pokemon.getType().getLabel(),
                     wins,
                     losses,
-                    ratio
+                    ratio,
+                    mostUsedAttack,
+                    attackUsed
             );
         }
 
         System.out.println(
-                "+----------------+----------------+--------+--------+--------+"
+                "+----------------+----------------+--------+--------+--------+----------------+--------+"
         );
     }
 }

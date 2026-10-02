@@ -14,6 +14,7 @@ import static org.java26.consoleLayout.BattleUI.*;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.PokemonViewer.showPokemons;
+import static org.java26.service.StatisticsService.*;
 import static org.java26.service.battle.BattleLogic.calculateDamage;
 import static org.java26.service.battle.BattleLogic.chooseRandomAttack;
 
@@ -90,12 +91,12 @@ public class HandicapBattle {
                 subTitle(myPokemon.getName() + " turn.");
 
                 Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
-                runTurnAccuracyBonus(selectedPlayerAttack, myPokemon, opponent, random, playerAccuracyBonus);
+                runTurnAccuracyBonus(selectedPlayerAttack, myPokemon, opponent, random, playerAccuracyBonus, statistics);
 
             } else {
                 subTitle(opponent.getName() + " turn.");
                 Attack opponentAttack = chooseRandomAttack(opponent, random);
-                runTurnAccuracyBonus(opponentAttack, opponent, myPokemon, random, opponentAccuracyBonus);
+                runTurnAccuracyBonus(opponentAttack, opponent, myPokemon, random, opponentAccuracyBonus, statistics);
             }
             round++;
             playerTurn = !playerTurn;
@@ -122,7 +123,10 @@ public class HandicapBattle {
         }
     }
 
-    private static void runTurnAccuracyBonus(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyBonus) {
+    private static void runTurnAccuracyBonus(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyBonus, BattleStatistics statistics) {
+        recordAttacksUse(statistics, attack);
+        recordPokemonAttackUse(statistics, attacker, attack);
+
         int hitChance = random.nextInt(100) + 1;
         int accuracy = Math.min(100, attack.getAccuracy() - accuracyBonus);
         boolean isHit = hitChance <= accuracy;
@@ -167,11 +171,11 @@ public class HandicapBattle {
         separator();
         System.out.println("  " + myPokemon.getName() + prompt);
         if (won) {
-            statistics.addWin();
+            recordWin(statistics, myPokemon);
             myPokemon.heal(myPokemon.getMaxHp());
             opponent.heal(opponent.getMaxHp());
         } else {
-            statistics.addLoss();
+            recordLoss(statistics, myPokemon);
             myPokemon.heal(myPokemon.getMaxHp());
         }
     }
