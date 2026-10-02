@@ -1,7 +1,5 @@
 [
   {
-    "win": 0,
-    "loss": 0,
     "name": "Pikachu",
     "type": "ELECTRIC",
     "maxHp": 300,
@@ -22,8 +20,6 @@
     ]
   },
   {
-    "win": 0,
-    "loss": 0,
     "name": "Charizard",
     "type": "FIRE",
     "maxHp": 300,
@@ -44,8 +40,6 @@
     ]
   },
   {
-    "win": 0,
-    "loss": 0,
     "name": "Blastoise",
     "type": "WATER",
     "maxHp": 300,
@@ -66,8 +60,6 @@
     ]
   },
   {
-    "win": 0,
-    "loss": 0,
     "name": "Bulbasaur",
     "type": "GRASS",
     "maxHp": 300,
@@ -88,8 +80,6 @@
     ]
   },
   {
-    "win": 0,
-    "loss": 0,
     "name": "Raichu",
     "type": "ELECTRIC",
     "maxHp": 300,
@@ -110,8 +100,6 @@
     ]
   },
   {
-    "win": 0,
-    "loss": 0,
     "name": "Charmander",
     "type": "FIRE",
     "maxHp": 300,
@@ -132,8 +120,6 @@
     ]
   },
   {
-    "win": 0,
-    "loss": 0,
     "name": "Magnemite",
     "type": "ELECTRIC",
     "maxHp": 300,
@@ -154,8 +140,6 @@
     ]
   },
   {
-    "win": 0,
-    "loss": 0,
     "name": "Magmar",
     "type": "FIRE",
     "maxHp": 300,

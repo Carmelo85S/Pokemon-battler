@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.java26.models.Pokemon;
 import org.java26.exceptions.PokemonLoadException;
 import org.java26.exceptions.PokemonSaveException;
+import org.java26.service.battle.BattleStatistics;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +36,30 @@ public class JsonHandler {
         }catch (IOException e){
             throw new PokemonSaveException(
                     "  Could not save Pokemon to file: " + filePath);
+        }
+    }
+
+    public void saveStatistics(String filePath, BattleStatistics statistics) throws PokemonSaveException {
+        try{
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), statistics);
+        }catch (IOException e){
+            throw new PokemonSaveException(
+                    "  Could not save statistics to file: " + filePath);
+        }
+    }
+
+    public BattleStatistics loadStatistics(String filePath) {
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            return new BattleStatistics();
+        }
+
+        try {
+            return mapper.readValue(file, BattleStatistics.class);
+        } catch (IOException e) {
+            System.out.println("  Could not load statistics from file: " + filePath);
+            return new BattleStatistics();
         }
     }
 

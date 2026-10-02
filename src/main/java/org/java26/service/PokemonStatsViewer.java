@@ -20,16 +20,16 @@ public class PokemonStatsViewer {
         }
 
         System.out.println(
-                "+----------------+----------------+--------+--------+"
+                "+----------------+----------------+--------+--------+--------+"
         );
 
         System.out.printf(
-                "| %-14s | %-14s | %-6s | %-6s |%n",
-                "Name", "Type", "Win", "Loss"
+                "| %-14s | %-14s | %-6s | %-6s | %-6s |%n",
+                "Name", "Type", "Win", "Loss", "Ratio"
         );
 
         System.out.println(
-                "+----------------+----------------+--------+--------+"
+                "+----------------+----------------+--------+--------+--------+"
         );
 
         for (Pokemon pokemon : pokedex.getPokemons()) {
@@ -38,18 +38,21 @@ public class PokemonStatsViewer {
 
             int losses = statistics.getPokemonLosses()
                     .getOrDefault(pokemon.getName(), 0);
-
+            double ratio = (wins + losses) == 0
+                    ? 0.0
+                    : (double) wins / (wins + losses);
             System.out.printf(
-                    "| %-14s | %-14s | %-6d | %-6d |%n",
+                    "| %-14s | %-14s | %-6d | %-6d | %-6.2f |%n",
                     pokemon.getName(),
                     pokemon.getType().getLabel(),
                     wins,
-                    losses
+                    losses,
+                    ratio
             );
         }
 
         System.out.println(
-                "+----------------+----------------+--------+--------+"
+                "+----------------+----------------+--------+--------+--------+"
         );
     }
 }

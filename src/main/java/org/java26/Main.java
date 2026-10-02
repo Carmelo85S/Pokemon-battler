@@ -14,8 +14,9 @@ import static org.java26.repository.SaveLoadPokemons.loadInitialPokemonData;
 public class Main {
     public static void main(String[] args) throws QuitPokemonOperationException {
         Pokedex pokedex = new Pokedex();
-        BattleStatistics statistics = new BattleStatistics();
         JsonHandler jsonHandler = new JsonHandler();
+        BattleStatistics statistics = jsonHandler.loadStatistics("statistic.json");
+
         printWelcome();
         loadInitialPokemonData(pokedex, jsonHandler);
 

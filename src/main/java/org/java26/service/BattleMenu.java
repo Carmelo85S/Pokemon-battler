@@ -13,8 +13,7 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
-import static org.java26.repository.SaveLoadPokemons.loadPokemonList;
-import static org.java26.repository.SaveLoadPokemons.saveToFile;
+import static org.java26.repository.SaveLoadPokemons.*;
 
 public class BattleMenu {
     public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics) {
@@ -40,6 +39,7 @@ public class BattleMenu {
     }
 
     public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics) {
+
         try {
             switch (choice) {
                 case 1 -> {
@@ -50,7 +50,8 @@ public class BattleMenu {
                             scanner,
                             pokedex,
                             wildPokemons,
-                            statistics
+                            statistics,
+                            jsonHandler
                     );
                 }
                 case 2 ->  {
@@ -60,10 +61,11 @@ public class BattleMenu {
                     HandicapBattle.startHandicapBattle(
                             scanner,
                             pokedex,
-                            wildPokemons
+                            wildPokemons,
+                            statistics
                     );
                 }
-                case 3 -> saveToFile(pokedex, jsonHandler);
+                case 3 -> jsonHandler.saveStatistics("statistic.json", statistics);
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {

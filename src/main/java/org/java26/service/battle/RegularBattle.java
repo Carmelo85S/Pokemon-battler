@@ -1,5 +1,6 @@
 package org.java26.service.battle;
 
+import org.java26.handlers.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
@@ -15,7 +16,7 @@ import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
-    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics) {
+    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
         title("Regular Battle");
 
         int round = 1;
@@ -70,7 +71,8 @@ public class RegularBattle {
                     myPokemon,
                     opponent,
                     false,
-                    statistics
+                    statistics,
+                    jsonHandler
             );
         } else {
             handleEndFight(
@@ -78,10 +80,11 @@ public class RegularBattle {
                     myPokemon,
                     opponent,
                     true,
-                    statistics
+                    statistics,
+                    jsonHandler
             );
 
-            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics);
+            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics, jsonHandler);
         }
     }
 
@@ -119,7 +122,7 @@ public class RegularBattle {
         }
     }
 
-    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics) {
+    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
 
         separator();
         System.out.println("  " + myPokemon.getName() + prompt);
@@ -137,9 +140,12 @@ public class RegularBattle {
 
             myPokemon.heal(myPokemon.getMaxHp());
         }
+
+        jsonHandler.saveStatistics("statistic.json", statistics);
+        System.out.println("  Statistics saved!");
     }
 
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon catched, List<Pokemon> wildPokemon, BattleStatistics statistics) {
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon catched, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
@@ -157,7 +163,7 @@ public class RegularBattle {
         separator();
 
         if (choice == 1) {
-            startBattle(scanner, pokedex, wildPokemon, statistics);
+            startBattle(scanner, pokedex, wildPokemon, statistics, jsonHandler);
             return;
         }
         System.out.println("  Returning to menu");

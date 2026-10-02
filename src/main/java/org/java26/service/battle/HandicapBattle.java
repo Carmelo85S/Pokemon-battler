@@ -18,7 +18,7 @@ import static org.java26.service.battle.BattleLogic.calculateDamage;
 import static org.java26.service.battle.BattleLogic.chooseRandomAttack;
 
 public class HandicapBattle {
-    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons) {
+    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics) {
         title("Handicap Battle");
 
         int round = 1;
@@ -92,7 +92,6 @@ public class HandicapBattle {
                 Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
                 runTurnAccuracyBonus(selectedPlayerAttack, myPokemon, opponent, random, playerAccuracyBonus);
 
-
             } else {
                 subTitle(opponent.getName() + " turn.");
                 Attack opponentAttack = chooseRandomAttack(opponent, random);
@@ -106,17 +105,20 @@ public class HandicapBattle {
                     " lost the battle",
                     myPokemon,
                     opponent,
-                    false
+                    false,
+                    statistics
+
             );
         } else {
             handleEndFight(
                     " won the battle",
                     myPokemon,
                     opponent,
-                    true
+                    true,
+                    statistics
             );
 
-            handleVictory(scanner, pokedex, opponent, wildPokemons);
+            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics );
         }
     }
 
@@ -160,21 +162,21 @@ public class HandicapBattle {
         }
     }
 
-    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won) {
+    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics) {
 
         separator();
         System.out.println("  " + myPokemon.getName() + prompt);
         if (won) {
-            myPokemon.addWin();
+            statistics.addWin();
             myPokemon.heal(myPokemon.getMaxHp());
             opponent.heal(opponent.getMaxHp());
         } else {
-            myPokemon.addLoss();
+            statistics.addLoss();
             myPokemon.heal(myPokemon.getMaxHp());
         }
     }
 
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon) {
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics) {
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
@@ -192,7 +194,7 @@ public class HandicapBattle {
         separator();
 
         if (choice == 1) {
-            startHandicapBattle(scanner, pokedex, wildPokemon);
+            startHandicapBattle(scanner, pokedex, wildPokemon,statistics);
             return;
         }
         System.out.println("  Returning to menu");
