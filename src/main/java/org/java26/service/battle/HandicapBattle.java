@@ -1,5 +1,7 @@
 package org.java26.service.battle;
 
+import org.java26.exceptions.InvalidPokemonException;
+import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
@@ -12,14 +14,15 @@ import static org.java26.consoleLayout.BattleUI.*;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.PokemonViewer.showPokemons;
-import static org.java26.service.battle.BattleLogic.*;
+import static org.java26.service.battle.BattleLogic.calculateDamage;
+import static org.java26.service.battle.BattleLogic.chooseRandomAttack;
 
-public class RegularBattle {
-    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons) {
-        title("Regular Battle");
+public class HandicapBattle {
+    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons) {
+        title("Handicap Battle");
 
         int round = 1;
-
+        int choice;
         Random random = new Random();
 
         if (wildPokemons.isEmpty()) {
@@ -39,10 +42,43 @@ public class RegularBattle {
         showPokemons(pokedex);
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
-
         Pokemon opponent = chooseOpponent(random, wildPokemons);
 
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
+
+        int playerAccuracyBonus = 0;
+        int opponentAccuracyBonus = 0;
+
+        title("Choose handicap for the match");
+        menuOption(1, "Player + 50 maxHp");
+        menuOption(2, "Opponent + 50 maxHp");
+        menuOption(3, "Player - 20 accuracy");
+        menuOption(4, "Opponent - 20 accuracy");
+        menuOption(5, "Exit");
+        backOption();
+
+
+            choice = readIntBetween(scanner, 1, 5, "Select an option: > ");
+
+            try {
+                switch (choice) {
+                    case 1 -> {
+                        myPokemon.setMaxHp(myPokemon.getMaxHp() + 50);
+                        myPokemon.setCurrentHp(myPokemon.getMaxHp());
+                    }
+                    case 2 -> {
+                        opponent.setMaxHp(opponent.getMaxHp() + 50);
+                        opponent.setCurrentHp(opponent.getMaxHp());
+                    }
+                    case 3 -> playerAccuracyBonus = 20;
+                    case 4 -> opponentAccuracyBonus = 20;
+                    case 5 -> {
+                        return;
+                    }
+                }
+            } catch (QuitPokemonOperationException e) {
+                System.out.println(e.getMessage());
+            }
 
         title("---Random Start---");
         boolean playerTurn = random.nextBoolean();
@@ -52,14 +88,16 @@ public class RegularBattle {
             title("ROUND " + round);
             if (playerTurn) {
                 subTitle(myPokemon.getName() + " turn.");
-                Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
 
-                runTurn(selectedPlayerAttack, myPokemon, opponent, random);
+                Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
+                System.out.println("ACCURACY BEFORE: " + selectedPlayerAttack.getAccuracy());
+                runTurnAccuracyBonus(selectedPlayerAttack, myPokemon, opponent, random, playerAccuracyBonus);
+
+
             } else {
                 subTitle(opponent.getName() + " turn.");
                 Attack opponentAttack = chooseRandomAttack(opponent, random);
-
-                runTurn(opponentAttack, opponent, myPokemon, random);
+                runTurnAccuracyBonus(opponentAttack, opponent, myPokemon, random, opponentAccuracyBonus);
             }
             round++;
             playerTurn = !playerTurn;
@@ -83,9 +121,11 @@ public class RegularBattle {
         }
     }
 
-    private static void runTurn(Attack attack, Pokemon attacker, Pokemon defender, Random random) {
+    private static void runTurnAccuracyBonus(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyBonus) {
         int hitChance = random.nextInt(100) + 1;
-        boolean isHit = hitChance <= attack.getAccuracy();
+        int accuracy = Math.min(100, attack.getAccuracy() - accuracyBonus);
+        System.out.println("ACCURACY AFTER: " + accuracy);
+        boolean isHit = hitChance <= accuracy;
         if (!isHit) {
             System.out.println(
                     "  " + attacker.getName() +
@@ -93,8 +133,7 @@ public class RegularBattle {
                             " but missed!"
             );
             separator();
-        }
-        else {
+        } else {
             int damage = calculateDamage(defender, attack, random);
             defender.takeDamage(damage);
             System.out.println(
@@ -131,14 +170,14 @@ public class RegularBattle {
         }
     }
 
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon catched, List<Pokemon> wildPokemon) {
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon) {
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
         int choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
         separator();
         if (choice == 1) {
-            pokedex.addPokemon(catched);
+            pokedex.addPokemon(caught);
         }
         ;
         subTitle("Play again");
@@ -149,7 +188,7 @@ public class RegularBattle {
         separator();
 
         if (choice == 1) {
-            startBattle(scanner, pokedex, wildPokemon);
+            startHandicapBattle(scanner, pokedex, wildPokemon);
             return;
         }
         System.out.println("  Returning to menu");

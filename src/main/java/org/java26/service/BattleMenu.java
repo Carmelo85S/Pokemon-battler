@@ -4,6 +4,7 @@ import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.service.battle.HandicapBattle;
 import org.java26.service.battle.RegularBattle;
 
 import java.util.List;
@@ -49,7 +50,16 @@ public class BattleMenu {
                             wildPokemons
                     );
                 }
-                case 2 -> System.out.println("Start Handicap match battle");
+                case 2 ->  {
+                    List<Pokemon> wildPokemons =
+                            loadPokemonList(jsonHandler, "wild-pokemons.json");
+
+                    HandicapBattle.startHandicapBattle(
+                            scanner,
+                            pokedex,
+                            wildPokemons
+                    );
+                }
                 case 3 -> saveToFile(pokedex, jsonHandler);
                 default -> System.out.println("  Invalid input");
             }
