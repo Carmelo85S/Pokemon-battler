@@ -107,7 +107,7 @@ public class PokemonViewer {
             System.out.printf(
                     "| %-14s | %-14s |%n",
                     p.getName(),
-                    p.getType()
+                    p.getType().getLabel()
             );
         }
         System.out.println(

@@ -49,8 +49,8 @@ public class PokemonCreator {
 
             maxHp = readIntBetween(
                     scanner,
-                    10,
-                    1000,
+                    200,
+                    300,
                     "  Enter max HP between %d and %d: "
             );
             System.out.println();

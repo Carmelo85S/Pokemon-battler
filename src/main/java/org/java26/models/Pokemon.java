@@ -161,7 +161,7 @@ public class Pokemon {
     @Override
     public String toString() {
         return "Pokemon: " + name +
-                " | Type: " + type.getType() +
+                " | Type: " + type.getLabel() +
                 " | HP: " + currentHp + " / " + maxHp;
     }
 }

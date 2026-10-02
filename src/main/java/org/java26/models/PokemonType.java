@@ -13,7 +13,7 @@ public enum PokemonType {
         this.label = label;
     }
 
-    public String getType() {
+    public String getLabel() {
         return label;
     }
 }

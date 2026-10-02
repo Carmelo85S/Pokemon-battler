@@ -2,8 +2,8 @@
   {
     "name": "Eevee",
     "type": "NORMAL",
-    "maxHp": 85,
-    "currentHp": 85,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Tackle",
@@ -22,8 +22,8 @@
   {
     "name": "Growlithe",
     "type": "FIRE",
-    "maxHp": 85,
-    "currentHp": 85,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Ember",
@@ -42,8 +42,8 @@
   {
     "name": "Vulpix",
     "type": "FIRE",
-    "maxHp": 75,
-    "currentHp": 75,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Ember",
@@ -62,8 +62,8 @@
   {
     "name": "Squirtle",
     "type": "WATER",
-    "maxHp": 85,
-    "currentHp": 85,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Water Gun",
@@ -82,8 +82,8 @@
   {
     "name": "Psyduck",
     "type": "WATER",
-    "maxHp": 80,
-    "currentHp": 80,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Water Gun",
@@ -102,8 +102,8 @@
   {
     "name": "Poliwag",
     "type": "WATER",
-    "maxHp": 75,
-    "currentHp": 75,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Bubble",
@@ -122,8 +122,8 @@
   {
     "name": "Oddish",
     "type": "GRASS",
-    "maxHp": 80,
-    "currentHp": 80,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Absorb",
@@ -142,8 +142,8 @@
   {
     "name": "Bellsprout",
     "type": "GRASS",
-    "maxHp": 78,
-    "currentHp": 78,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Vine Whip",
@@ -162,8 +162,8 @@
   {
     "name": "Magnemite",
     "type": "ELECTRIC",
-    "maxHp": 70,
-    "currentHp": 70,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Thunder Shock",
@@ -182,8 +182,8 @@
   {
     "name": "Voltorb",
     "type": "ELECTRIC",
-    "maxHp": 75,
-    "currentHp": 75,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Spark",
@@ -202,8 +202,8 @@
   {
     "name": "Meowth",
     "type": "NORMAL",
-    "maxHp": 75,
-    "currentHp": 75,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Scratch",
@@ -222,8 +222,8 @@
   {
     "name": "Rattata",
     "type": "NORMAL",
-    "maxHp": 70,
-    "currentHp": 70,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Tackle",
@@ -242,8 +242,8 @@
   {
     "name": "Pidgey",
     "type": "NORMAL",
-    "maxHp": 72,
-    "currentHp": 72,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Tackle",
@@ -262,8 +262,8 @@
   {
     "name": "Sandshrew",
     "type": "NORMAL",
-    "maxHp": 85,
-    "currentHp": 85,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Scratch",
@@ -282,8 +282,8 @@
   {
     "name": "Machop",
     "type": "NORMAL",
-    "maxHp": 90,
-    "currentHp": 90,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Low Kick",
@@ -302,8 +302,8 @@
   {
     "name": "Jigglypuff",
     "type": "NORMAL",
-    "maxHp": 95,
-    "currentHp": 95,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Pound",
@@ -322,8 +322,8 @@
   {
     "name": "Clefairy",
     "type": "NORMAL",
-    "maxHp": 90,
-    "currentHp": 90,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Pound",
@@ -342,8 +342,8 @@
   {
     "name": "Seel",
     "type": "WATER",
-    "maxHp": 80,
-    "currentHp": 80,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Water Gun",
@@ -362,8 +362,8 @@
   {
     "name": "Ponyta",
     "type": "FIRE",
-    "maxHp": 85,
-    "currentHp": 85,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Ember",
@@ -382,8 +382,8 @@
   {
     "name": "Magmar",
     "type": "FIRE",
-    "maxHp": 90,
-    "currentHp": 90,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Ember",
@@ -394,7 +394,7 @@
       {
         "name": "Flame Wheel",
         "baseDamage": 60,
-        "accuracy": 90,
+        "accuracy": 20,
         "type": "FIRE"
       },
       {

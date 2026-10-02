@@ -91,18 +91,14 @@ public class RegularBattle {
                             " but missed!"
             );
             separator();
-
         }
         else {
             int damage = calculateDamage(defender, attack, random);
-
             defender.takeDamage(damage);
-
             System.out.println(
                     "  " + attacker.getName() +
                             " used " + attack.getName() + "!"
             );
-
             System.out.println(
                     "  Damage: " + damage
             );

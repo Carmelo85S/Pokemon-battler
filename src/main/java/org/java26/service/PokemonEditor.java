@@ -87,7 +87,7 @@ public class PokemonEditor {
                 }
                 case 3 -> {
                     try {
-                        pokemon.setMaxHp(readIntBetween(scanner, 10, 1000, "  Enter new hp value: "));
+                        pokemon.setMaxHp(readIntBetween(scanner, 200, 300, "  Enter new hp value: "));
                         if (pokemon.getCurrentHp() > pokemon.getMaxHp()) {
                             pokemon.setCurrentHp(pokemon.getMaxHp());
                         }

@@ -1,9 +1,11 @@
 [
   {
+    "win": 0,
+    "loss": 0,
     "name": "Pikachu",
     "type": "ELECTRIC",
-    "maxHp": 100,
-    "currentHp": 100,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Thunder Shock",
@@ -20,10 +22,12 @@
     ]
   },
   {
+    "win": 0,
+    "loss": 0,
     "name": "Charizard",
     "type": "FIRE",
-    "maxHp": 90,
-    "currentHp": 90,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Flamethrower",
@@ -40,10 +44,12 @@
     ]
   },
   {
+    "win": 0,
+    "loss": 0,
     "name": "Blastoise",
     "type": "WATER",
-    "maxHp": 95,
-    "currentHp": 95,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Water Gun",
@@ -60,10 +66,12 @@
     ]
   },
   {
+    "win": 0,
+    "loss": 0,
     "name": "Bulbasaur",
     "type": "GRASS",
-    "maxHp": 85,
-    "currentHp": 85,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Vine Whip",
@@ -80,10 +88,12 @@
     ]
   },
   {
+    "win": 0,
+    "loss": 0,
     "name": "Raichu",
     "type": "ELECTRIC",
-    "maxHp": 90,
-    "currentHp": 90,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Thunder Shock",
@@ -100,10 +110,12 @@
     ]
   },
   {
+    "win": 0,
+    "loss": 0,
     "name": "Charmander",
     "type": "FIRE",
-    "maxHp": 80,
-    "currentHp": 80,
+    "maxHp": 300,
+    "currentHp": 300,
     "attacks": [
       {
         "name": "Ember",
@@ -116,6 +128,56 @@
         "baseDamage": 45,
         "accuracy": 95,
         "type": "NORMAL"
+      }
+    ]
+  },
+  {
+    "win": 0,
+    "loss": 0,
+    "name": "Magnemite",
+    "type": "ELECTRIC",
+    "maxHp": 300,
+    "currentHp": 300,
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "ELECTRIC"
+      },
+      {
+        "name": "Spark",
+        "baseDamage": 50,
+        "accuracy": 90,
+        "type": "ELECTRIC"
+      }
+    ]
+  },
+  {
+    "win": 0,
+    "loss": 0,
+    "name": "Magmar",
+    "type": "FIRE",
+    "maxHp": 300,
+    "currentHp": 300,
+    "attacks": [
+      {
+        "name": "Ember",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "FIRE"
+      },
+      {
+        "name": "Flame Wheel",
+        "baseDamage": 60,
+        "accuracy": 90,
+        "type": "FIRE"
+      },
+      {
+        "name": "Flamethrower",
+        "baseDamage": 70,
+        "accuracy": 85,
+        "type": "FIRE"
       }
     ]
   }
