@@ -58,27 +58,27 @@ public class HandicapBattle {
         backOption();
 
 
-            choice = readIntBetween(scanner, 1, 5, "Select an option: > ");
+        choice = readIntBetween(scanner, 1, 5, "Select an option: > ");
 
-            try {
-                switch (choice) {
-                    case 1 -> {
-                        myPokemon.setMaxHp(myPokemon.getMaxHp() + 50);
-                        myPokemon.setCurrentHp(myPokemon.getMaxHp());
-                    }
-                    case 2 -> {
-                        opponent.setMaxHp(opponent.getMaxHp() + 50);
-                        opponent.setCurrentHp(opponent.getMaxHp());
-                    }
-                    case 3 -> playerAccuracyBonus = 20;
-                    case 4 -> opponentAccuracyBonus = 20;
-                    case 5 -> {
-                        return;
-                    }
+        try {
+            switch (choice) {
+                case 1 -> {
+                    myPokemon.setMaxHp(myPokemon.getMaxHp() + 50);
+                    myPokemon.setCurrentHp(myPokemon.getMaxHp());
                 }
-            } catch (QuitPokemonOperationException e) {
-                System.out.println(e.getMessage());
+                case 2 -> {
+                    opponent.setMaxHp(opponent.getMaxHp() + 50);
+                    opponent.setCurrentHp(opponent.getMaxHp());
+                }
+                case 3 -> playerAccuracyBonus = 20;
+                case 4 -> opponentAccuracyBonus = 20;
+                case 5 -> {
+                    return;
+                }
             }
+        } catch (QuitPokemonOperationException e) {
+            System.out.println(e.getMessage());
+        }
 
         title("---Random Start---");
         boolean playerTurn = random.nextBoolean();
@@ -90,7 +90,6 @@ public class HandicapBattle {
                 subTitle(myPokemon.getName() + " turn.");
 
                 Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
-                System.out.println("ACCURACY BEFORE: " + selectedPlayerAttack.getAccuracy());
                 runTurnAccuracyBonus(selectedPlayerAttack, myPokemon, opponent, random, playerAccuracyBonus);
 
 
@@ -124,7 +123,6 @@ public class HandicapBattle {
     private static void runTurnAccuracyBonus(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyBonus) {
         int hitChance = random.nextInt(100) + 1;
         int accuracy = Math.min(100, attack.getAccuracy() - accuracyBonus);
-        System.out.println("ACCURACY AFTER: " + accuracy);
         boolean isHit = hitChance <= accuracy;
         if (!isHit) {
             System.out.println(
@@ -135,6 +133,12 @@ public class HandicapBattle {
             separator();
         } else {
             int damage = calculateDamage(defender, attack, random);
+            boolean isCritical = random.nextInt(16) == 0;
+
+            if(isCritical){
+                damage *= 2;
+                subTitle("!!!Critical hit!!!");
+            }
             defender.takeDamage(damage);
             System.out.println(
                     "  " + attacker.getName() +
