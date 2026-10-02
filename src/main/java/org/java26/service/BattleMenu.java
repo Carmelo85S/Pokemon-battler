@@ -4,6 +4,7 @@ import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.service.battle.BattleStatistics;
 import org.java26.service.battle.HandicapBattle;
 import org.java26.service.battle.RegularBattle;
 
@@ -16,7 +17,7 @@ import static org.java26.repository.SaveLoadPokemons.loadPokemonList;
 import static org.java26.repository.SaveLoadPokemons.saveToFile;
 
 public class BattleMenu {
-    public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics) {
         int choice;
         do {
             title("Battle Menu");
@@ -32,12 +33,13 @@ public class BattleMenu {
                     choice,
                     scanner,
                     pokedex,
-                    jsonHandler
+                    jsonHandler,
+                    statistics
             );
         } while(choice != 3);
     }
 
-    public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics) {
         try {
             switch (choice) {
                 case 1 -> {
@@ -47,7 +49,8 @@ public class BattleMenu {
                     RegularBattle.startBattle(
                             scanner,
                             pokedex,
-                            wildPokemons
+                            wildPokemons,
+                            statistics
                     );
                 }
                 case 2 ->  {

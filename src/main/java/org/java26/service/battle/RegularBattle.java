@@ -15,7 +15,7 @@ import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
-    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons) {
+    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics) {
         title("Regular Battle");
 
         int round = 1;
@@ -69,17 +69,19 @@ public class RegularBattle {
                     " lost the battle",
                     myPokemon,
                     opponent,
-                    false
+                    false,
+                    statistics
             );
         } else {
             handleEndFight(
                     " won the battle",
                     myPokemon,
                     opponent,
-                    true
+                    true,
+                    statistics
             );
 
-            handleVictory(scanner, pokedex, opponent, wildPokemons);
+            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics);
         }
     }
 
@@ -117,21 +119,27 @@ public class RegularBattle {
         }
     }
 
-    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won) {
+    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics) {
 
         separator();
         System.out.println("  " + myPokemon.getName() + prompt);
+        statistics.addPokemonUse(myPokemon.getName());
+
         if (won) {
-            myPokemon.addWin();
+            statistics.addWin();
+            statistics.addPokemonWin(myPokemon.getName());
+
             myPokemon.heal(myPokemon.getMaxHp());
             opponent.heal(opponent.getMaxHp());
         } else {
-            myPokemon.addLoss();
+            statistics.addLoss();
+            statistics.addPokemonLoss(myPokemon.getName());
+
             myPokemon.heal(myPokemon.getMaxHp());
         }
     }
 
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon catched, List<Pokemon> wildPokemon) {
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon catched, List<Pokemon> wildPokemon, BattleStatistics statistics) {
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
@@ -149,7 +157,7 @@ public class RegularBattle {
         separator();
 
         if (choice == 1) {
-            startBattle(scanner, pokedex, wildPokemon);
+            startBattle(scanner, pokedex, wildPokemon, statistics);
             return;
         }
         System.out.println("  Returning to menu");

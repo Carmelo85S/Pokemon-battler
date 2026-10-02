@@ -3,6 +3,7 @@ package org.java26.service;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
+import org.java26.service.battle.BattleStatistics;
 
 import java.util.Scanner;
 
@@ -46,7 +47,7 @@ public class Menu {
 
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics) {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
@@ -57,8 +58,8 @@ public class Menu {
                 case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
-                case 9 -> battleMenu(scanner, pokedex, jsonHandler);
-                case 10 -> getPokemonsStats(pokedex);
+                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics);
+                case 10 -> getPokemonsStats(pokedex, statistics);
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {

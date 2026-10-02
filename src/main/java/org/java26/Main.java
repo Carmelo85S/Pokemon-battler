@@ -4,6 +4,7 @@ import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.inputHelpers.InputHelper;
+import org.java26.service.battle.BattleStatistics;
 
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ import static org.java26.repository.SaveLoadPokemons.loadInitialPokemonData;
 public class Main {
     public static void main(String[] args) throws QuitPokemonOperationException {
         Pokedex pokedex = new Pokedex();
+        BattleStatistics statistics = new BattleStatistics();
         JsonHandler jsonHandler = new JsonHandler();
         printWelcome();
         loadInitialPokemonData(pokedex, jsonHandler);
@@ -28,7 +30,7 @@ public class Main {
                         10,
                         "  Select an option %n  > "
                 );
-                runAction(choice, scanner, pokedex, jsonHandler);
+                runAction(choice, scanner, pokedex, jsonHandler, statistics);
 
         } while (choice != 0);
         scanner.close();
