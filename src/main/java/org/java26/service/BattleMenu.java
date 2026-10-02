@@ -12,19 +12,20 @@ import java.util.Scanner;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.repository.SaveLoadPokemons.loadPokemonList;
+import static org.java26.repository.SaveLoadPokemons.saveToFile;
 
 public class BattleMenu {
     public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
-
-        while (true) {
+        int choice;
+        do {
             title("Battle Menu");
             subTitle("Choose your mode");
             menuOption(1, "Regular battle");
             menuOption(2, "Handicap match");
-            menuOption(3, "Survival");
+            menuOption(3, "Exit & Save");
             backOption();
 
-            int choice = readIntBetween(scanner, 0, 3, "Choose you battle mode: ");
+            choice = readIntBetween(scanner, 0,3, "Choose your battle mode: ");
 
             runBattleMenuAction(
                     choice,
@@ -32,7 +33,7 @@ public class BattleMenu {
                     pokedex,
                     jsonHandler
             );
-        }
+        } while(choice != 3);
     }
 
     public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler) {
@@ -49,7 +50,7 @@ public class BattleMenu {
                     );
                 }
                 case 2 -> System.out.println("Start Handicap match battle");
-                case 3 -> System.out.println("Start survival battle");
+                case 3 -> saveToFile(pokedex, jsonHandler);
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {
