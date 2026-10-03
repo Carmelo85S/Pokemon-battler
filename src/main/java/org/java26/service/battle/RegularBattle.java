@@ -43,7 +43,7 @@ public class RegularBattle {
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
 
         Pokemon opponent = chooseOpponent(random, wildPokemons);
-
+        recordPokemonUse(statistics, myPokemon);
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
         title("---Random Start---");
@@ -132,25 +132,29 @@ public class RegularBattle {
 
         if (won) {
             recordWin(statistics, myPokemon);
+            recordLoss(statistics, opponent);
             myPokemon.heal(myPokemon.getMaxHp());
             opponent.heal(opponent.getMaxHp());
         } else {
+            recordWin(statistics, opponent);
             recordLoss(statistics, myPokemon);
             myPokemon.heal(myPokemon.getMaxHp());
+            opponent.heal(opponent.getMaxHp());
         }
 
         jsonHandler.saveStatistics("statistic.json", statistics);
         System.out.println("  Statistics saved!");
     }
 
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon catched, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
         int choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
         separator();
         if (choice == 1) {
-            pokedex.addPokemon(catched);
+            recordPokemonCatch(statistics, caught);
+            pokedex.addPokemon(caught);
         }
         ;
         subTitle("Play again");

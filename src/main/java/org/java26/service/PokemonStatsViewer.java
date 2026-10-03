@@ -23,27 +23,35 @@ public class PokemonStatsViewer {
         }
 
         System.out.println(
-                "+----------------+----------------+--------+--------+--------+----------------+--------+"
+                "+----------------+------------+------------+--------+--------+--------+----------------+--------+"
         );
 
         System.out.printf(
-                "| %-14s | %-14s | %-6s | %-6s | %-6s | %-14s | %-6s | %n",
-                "Name", "Type", "Win", "Loss", "Ratio", "Attack used", "Times"
+                "| %-14s | %-10s | %-10s | %-6s | %-6s | %-6s | %-14s | %-6s | %n",
+                "Name", "Caught ", "Used Times", "Win", "Loss", "Ratio", "Attack used", "Times"
         );
 
         System.out.println(
-                "+----------------+----------------+--------+--------+--------+----------------+--------+"
+                "+----------------+------------+------------+--------+--------+--------+----------------+--------+"
         );
 
         for (Pokemon pokemon : pokedex.getPokemons()) {
+            String caught = statistics.getPokemonCatch()
+                    .containsKey(pokemon.getName()) ? "Yes" : "No";
+
+            int pokemonUsedTimes = statistics.getPokemonUse()
+                    .getOrDefault(pokemon.getName(), 0);
+
             int wins = statistics.getPokemonWins()
                     .getOrDefault(pokemon.getName(), 0);
 
             int losses = statistics.getPokemonLosses()
                     .getOrDefault(pokemon.getName(), 0);
+
             double ratio = (wins + losses) == 0
                     ? 0.0
                     : (double) wins / (wins + losses);
+
             HashMap<String, Integer> attacks =
                     statistics.getPokemonAttackUse()
                             .getOrDefault(pokemon.getName(), new HashMap<>());
@@ -52,14 +60,15 @@ public class PokemonStatsViewer {
                     .stream()
                     .max(Map.Entry.comparingByValue())
                     .map(Map.Entry::getKey)
-                    .orElse("None");
+                    .orElse("-");
 
             int attackUsed = attacks.getOrDefault(mostUsedAttack, 0);
 
             System.out.printf(
-                    "| %-14s | %-14s | %-6d | %-6d | %-6.2f | %-14s | %-6d |%n",
+                    "| %-14s | %-10s | %-10s | %-6d | %-6d | %-6.2f | %-14s | %-6d |%n",
                     pokemon.getName(),
-                    pokemon.getType().getLabel(),
+                    caught,
+                    pokemonUsedTimes,
                     wins,
                     losses,
                     ratio,
@@ -69,7 +78,7 @@ public class PokemonStatsViewer {
         }
 
         System.out.println(
-                "+----------------+----------------+--------+--------+--------+----------------+--------+"
+                "+----------------+------------+------------+--------+--------+--------+----------------+--------+"
         );
     }
 }

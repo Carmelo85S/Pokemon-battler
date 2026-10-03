@@ -44,6 +44,7 @@ public class HandicapBattle {
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
         Pokemon opponent = chooseOpponent(random, wildPokemons);
+        recordPokemonUse(statistics, myPokemon);
 
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
@@ -172,11 +173,14 @@ public class HandicapBattle {
         System.out.println("  " + myPokemon.getName() + prompt);
         if (won) {
             recordWin(statistics, myPokemon);
+            recordLoss(statistics, opponent);
             myPokemon.heal(myPokemon.getMaxHp());
             opponent.heal(opponent.getMaxHp());
         } else {
+            recordWin(statistics, opponent);
             recordLoss(statistics, myPokemon);
             myPokemon.heal(myPokemon.getMaxHp());
+            opponent.heal(opponent.getMaxHp());
         }
     }
 
@@ -187,6 +191,7 @@ public class HandicapBattle {
         int choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
         separator();
         if (choice == 1) {
+            recordPokemonCatch(statistics, caught);
             pokedex.addPokemon(caught);
         }
         ;
