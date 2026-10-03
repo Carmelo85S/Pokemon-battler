@@ -21,7 +21,7 @@ import static org.java26.service.battle.BattleLogic.chooseRandomAttack;
 public class HandicapBattle {
     public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
         title("Handicap Battle");
-
+        showHandicapBattleRules();
         int round = 1;
         int choice;
         Random random = new Random();
