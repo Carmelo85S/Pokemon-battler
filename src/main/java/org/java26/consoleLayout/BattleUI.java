@@ -34,6 +34,7 @@ public class BattleUI {
             }
         }
     }
+
     public static void showAttacks(Pokemon pokemon) {
         System.out.println();
         System.out.println("  ATTACKS");
@@ -102,6 +103,42 @@ public class BattleUI {
         return wildPokemons.get(randomOpponent);
     }
 
+    public static void showRegularBattleRules() {
+        title("Battle Rules");
+        subTitle("Choose one of your Pokemon.");
+        subTitle("You and the opponent take turns attacking.");
+        subTitle("Each attack has its own damage and accuracy.");
+        subTitle("An attack can miss.");
+        subTitle("The battle ends when one Pokemon faints.");
+        subTitle("The winner is the Pokemon that remains standing.");
+        subTitle("Pokemon HP is restored after the battle.");
+        subTitle("Winner can catch pokemon opponent");
+        subTitle("Statistic saved automatically at the end of the battle");
+        subTitle("Statistic saved automatically if user catch pokemon opponent");
 
+        separator();
+    }
 
+    public static void showHandicapBattleRules() {
+        title("Handicap Battle Rules");
+        subTitle("Choose one of your Pokemon.");
+        subTitle("Choose one handicap before the battle starts.");
+        subTitle("You and the opponent take turns attacking.");
+        subTitle("Each attack has its own damage and accuracy.");
+        subTitle("An attack can miss.");
+        subTitle("Critical hits can deal double damage.");
+        subTitle("The battle ends when one Pokemon faints.");
+        subTitle("Pokemon HP is restored after the battle.");
+        subTitle("Statistic saved automatically at the end of the battle");
+        subTitle("Statistic saved automatically if user catch pokemon opponent");
+        separator();
+
+        subTitle("Available Handicaps");
+
+        subTitle("Player + 50 max HP");
+        subTitle("Opponent + 50 max HP");
+        subTitle("Player - 20 accuracy");
+        subTitle("Opponent - 20 accuracy");
+        separator();
+    }
 }

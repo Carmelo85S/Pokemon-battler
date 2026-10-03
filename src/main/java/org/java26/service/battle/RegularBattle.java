@@ -1,5 +1,6 @@
 package org.java26.service.battle;
 
+import org.java26.consoleLayout.BattleUI;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
@@ -19,7 +20,7 @@ import static org.java26.service.battle.BattleLogic.*;
 public class RegularBattle {
     public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
         title("Regular Battle");
-
+        showRegularBattleRules();
         int round = 1;
 
         Random random = new Random();
@@ -155,6 +156,8 @@ public class RegularBattle {
         if (choice == 1) {
             recordPokemonCatch(statistics, caught);
             pokedex.addPokemon(caught);
+            jsonHandler.saveStatistics("statistic.json", statistics);
+            System.out.println("  Statistics saved!");
         }
         ;
         subTitle("Play again");

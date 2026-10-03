@@ -14,6 +14,7 @@ import java.util.Scanner;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.repository.SaveLoadPokemons.*;
+import static org.java26.service.battle.HandicapBattle.startHandicapBattle;
 
 public class BattleMenu {
     public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics) {
@@ -58,11 +59,12 @@ public class BattleMenu {
                     List<Pokemon> wildPokemons =
                             loadPokemonList(jsonHandler, "wild-pokemons.json");
 
-                    HandicapBattle.startHandicapBattle(
+                    startHandicapBattle(
                             scanner,
                             pokedex,
                             wildPokemons,
-                            statistics
+                            statistics,
+                            jsonHandler
                     );
                 }
                 case 3 -> jsonHandler.saveStatistics("statistic.json", statistics);

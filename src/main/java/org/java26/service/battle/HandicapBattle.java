@@ -1,7 +1,7 @@
 package org.java26.service.battle;
 
-import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
+import org.java26.handlers.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
@@ -19,7 +19,7 @@ import static org.java26.service.battle.BattleLogic.calculateDamage;
 import static org.java26.service.battle.BattleLogic.chooseRandomAttack;
 
 public class HandicapBattle {
-    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics) {
+    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
         title("Handicap Battle");
 
         int round = 1;
@@ -108,7 +108,8 @@ public class HandicapBattle {
                     myPokemon,
                     opponent,
                     false,
-                    statistics
+                    statistics,
+                    jsonHandler
 
             );
         } else {
@@ -117,10 +118,11 @@ public class HandicapBattle {
                     myPokemon,
                     opponent,
                     true,
-                    statistics
+                    statistics,
+                    jsonHandler
             );
 
-            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics );
+            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics, jsonHandler);
         }
     }
 
@@ -142,7 +144,7 @@ public class HandicapBattle {
             int damage = calculateDamage(defender, attack, random);
             boolean isCritical = random.nextInt(16) == 0;
 
-            if(isCritical){
+            if (isCritical) {
                 damage *= 2;
                 subTitle("!!!Critical hit!!!");
             }
@@ -167,7 +169,7 @@ public class HandicapBattle {
         }
     }
 
-    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics) {
+    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
 
         separator();
         System.out.println("  " + myPokemon.getName() + prompt);
@@ -182,9 +184,12 @@ public class HandicapBattle {
             myPokemon.heal(myPokemon.getMaxHp());
             opponent.heal(opponent.getMaxHp());
         }
+        jsonHandler.saveStatistics("statistic.json", statistics);
+        System.out.println("  Statistics saved!");
     }
 
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics) {
+
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
@@ -193,6 +198,8 @@ public class HandicapBattle {
         if (choice == 1) {
             recordPokemonCatch(statistics, caught);
             pokedex.addPokemon(caught);
+            jsonHandler.saveStatistics("statistic.json", statistics);
+            System.out.println("  Statistics saved!");
         }
         ;
         subTitle("Play again");
@@ -203,7 +210,7 @@ public class HandicapBattle {
         separator();
 
         if (choice == 1) {
-            startHandicapBattle(scanner, pokedex, wildPokemon,statistics);
+            startHandicapBattle(scanner, pokedex, wildPokemon, statistics, jsonHandler);
             return;
         }
         System.out.println("  Returning to menu");
