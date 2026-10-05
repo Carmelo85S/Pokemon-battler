@@ -30,7 +30,13 @@ public class DamageAttack extends Attack {
     }
 
     @Override
-    public void execute(Pokemon attacker, Pokemon defender) {
+    public void execute(Pokemon attacker, Pokemon defender, boolean criticalHit) {
+
+        int damage = power;
+
+        if (criticalHit) {
+            damage *= 2;
+        }
         defender.takeDamage(power);
     }
 }

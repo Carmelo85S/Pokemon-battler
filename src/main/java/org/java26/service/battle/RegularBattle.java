@@ -101,9 +101,9 @@ public class RegularBattle {
                             " but missed!"
             );
             separator();
-        }
-        else {
-            attack.execute(attacker, defender);
+        } else {
+        boolean chriticalHit = random.nextInt(15) == 0;
+        attack.execute(attacker, defender, criticalHit);
             System.out.println(
                     "  " + attacker.getName() +
                             " used " + attack.getName() + "!"

@@ -7,7 +7,7 @@ import org.java26.models.PokemonType;
 import java.util.Random;
 
 public class BattleLogic {
-    static int calculateDamage(Pokemon pokemon, Attack attack, Random random){
+    static int calculateDamage(Pokemon pokemon, Attack attack, Random random) {
         double effect = effectiveness(pokemon, attack);
         double randomFactor = 0.85 + random.nextDouble() * 0.15;
         return (int) (
@@ -16,9 +16,10 @@ public class BattleLogic {
                         * randomFactor
         );
     }
-    public static double effectiveness(Pokemon opponent, Attack attack) {
+
+    public static double effectiveness(Pokemon defender, Attack attack) {
         PokemonType attackType = attack.getType();
-        PokemonType opponentType = opponent.getType();
+        PokemonType opponentType = defender.getType();
 
         if (attackType == PokemonType.FIRE && opponentType == PokemonType.GRASS) {
             return 2.0;
@@ -54,11 +55,11 @@ public class BattleLogic {
 
         return 1.0;
     }
+
     static Attack chooseRandomAttack(Pokemon pokemon, Random random) {
         int randomAttack = random.nextInt(pokemon.getAttacks().size());
         return pokemon.getAttacks().get(randomAttack);
     }
-
 
 
 }

@@ -15,8 +15,7 @@ import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
-import static org.java26.service.battle.BattleLogic.calculateDamage;
-import static org.java26.service.battle.BattleLogic.chooseRandomAttack;
+import static org.java26.service.battle.BattleLogic.*;
 
 public class HandicapBattle {
     public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
@@ -141,7 +140,8 @@ public class HandicapBattle {
             );
             separator();
         } else {
-            attack.execute(attacker, defender);
+            int criticalHit = (int) (0.15 * (random.nextInt(25) * effectiveness(defender, attack)));
+            attack.execute(attacker, defender, criticalHit);
             System.out.println(
                     "  " + attacker.getName() +
                             " used " + attack.getName() + "!"

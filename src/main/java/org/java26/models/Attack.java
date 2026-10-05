@@ -83,5 +83,5 @@ public abstract class Attack {
         this.type = type;
     }
 
-    public abstract void execute(Pokemon attacker, Pokemon defender);
+    public abstract void execute(Pokemon attacker, Pokemon defender, boolean criticalHit);
 }

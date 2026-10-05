@@ -75,6 +75,46 @@ HP is reduced by the calculated damage.
 The battle continues until one Pokémon reaches 0 HP.
 The result is displayed and the win/loss statistics are updated.
 
+### Critical Hits
+
+During battle, every attack has a **1 in 15 chance** of being a critical hit.
+
+The critical hit is determined randomly:
+
+```java
+boolean criticalHit = random.nextInt(15) == 0;
+```
+
+`random.nextInt(15)` generates a value between `0` and `14`. If the result is `0`, the attack is critical.
+
+* **1/15 chance** → Critical Hit (~6.67%)
+* **14/15 chance** → Normal Hit
+* A critical hit deals **double damage**
+
+The critical-hit result is passed to the attack through `execute()`:
+
+```java
+attack.execute(attacker, defender, criticalHit);
+```
+
+`DamageAttack` then applies the critical-hit multiplier:
+
+```java
+@Override
+public void execute(Pokemon attacker, Pokemon defender, boolean criticalHit) {
+    int damage = power;
+
+    if (criticalHit) {
+        damage *= 2;
+    }
+
+    defender.takeDamage(damage);
+}
+```
+
+This keeps the **random critical-hit calculation** separate from the **attack-specific damage logic**, using polymorphism.
+
+
 ## Persistence
 Pokémon and battle statistics are saved between sessions using JSON and Jackson.
 OOP
