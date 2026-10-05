@@ -1,6 +1,6 @@
 package org.java26.models;
 
-public class Attack {
+public abstract class Attack {
     private String name;
     private int baseDamage;
     private int accuracy;
@@ -9,7 +9,7 @@ public class Attack {
     private Attack() {
     }
 
-    public Attack(String name, int baseDamage, int accuracy, PokemonType type) {
+    protected Attack(String name, int baseDamage, int accuracy, PokemonType type) {
         setName(name);
         setBaseDamage(baseDamage);
         setAccuracy(accuracy);
@@ -67,4 +67,6 @@ public class Attack {
         }
         this.type = type;
     }
+
+    public abstract void execute(Pokemon attacker, Pokemon defender);
 }
