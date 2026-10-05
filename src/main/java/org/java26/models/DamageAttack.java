@@ -2,6 +2,9 @@ package org.java26.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.java26.service.battle.BattleLogic;
+
+import java.util.Random;
 
 public class DamageAttack extends Attack {
 
@@ -32,11 +35,13 @@ public class DamageAttack extends Attack {
     @Override
     public void execute(Pokemon attacker, Pokemon defender, boolean criticalHit) {
 
-        int damage = power;
+        double effectiveness = BattleLogic.effectiveness(defender, this);
+        double randomFactor = 0.85 + new Random().nextDouble() * 0.15;
+        double damage = getBaseDamage() * randomFactor * effectiveness;
 
         if (criticalHit) {
             damage *= 2;
         }
-        defender.takeDamage(power);
+        defender.takeDamage((int) damage);
     }
 }

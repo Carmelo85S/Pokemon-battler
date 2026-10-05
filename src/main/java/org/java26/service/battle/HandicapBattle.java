@@ -140,7 +140,7 @@ public class HandicapBattle {
             );
             separator();
         } else {
-            int criticalHit = (int) (0.15 * (random.nextInt(25) * effectiveness(defender, attack)));
+            boolean criticalHit = random.nextInt(15) == 0;
             attack.execute(attacker, defender, criticalHit);
             System.out.println(
                     "  " + attacker.getName() +
