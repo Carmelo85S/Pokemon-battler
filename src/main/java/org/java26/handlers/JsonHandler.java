@@ -10,6 +10,8 @@ import org.java26.service.battle.BattleStatistics;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class JsonHandler {
@@ -31,34 +33,45 @@ public class JsonHandler {
     }
 
     public void savePokemon(String filePath, List<Pokemon> pokemons) throws PokemonSaveException {
-        try{
+        try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), pokemons);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new PokemonSaveException(
                     "  Could not save Pokemon to file: " + filePath);
         }
     }
 
     public void saveStatistics(String filePath, BattleStatistics statistics) throws PokemonSaveException {
-        try{
+        try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), statistics);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new PokemonSaveException(
                     "  Could not save statistics to file: " + filePath);
         }
     }
 
-    public BattleStatistics loadStatistics(String filePath) {
-        File file = new File(filePath);
+    public BattleStatistics loadStatistics(String filePath) throws IOException {
+        Path path = Path.of(filePath);
 
-        if (!file.exists()) {
+        if (!Files.exists(path)) {
+            return new BattleStatistics();
+        }
+
+
+        String json = Files.readString(path);
+
+        if (json.isBlank()) {
+            System.out.println("  Json file is empty.");
             return new BattleStatistics();
         }
 
         try {
-            return mapper.readValue(file, BattleStatistics.class);
+            return mapper.readValue(json, BattleStatistics.class);
+
         } catch (IOException e) {
-            System.out.println("  Could not load statistics from file: " + filePath);
+            System.out.println(
+                    "  Could not load statistics from file: " + filePath
+            );
             return new BattleStatistics();
         }
     }
@@ -69,7 +82,7 @@ public class JsonHandler {
             return true;
 
         } catch (JsonProcessingException e) {
-            System.out.println("  Json file is corrupted. Load seed data");
+            System.out.println("  Json file is corrupted.");
             System.out.println();
             return false;
         }

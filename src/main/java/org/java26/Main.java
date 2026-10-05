@@ -6,13 +6,14 @@ import org.java26.models.Pokedex;
 import org.java26.inputHelpers.InputHelper;
 import org.java26.service.battle.BattleStatistics;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static org.java26.service.Menu.*;
 import static org.java26.repository.SaveLoadPokemons.loadInitialPokemonData;
 
 public class Main {
-    public static void main(String[] args) throws QuitPokemonOperationException {
+    public static void main(String[] args) throws QuitPokemonOperationException, IOException {
         Pokedex pokedex = new Pokedex();
         JsonHandler jsonHandler = new JsonHandler();
         BattleStatistics statistics = jsonHandler.loadStatistics("statistic.json");
