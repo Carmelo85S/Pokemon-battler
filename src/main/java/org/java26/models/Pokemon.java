@@ -1,6 +1,8 @@
 package org.java26.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.java26.exceptions.InvalidPokemonException;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class Pokemon {
     private PokemonType type;
     private int maxHp;
     private int currentHp;
+
     private ArrayList<Attack> attacks = new ArrayList<>();
 
     public Pokemon() {

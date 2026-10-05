@@ -1,11 +1,8 @@
 package org.java26.service;
 
-import org.java26.models.PokemonType;
+import org.java26.models.*;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.models.Attack;
-import org.java26.models.Pokedex;
-import org.java26.models.Pokemon;
 
 import java.util.Scanner;
 
@@ -79,7 +76,7 @@ public class PokemonCreator {
 
                 Attack attack = AttackCreator.createAttack(scanner, type);
 
-                pokemon.addAttack(attack);
+                pokemon.addAttack((DamageAttack)attack);
 
                 attackCount++;
 

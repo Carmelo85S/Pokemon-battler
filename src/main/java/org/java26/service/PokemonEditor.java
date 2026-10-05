@@ -3,6 +3,7 @@ package org.java26.service;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;
+import org.java26.models.DamageAttack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
@@ -129,11 +130,12 @@ public class PokemonEditor {
                             );
                             System.out.println();
 
-                            Attack newAttack = new Attack(
+                            Attack newAttack = new DamageAttack(
                                     attackName,
                                     baseDamage,
                                     accuracy,
-                                    pokemon.getType()
+                                    pokemon.getType(),
+                                    baseDamage
                             );
                             pokemon.addAttack(newAttack);
 

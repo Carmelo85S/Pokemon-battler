@@ -1,5 +1,6 @@
 package org.java26.service;
 
+import org.java26.models.DamageAttack;
 import org.java26.models.PokemonType;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;
@@ -35,11 +36,12 @@ public class AttackCreator {
         System.out.println();
         System.out.println("  Attack added successfully");
 
-        return new Attack(
+        return new DamageAttack(
                 attackName,
                 baseDamage,
                 accuracy,
-                type
+                type,
+                baseDamage
         );
     }
 }

@@ -1,12 +1,27 @@
 package org.java26.models;
 
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "attackClassType"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = DamageAttack.class, name = "damage"),
+       // @JsonSubTypes.Type(value = HealAttack.class, name = "heal"),
+       // @JsonSubTypes.Type(value = StatusAttack.class, name = "status")
+})
+
 public abstract class Attack {
     private String name;
     private int baseDamage;
     private int accuracy;
     private PokemonType type;
 
-    private Attack() {
+    protected Attack() {
     }
 
     protected Attack(String name, int baseDamage, int accuracy, PokemonType type) {
