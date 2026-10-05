@@ -76,7 +76,7 @@ public class PokemonCreator {
 
                 Attack attack = AttackCreator.createAttack(scanner, type);
 
-                pokemon.addAttack((DamageAttack)attack);
+                pokemon.addAttack(attack);
 
                 attackCount++;
 
