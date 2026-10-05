@@ -102,11 +102,19 @@ public class RegularBattle {
             );
             separator();
         } else {
-        boolean criticalHit = random.nextInt(15) == 0;
-        attack.execute(attacker, defender, criticalHit);
+            boolean criticalHit = random.nextInt(15) == 0;
+            attack.execute(attacker, defender, criticalHit);
             System.out.println(
                     "  " + attacker.getName() +
                             " used " + attack.getName() + "!"
+           );
+
+            System.out.println(
+                    "  " + attacker.getName() +
+                            " !!! HP: " +
+                            attacker.getCurrentHp() +
+                            "/" +
+                            attacker.getMaxHp()
             );
 
             System.out.println(
@@ -169,6 +177,5 @@ public class RegularBattle {
         }
         System.out.println("  Returning to menu");
     }
-
 }
 

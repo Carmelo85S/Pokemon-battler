@@ -7,7 +7,7 @@ import org.java26.models.PokemonType;
 import java.util.Random;
 
 public class BattleLogic {
-    static int calculateDamage(Pokemon pokemon, Attack attack, Random random) {
+    /*static int calculateDamage(Pokemon pokemon, Attack attack, Random random) {
         double effect = effectiveness(pokemon, attack);
         double randomFactor = 0.85 + random.nextDouble() * 0.15;
         return (int) (
@@ -15,7 +15,7 @@ public class BattleLogic {
                         * effect
                         * randomFactor
         );
-    }
+    }*/
 
     public static double effectiveness(Pokemon defender, Attack attack) {
         PokemonType attackType = attack.getType();

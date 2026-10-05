@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(value = DamageAttack.class, name = "damage"),
-       // @JsonSubTypes.Type(value = HealAttack.class, name = "heal"),
-       // @JsonSubTypes.Type(value = StatusAttack.class, name = "status")
+        @JsonSubTypes.Type(value = HealAttack.class, name = "heal"),
+        // @JsonSubTypes.Type(value = StatusAttack.class, name = "status")
 })
 
 public abstract class Attack {
@@ -84,4 +84,5 @@ public abstract class Attack {
     }
 
     public abstract void execute(Pokemon attacker, Pokemon defender, boolean criticalHit);
+
 }

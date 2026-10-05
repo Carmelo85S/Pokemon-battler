@@ -185,7 +185,7 @@ Critical Multiplier = 1.0 when normal
 
 ## Object-Oriented Programming
 
-The project uses several object-oriented programming principles.
+The project uses several object-oriented programming principles, including encapsulation, inheritance, abstraction and polymorphism.
 
 ### Encapsulation
 
@@ -207,38 +207,82 @@ Different attack types inherit from the abstract `Attack` class.
 Attack
   │
   ├── DamageAttack
-  ├── HealingAttack
-  └── Other attack types
+  └── HealAttack
 ```
 
-The base `Attack` class contains the common properties shared by all attacks, while subclasses provide their specific behaviour.
+The `Attack` class contains properties shared by all attacks, such as:
+
+```text
+name
+baseDamage
+accuracy
+type
+```
+
+The subclasses inherit these properties and provide their own implementation of the attack behaviour.
+
+`DamageAttack` is responsible for dealing damage to the opponent, while `HealAttack` restores HP to the attacking Pokémon.
 
 ### Abstraction
 
 `Attack` is an abstract class.
 
-It defines the common structure of an attack and requires concrete subclasses to implement `execute()`:
+It defines the common structure of an attack and requires every concrete subclass to implement the `execute()` method:
 
 ```java
-public abstract class Attack {
+public abstract void execute(
+        Pokemon attacker,
+        Pokemon defender,
+        boolean criticalHit
+);
+```
 
-    public abstract void execute(
-            Pokemon attacker,
-            Pokemon defender,
-            boolean criticalHit
-    );
+The base class does not need to know how each individual attack behaves.
+
+The specific behaviour is implemented by the subclasses.
+
+For example, `DamageAttack` deals damage:
+
+```java
+@Override
+public void execute(
+        Pokemon attacker,
+        Pokemon defender,
+        boolean criticalHit
+) {
+    // Calculate and apply damage
+    defender.takeDamage(...);
 }
 ```
 
-The base class does not need to know exactly how every attack behaves.
+While `HealAttack` restores HP:
+
+```java
+@Override
+public void execute(
+        Pokemon attacker,
+        Pokemon defender,
+        boolean criticalHit
+) {
+    attacker.heal(heal);
+}
+```
 
 ### Polymorphism
 
 The battle system works with the general `Attack` type instead of depending on a specific attack implementation.
 
-```java
-Attack attack = ...;
+For example:
 
+```java
+Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
+```
+
+The same approach is used for both `RegularBattle` and `HandicapBattle`.
+
+The selected attack is then executed through the common method:
+
+```java
 attack.execute(
         attacker,
         defender,
@@ -246,43 +290,29 @@ attack.execute(
 );
 ```
 
-The actual implementation of `execute()` is determined at runtime based on the concrete object.
+The actual implementation that is executed is determined at runtime.
 
-For example, a `DamageAttack` can implement:
+If the object is a `DamageAttack`:
 
-```java
-@Override
-public void execute(
-        Pokemon attacker,
-        Pokemon defender,
-        boolean criticalHit
-) {
-    // Damage calculation
-}
+```text
+DamageAttack.execute()
+        ↓
+Calculate damage
+        ↓
+Damage defender
 ```
 
-Another attack type could implement the same method differently:
+If the object is a `HealAttack`:
 
-```java
-@Override
-public void execute(
-        Pokemon attacker,
-        Pokemon defender,
-        boolean criticalHit
-) {
-    // Different behaviour
-}
+```text
+HealAttack.execute()
+        ↓
+Restore attacker HP
 ```
 
-The battle system can therefore call:
+The battle system therefore does not need to check the concrete attack type using `instanceof` or casts.
 
-```java
-attack.execute(...);
-```
-
-without needing to know which concrete subclass is being used.
-
-This allows new attack types to be added without changing the overall battle flow.
+This makes it possible to add new attack types without changing the main battle flow.
 
 ### Polymorphic Attack Structure
 
@@ -290,16 +320,110 @@ This allows new attack types to be added without changing the overall battle flo
                     Attack
                  abstract class
                       │
-          ┌───────────┼───────────┐
-          │           │           │
-    DamageAttack  HealingAttack  ...
-          │           │
-      execute()   execute()
-          │           │
-    Deal damage   Restore HP
+             ┌────────┴────────┐
+             │                 │
+       DamageAttack         HealAttack
+             │                 │
+         execute()          execute()
+             │                 │
+       Deal damage         Restore HP
+             │                 │
+          Defender           Attacker
+           loses HP          gains HP
 ```
 
 This separates the **battle flow** from the **specific behaviour of each attack**.
+
+The battle classes only need to know that they have an `Attack` and can call:
+
+```java
+attack.execute(...);
+```
+
+The concrete subclass determines what actually happens.
+
+### Polymorphism and JSON
+
+Jackson is configured to preserve the concrete attack type when Pokémon are saved and loaded.
+
+The abstract `Attack` class uses `@JsonTypeInfo` and `@JsonSubTypes`:
+
+```java
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "attackClassType"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(
+                value = DamageAttack.class,
+                name = "damage"
+        ),
+        @JsonSubTypes.Type(
+                value = HealAttack.class,
+                name = "heal"
+        )
+})
+```
+
+The JSON therefore contains the concrete attack type:
+
+```json
+{
+  "attackClassType": "damage",
+  "name": "sparo",
+  "baseDamage": 100,
+  "accuracy": 90,
+  "type": "FIRE"
+}
+```
+
+or:
+
+```json
+{
+  "attackClassType": "heal",
+  "name": "heal",
+  "baseDamage": 10,
+  "accuracy": 100,
+  "type": "FIRE",
+  "heal": 50
+}
+```
+
+When the JSON is loaded, Jackson uses `attackClassType` to create the correct subclass.
+
+This allows the application to store different attack types inside the same:
+
+```java
+List<Attack>
+```
+
+while preserving their individual behaviour.
+
+### OOP Design
+
+The attack system therefore combines the main OOP concepts:
+
+```text
+                    Attack
+                abstract class
+                       │
+                 inheritance
+                       │
+          ┌────────────┴────────────┐
+          │                         │
+    DamageAttack                HealAttack
+          │                         │
+     polymorphism              polymorphism
+          │                         │
+    execute()                  execute()
+          │                         │
+    Deal damage               Restore HP
+```
+
+The result is a more extensible battle system where new attack types can be introduced by creating a new subclass of `Attack` and implementing its `execute()` method.
+
 
 ## Persistence
 
