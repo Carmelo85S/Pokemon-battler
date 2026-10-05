@@ -1,17 +1,19 @@
 [
   {
-    "name": "Eevee",
-    "type": "NORMAL",
+    "name": "Pikachu",
+    "type": "ELECTRIC",
     "maxHp": 300,
     "currentHp": 300,
     "attacks": [
       {
-        "name": "Tackle",
+        "attackClassType": "damage",
+        "name": "Thunder Shock",
         "baseDamage": 40,
-        "accuracy": 100,
-        "type": "NORMAL"
+        "accuracy": 95,
+        "type": "ELECTRIC"
       },
       {
+        "attackClassType": "damage",
         "name": "Quick Attack",
         "baseDamage": 50,
         "accuracy": 90,
@@ -20,142 +22,112 @@
     ]
   },
   {
-    "name": "Growlithe",
+    "name": "Charizard",
     "type": "FIRE",
     "maxHp": 300,
     "currentHp": 300,
     "attacks": [
       {
-        "name": "Ember",
-        "baseDamage": 40,
-        "accuracy": 95,
+        "attackClassType": "damage",
+        "name": "Flamethrower",
+        "baseDamage": 70,
+        "accuracy": 85,
         "type": "FIRE"
       },
       {
-        "name": "Flame Wheel",
+        "attackClassType": "damage",
+        "name": "Wing Attack",
         "baseDamage": 60,
         "accuracy": 90,
-        "type": "FIRE"
-      }
-    ]
-  },
-  {
-    "name": "Vulpix",
-    "type": "FIRE",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Ember",
-        "baseDamage": 40,
-        "accuracy": 95,
-        "type": "FIRE"
-      },
-      {
-        "name": "Quick Attack",
-        "baseDamage": 50,
-        "accuracy": 90,
         "type": "NORMAL"
       }
     ]
   },
   {
-    "name": "Squirtle",
+    "name": "Blastoise",
     "type": "WATER",
     "maxHp": 300,
     "currentHp": 300,
     "attacks": [
       {
+        "attackClassType": "damage",
         "name": "Water Gun",
         "baseDamage": 50,
         "accuracy": 95,
         "type": "WATER"
       },
       {
+        "attackClassType": "damage",
         "name": "Aqua Tail",
-        "baseDamage": 65,
+        "baseDamage": 70,
         "accuracy": 85,
         "type": "WATER"
       }
     ]
   },
   {
-    "name": "Psyduck",
-    "type": "WATER",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Water Gun",
-        "baseDamage": 50,
-        "accuracy": 95,
-        "type": "WATER"
-      },
-      {
-        "name": "Confusion",
-        "baseDamage": 50,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Poliwag",
-    "type": "WATER",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Bubble",
-        "baseDamage": 40,
-        "accuracy": 100,
-        "type": "WATER"
-      },
-      {
-        "name": "Water Gun",
-        "baseDamage": 50,
-        "accuracy": 95,
-        "type": "WATER"
-      }
-    ]
-  },
-  {
-    "name": "Oddish",
+    "name": "Bulbasaur",
     "type": "GRASS",
     "maxHp": 300,
     "currentHp": 300,
     "attacks": [
       {
-        "name": "Absorb",
-        "baseDamage": 35,
-        "accuracy": 100,
-        "type": "GRASS"
-      },
-      {
-        "name": "Razor Leaf",
-        "baseDamage": 55,
-        "accuracy": 90,
-        "type": "GRASS"
-      }
-    ]
-  },
-  {
-    "name": "Bellsprout",
-    "type": "GRASS",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
+        "attackClassType": "damage",
         "name": "Vine Whip",
         "baseDamage": 45,
         "accuracy": 95,
         "type": "GRASS"
       },
       {
+        "attackClassType": "damage",
         "name": "Razor Leaf",
         "baseDamage": 55,
         "accuracy": 90,
         "type": "GRASS"
+      }
+    ]
+  },
+  {
+    "name": "Raichu",
+    "type": "ELECTRIC",
+    "maxHp": 300,
+    "currentHp": 300,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Thunder Shock",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "ELECTRIC"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Spark",
+        "baseDamage": 50,
+        "accuracy": 90,
+        "type": "ELECTRIC"
+      }
+    ]
+  },
+  {
+    "name": "Charmander",
+    "type": "FIRE",
+    "maxHp": 300,
+    "currentHp": 300,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Ember",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "FIRE"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Scratch",
+        "baseDamage": 45,
+        "accuracy": 95,
+        "type": "NORMAL"
       }
     ]
   },
@@ -166,216 +138,18 @@
     "currentHp": 300,
     "attacks": [
       {
+        "attackClassType": "damage",
         "name": "Thunder Shock",
         "baseDamage": 40,
         "accuracy": 95,
         "type": "ELECTRIC"
       },
       {
+        "attackClassType": "damage",
         "name": "Spark",
         "baseDamage": 50,
         "accuracy": 90,
         "type": "ELECTRIC"
-      }
-    ]
-  },
-  {
-    "name": "Voltorb",
-    "type": "ELECTRIC",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Spark",
-        "baseDamage": 50,
-        "accuracy": 90,
-        "type": "ELECTRIC"
-      },
-      {
-        "name": "Tackle",
-        "baseDamage": 40,
-        "accuracy": 100,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Meowth",
-    "type": "NORMAL",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Scratch",
-        "baseDamage": 45,
-        "accuracy": 100,
-        "type": "NORMAL"
-      },
-      {
-        "name": "Bite",
-        "baseDamage": 60,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Rattata",
-    "type": "NORMAL",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Tackle",
-        "baseDamage": 40,
-        "accuracy": 100,
-        "type": "NORMAL"
-      },
-      {
-        "name": "Quick Attack",
-        "baseDamage": 50,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Pidgey",
-    "type": "NORMAL",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Tackle",
-        "baseDamage": 40,
-        "accuracy": 100,
-        "type": "NORMAL"
-      },
-      {
-        "name": "Quick Attack",
-        "baseDamage": 50,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Sandshrew",
-    "type": "NORMAL",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Scratch",
-        "baseDamage": 45,
-        "accuracy": 100,
-        "type": "NORMAL"
-      },
-      {
-        "name": "Slash",
-        "baseDamage": 65,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Machop",
-    "type": "NORMAL",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Low Kick",
-        "baseDamage": 50,
-        "accuracy": 95,
-        "type": "NORMAL"
-      },
-      {
-        "name": "Headbutt",
-        "baseDamage": 65,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Jigglypuff",
-    "type": "NORMAL",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Pound",
-        "baseDamage": 40,
-        "accuracy": 100,
-        "type": "NORMAL"
-      },
-      {
-        "name": "Body Slam",
-        "baseDamage": 70,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Clefairy",
-    "type": "NORMAL",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Pound",
-        "baseDamage": 40,
-        "accuracy": 100,
-        "type": "NORMAL"
-      },
-      {
-        "name": "Double Slap",
-        "baseDamage": 55,
-        "accuracy": 85,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Seel",
-    "type": "WATER",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Water Gun",
-        "baseDamage": 50,
-        "accuracy": 95,
-        "type": "WATER"
-      },
-      {
-        "name": "Headbutt",
-        "baseDamage": 65,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Ponyta",
-    "type": "FIRE",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "name": "Ember",
-        "baseDamage": 40,
-        "accuracy": 95,
-        "type": "FIRE"
-      },
-      {
-        "name": "Flame Wheel",
-        "baseDamage": 60,
-        "accuracy": 90,
-        "type": "FIRE"
       }
     ]
   },
@@ -386,18 +160,21 @@
     "currentHp": 300,
     "attacks": [
       {
+        "attackClassType": "damage",
         "name": "Ember",
         "baseDamage": 40,
         "accuracy": 95,
         "type": "FIRE"
       },
       {
+        "attackClassType": "damage",
         "name": "Flame Wheel",
         "baseDamage": 60,
-        "accuracy": 20,
+        "accuracy": 90,
         "type": "FIRE"
       },
       {
+        "attackClassType": "damage",
         "name": "Flamethrower",
         "baseDamage": 70,
         "accuracy": 85,
