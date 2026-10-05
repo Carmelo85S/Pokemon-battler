@@ -103,14 +103,10 @@ public class RegularBattle {
             separator();
         }
         else {
-            int damage = calculateDamage(defender, attack, random);
-            defender.takeDamage(damage);
+            attack.execute(attacker, defender);
             System.out.println(
                     "  " + attacker.getName() +
                             " used " + attack.getName() + "!"
-            );
-            System.out.println(
-                    "  Damage: " + damage
             );
 
             System.out.println(
