@@ -141,20 +141,10 @@ public class HandicapBattle {
             );
             separator();
         } else {
-            int damage = calculateDamage(defender, attack, random);
-            boolean isCritical = random.nextInt(16) == 0;
-
-            if (isCritical) {
-                damage *= 2;
-                subTitle("!!!Critical hit!!!");
-            }
-            defender.takeDamage(damage);
+            attack.execute(attacker, defender);
             System.out.println(
                     "  " + attacker.getName() +
                             " used " + attack.getName() + "!"
-            );
-            System.out.println(
-                    "  Damage: " + damage
             );
 
             System.out.println(
