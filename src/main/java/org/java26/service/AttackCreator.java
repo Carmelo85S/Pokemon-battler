@@ -70,7 +70,7 @@ public class AttackCreator {
         int heal = readIntBetween(
                 scanner,
                 10,
-                100,
+                30,
                 "  Enter heal amount. Value between %d and %d: "
         );
 

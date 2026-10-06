@@ -100,67 +100,52 @@ public class PokemonEditor {
                     }
                 }
                 case 4 -> {
-                    try {
-                        System.out.println("  Current attacks:");
-                        System.out.println(pokemon);
+                        try {
+                            System.out.println("  Current attacks:");
+                            System.out.println(pokemon);
 
-                        if(pokemon.hasMaxAttacks()){
-                            System.out.println("  Attack slots are already full.");
-                            break;
-                        }
-                        while (!pokemon.hasMaxAttacks()) {
-                            String attackName = readString(
-                                    scanner,
-                                    "  Enter attack name: ",
-                                    "  Attack name: "
-                            );
-                            System.out.println();
-                            int baseDamage = readIntBetween(
-                                    scanner,
-                                    10,
-                                    100,
-                                    "  Enter attack base damage, value between %d and %d: "
-                            );
-                            System.out.println();
-                            int accuracy = readIntBetween(
-                                    scanner,
-                                    10,
-                                    100,
-                                    "  Enter attack accuracy, value between %d and %d: "
-                            );
-                            System.out.println();
-
-                            Attack newAttack = new DamageAttack(
-                                    attackName,
-                                    baseDamage,
-                                    accuracy,
-                                    pokemon.getType(),
-                                    baseDamage
-                            );
-                            pokemon.addAttack(newAttack);
-
-                            System.out.println(
-                                    "  Attack '" + attackName + "' added successfully."
-                            );
                             if (pokemon.hasMaxAttacks()) {
-                                System.out.println("  Attack slots filled");
+                                System.out.println("  Attack slots are already full.");
                                 break;
                             }
 
-                            int userChoice = readIntBetween(
-                                    scanner,
-                                    1,
-                                    2,
-                                    "  Do you want to enter another attack? [1] Yes / [2] No: "
-                            );
-                            separator();
-                            if (userChoice == 2) {
-                                break;
+                            while (!pokemon.hasMaxAttacks()) {
+
+                                Attack newAttack = AttackCreator.createAttack(
+                                        scanner,
+                                        pokemon.getType()
+                                );
+
+                                pokemon.addAttack(newAttack);
+
+                                System.out.println(
+                                        "  Attack '" + newAttack.getName()
+                                                + "' added successfully."
+                                );
+
+                                if (pokemon.hasMaxAttacks()) {
+                                    System.out.println("  Attack slots filled");
+                                    break;
+                                }
+
+                                int userChoice = readIntBetween(
+                                        scanner,
+                                        1,
+                                        2,
+                                        "  Do you want to enter another attack? [1] Yes / [2] No: "
+                                );
+
+                                separator();
+
+                                if (userChoice == 2) {
+                                    break;
+                                }
                             }
+
+                        } catch (QuitPokemonOperationException e) {
+                            System.out.println(e.getMessage());
                         }
-                    } catch (QuitPokemonOperationException e) {
-                        System.out.println(e.getMessage());
-                    }
+
                 }
 
                 case 5 -> {
