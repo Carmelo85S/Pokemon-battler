@@ -33,6 +33,8 @@ public class PokemonViewer {
             System.out.println();
             try {
                 Pokemon pokemon = pokedex.getPokemon(choice);
+                separator();
+                title(pokemon.getName());
                 System.out.println("+----------------+----------------+----------------+----------------+");
                 System.out.printf(
                         "| %-14s | %-14s | %-14s | %-14s |%n",
@@ -51,26 +53,27 @@ public class PokemonViewer {
                 System.out.println("+----------------+----------------+----------------+----------------+");
 
                 // Attack information
-                System.out.println();
-                System.out.println("  ATTACKS");
-                System.out.println("+----------------+----------------+----------------+----------------+");
+                separator();
+                title("ATTACKS");
+                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
                 System.out.printf(
-                        "| %-14s | %-14s | %-14s | %-14s |%n",
-                        "Name", "Damage", "Accuracy", "Type"
+                        "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                        "Name", "Damage", "Accuracy", "Type", "Category"
                 );
-                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
 
                 for (Attack attack : pokemon.getAttacks()) {
                     System.out.printf(
-                            "| %-14s | %-14d | %-14d | %-14s |%n",
+                            "| %-14s | %-14d | %-14d | %-14s | %-14s |%n",
                             attack.getName(),
                             attack.getBaseDamage(),
                             attack.getAccuracy(),
-                            attack.getType()
+                            attack.getType().getLabel(),
+                            attack.getAttackClassType().getLabel()
                     );
                 }
 
-                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
 
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());

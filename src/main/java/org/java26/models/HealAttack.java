@@ -15,10 +15,13 @@ public class HealAttack extends Attack {
             @JsonProperty("type") PokemonType type,
             @JsonProperty("heal") int heal
     ) {
-        super(name, baseDamage, accuracy, type);
+        super(name, baseDamage, accuracy, type, AttackClassType.HEAL);
         this.heal = heal;
     }
 
+    public int getHeal() {
+        return heal;
+    }
 
     @Override
     public void execute(
@@ -26,8 +29,7 @@ public class HealAttack extends Attack {
             Pokemon defender,
             boolean criticalHit
     ) {
+        System.out.println("DEBUG heal = " + heal);
         attacker.heal(heal);
-
     }
-
 }

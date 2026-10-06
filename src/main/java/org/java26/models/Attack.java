@@ -1,6 +1,7 @@
 package org.java26.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -20,17 +21,25 @@ public abstract class Attack {
     private int baseDamage;
     private int accuracy;
     private final PokemonType type;
+    private final AttackClassType attackClassType;
 
-    protected Attack(PokemonType type) {
+    protected Attack(PokemonType type, AttackClassType attackClassType) {
         if (type == null) {
             throw new IllegalArgumentException(
                     "  Pokemon type cannot be null"
             );
         }
         this.type = type;
+
+        if (attackClassType == null) {
+            throw new IllegalArgumentException(
+                    "  Pokemon type cannot be null"
+            );
+        }
+        this.attackClassType = attackClassType;
     }
 
-    protected Attack(String name, int baseDamage, int accuracy, PokemonType type) {
+    protected Attack(String name, int baseDamage, int accuracy, PokemonType type, AttackClassType attackClassType) {
         setName(name);
         setBaseDamage(baseDamage);
         setAccuracy(accuracy);
@@ -40,6 +49,13 @@ public abstract class Attack {
             );
         }
         this.type = type;
+
+        if (attackClassType == null) {
+            throw new IllegalArgumentException(
+                    "  Pokemon type cannot be null"
+            );
+        }
+        this.attackClassType = attackClassType;
     }
 
     public String getName() {
@@ -83,6 +99,10 @@ public abstract class Attack {
 
     public PokemonType getType() {
         return type;
+    }
+    @JsonIgnore
+    public AttackClassType getAttackClassType(){
+        return attackClassType;
     }
 
 

@@ -16,8 +16,10 @@ public class DamageAttack extends Attack {
             @JsonProperty("baseDamage") int baseDamage,
             @JsonProperty("accuracy") int accuracy,
             @JsonProperty("type") PokemonType type
+
     ) {
-        super(name, baseDamage, accuracy, type);
+        super(name, baseDamage, accuracy, type, AttackClassType.DAMAGE
+        );
         this.power = baseDamage;
     }
 
@@ -28,7 +30,8 @@ public class DamageAttack extends Attack {
             PokemonType type,
             int power
     ) {
-        super(name, baseDamage, accuracy, type);
+        super(name, baseDamage, accuracy, type, AttackClassType.DAMAGE
+        );
         this.power = power;
     }
 
@@ -36,7 +39,7 @@ public class DamageAttack extends Attack {
     public void execute(Pokemon attacker, Pokemon defender, boolean criticalHit) {
 
         double effectiveness = BattleLogic.effectiveness(defender, this);
-        double randomFactor = power + new Random().nextDouble() * 0.15;
+        double randomFactor = 0.85 + new Random().nextDouble() * 0.15;
         double damage = getBaseDamage() * randomFactor * effectiveness;
 
         if (criticalHit) {

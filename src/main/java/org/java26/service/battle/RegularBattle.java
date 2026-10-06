@@ -1,6 +1,5 @@
 package org.java26.service.battle;
 
-import org.java26.consoleLayout.BattleUI;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;

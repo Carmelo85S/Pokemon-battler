@@ -1,9 +1,6 @@
 package org.java26.service;
 
-import org.java26.models.DamageAttack;
-import org.java26.models.HealAttack;
-import org.java26.models.PokemonType;
-import org.java26.models.Attack;
+import org.java26.models.*;
 import org.java26.exceptions.QuitPokemonOperationException;
 
 import java.util.Scanner;
@@ -62,8 +59,7 @@ public class AttackCreator {
                     attackName,
                     baseDamage,
                     accuracy,
-                    type,
-                    baseDamage
+                    type
             );
         }
 
