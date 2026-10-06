@@ -43,10 +43,10 @@ Damage = Base Damage × Type Effectiveness × Random Factor
 The random factor introduces a small amount of variation to each attack.
 
 ```java
-double randomFactor = 0.85 + random.nextDouble() * 0.15;
+double randomFactor = power + random.nextDouble() * 0.15;
 ```
 
-`random.nextDouble()` generates a value between `0.0` and `1.0`, resulting in a random factor between **0.85 and 1.00**.
+`random.nextDouble()` generates a value between `0.0` and `1.0`, resulting in a random factor between **power and 1.00**.
 
 The final damage is rounded down to the nearest integer.
 

@@ -19,16 +19,27 @@ public abstract class Attack {
     private String name;
     private int baseDamage;
     private int accuracy;
-    private PokemonType type;
+    private final PokemonType type;
 
-    protected Attack() {
+    protected Attack(PokemonType type) {
+        if (type == null) {
+            throw new IllegalArgumentException(
+                    "  Pokemon type cannot be null"
+            );
+        }
+        this.type = type;
     }
 
     protected Attack(String name, int baseDamage, int accuracy, PokemonType type) {
         setName(name);
         setBaseDamage(baseDamage);
         setAccuracy(accuracy);
-        setAttackType(type);
+        if (type == null) {
+            throw new IllegalArgumentException(
+                    "  Pokemon type cannot be null"
+            );
+        }
+        this.type = type;
     }
 
     public String getName() {
@@ -74,14 +85,6 @@ public abstract class Attack {
         return type;
     }
 
-    public void setAttackType(PokemonType type) {
-        if (type == null) {
-            throw new IllegalArgumentException(
-                    "  Pokemon type cannot be null"
-            );
-        }
-        this.type = type;
-    }
 
     public abstract void execute(Pokemon attacker, Pokemon defender, boolean criticalHit);
 

@@ -36,7 +36,7 @@ public class DamageAttack extends Attack {
     public void execute(Pokemon attacker, Pokemon defender, boolean criticalHit) {
 
         double effectiveness = BattleLogic.effectiveness(defender, this);
-        double randomFactor = 0.85 + new Random().nextDouble() * 0.15;
+        double randomFactor = power + new Random().nextDouble() * 0.15;
         double damage = getBaseDamage() * randomFactor * effectiveness;
 
         if (criticalHit) {
