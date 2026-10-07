@@ -67,7 +67,11 @@ public class BattleMenu {
                             jsonHandler
                     );
                 }
-                case 3 -> jsonHandler.saveStatistics("statistic.json", statistics);
+                case 3 -> {
+                    jsonHandler.saveStatistics("statistic.json", statistics);
+                    saveToFile(pokedex, jsonHandler);
+                    System.out.println("  Statistics saved correctly!");
+                }
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {

@@ -2,6 +2,7 @@ package org.java26.consoleLayout;
 
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.models.Attack;
+import org.java26.models.HealAttack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
@@ -37,22 +38,28 @@ public class BattleUI {
     public static void showAttacks(Pokemon pokemon) {
         System.out.println();
         System.out.println("  ATTACKS");
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+----------------+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+---------------+");
         System.out.printf(
                 "| %-14s | %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                "Choice", "Name", "Damage", "Accuracy", "Type", "Attack Category"
+                "Choice", "Name", "Value", "Accuracy", "Type", "Attack Category"
         );
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+----------------+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+---------------+");
 
         for (int i = 0; i < pokemon.getAttacks().size(); i++) {
 
             Attack attack = pokemon.getAttacks().get(i);
 
+            int value = attack.getBaseDamage();
+
+            if (attack instanceof HealAttack healAttack) {
+                value = healAttack.getHeal();
+            }
+
             System.out.printf(
                     "| %-14d | %-14s | %-14d | %-14d | %-14s | %-14s |%n",
                     i + 1,
                     attack.getName(),
-                    attack.getBaseDamage(),
+                    value,
                     attack.getAccuracy(),
                     attack.getType().getLabel(),
                     attack.getAttackClassType().getLabel()

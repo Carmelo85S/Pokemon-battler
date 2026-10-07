@@ -35,22 +35,33 @@ public class BattleLogic {
         jsonHandler.saveStatistics("statistic.json", statistics);
     }
 
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon pokemon, Pokemon caught, BattleStatistics statistics, JsonHandler jsonHandler, Runnable playAgain) {
+    public static void handleVictory(
+            Scanner scanner,
+            Pokedex pokedex,
+            Pokemon pokemon,
+            Pokemon caught,
+            BattleStatistics statistics,
+            JsonHandler jsonHandler,
+            Runnable playAgain
+    ) {
         evolvePokemon(pokemon, statistics);
 
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
 
-        int choice = readIntBetween(scanner, 1, 2, "  Select an option: > ");
+        int choice = readIntBetween(
+                scanner,
+                1,
+                2,
+                "  Select an option: > "
+        );
 
         separator();
 
         if (choice == 1) {
             recordPokemonCatch(statistics, caught);
             pokedex.addPokemon(caught);
-            jsonHandler.saveStatistics("statistic.json", statistics);
-            System.out.println("  Statistics saved!");
         }
 
         subTitle("Play again");
@@ -59,9 +70,17 @@ public class BattleLogic {
 
         separator();
 
-        choice = readIntBetween(scanner, 1, 2, "  Select an option: > ");
+        choice = readIntBetween(
+                scanner,
+                1,
+                2,
+                "  Select an option: > "
+        );
 
         separator();
+
+        jsonHandler.saveStatistics("statistic.json", statistics);
+        System.out.println("  Statistics saved!");
 
         if (choice == 1) {
             playAgain.run();
@@ -142,13 +161,6 @@ public class BattleLogic {
                             " used " + attack.getName() + "!"
             );
 
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " !!! HP: " +
-                            attacker.getCurrentHp() +
-                            "/" +
-                            attacker.getMaxHp()
-            );
 
             System.out.println(
                     "  " + defender.getName() +
@@ -161,5 +173,4 @@ public class BattleLogic {
             separator();
         }
     }
-
 }

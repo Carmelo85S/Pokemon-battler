@@ -42,7 +42,6 @@ public class HandicapBattle {
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
         Pokemon opponent = chooseOpponent(random, wildPokemons);
-        recordPokemonUse(statistics, myPokemon);
 
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
@@ -56,7 +55,6 @@ public class HandicapBattle {
         menuOption(4, "Opponent - 20 accuracy");
         menuOption(5, "Exit");
         backOption();
-
 
         choice = readIntBetween(scanner, 1, 5, "Select an option: > ");
 
@@ -102,11 +100,9 @@ public class HandicapBattle {
         }
         if (myPokemon.isFainted()) {
             BattleLogic.handleEndFight(" lost the battle", myPokemon, opponent, false, statistics, jsonHandler
-
             );
         } else {
             BattleLogic.handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
-
             BattleLogic.handleVictory(scanner, pokedex, myPokemon, opponent, statistics, jsonHandler, () -> startHandicapBattle(scanner, pokedex, wildPokemons, statistics, jsonHandler));
         }
     }

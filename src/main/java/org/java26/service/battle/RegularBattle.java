@@ -11,9 +11,7 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.BattleUI.*;
 import static org.java26.consoleLayout.Layout.*;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.PokemonViewer.showPokemons;
-import static org.java26.service.StatisticsService.*;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
@@ -43,7 +41,6 @@ public class RegularBattle {
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
 
         Pokemon opponent = chooseOpponent(random, wildPokemons);
-        recordPokemonUse(statistics, myPokemon);
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
         title("---Random Start---");
@@ -62,8 +59,8 @@ public class RegularBattle {
                 Attack opponentAttack = chooseRandomAttack(opponent, random);
 
                 BattleLogic.runTurn(opponentAttack, opponent, myPokemon, random, statistics);
+                round++;
             }
-            round++;
             playerTurn = !playerTurn;
         }
         if (myPokemon.isFainted()) {

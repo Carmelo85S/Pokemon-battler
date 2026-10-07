@@ -3,6 +3,8 @@ package org.java26.models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import static org.java26.consoleLayout.Layout.subTitle;
+
 public class HealAttack extends Attack {
 
     private final int heal;
@@ -29,7 +31,8 @@ public class HealAttack extends Attack {
             Pokemon defender,
             boolean criticalHit
     ) {
-        System.out.println("DEBUG heal = " + heal);
+        subTitle( attacker.getName() + " needs a boost of " + heal + " !");
         attacker.heal(heal);
+        subTitle(attacker.getCurrentHp() + " after potion");
     }
 }
