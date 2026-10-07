@@ -3,6 +3,7 @@ package org.java26.service;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;
+import org.java26.models.HealAttack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
@@ -59,15 +60,19 @@ public class PokemonViewer {
                 System.out.println("+----------------+----------------+----------------+----------------+----------------+");
                 System.out.printf(
                         "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                        "Name", "Damage", "Accuracy", "Type", "Category"
+                        "Name", "Value", "Accuracy", "Type", "Category"
                 );
                 System.out.println("+----------------+----------------+----------------+----------------+----------------+");
 
                 for (Attack attack : pokemon.getAttacks()) {
+                    int value = attack.getBaseDamage();
+                    if(attack instanceof HealAttack healAttack){
+                        value = healAttack.getHeal();
+                    }
                     System.out.printf(
                             "| %-14s | %-14d | %-14d | %-14s | %-14s |%n",
                             attack.getName(),
-                            attack.getBaseDamage(),
+                            value,
                             attack.getAccuracy(),
                             attack.getType().getLabel(),
                             attack.getAttackClassType().getLabel()

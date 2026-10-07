@@ -81,7 +81,7 @@ public class JsonHandler {
             return true;
 
         } catch (JsonProcessingException e) {
-            System.out.println("  Json file is corrupted.");
+            System.out.println("  File is corrupted.");
             System.out.println();
             return false;
         }

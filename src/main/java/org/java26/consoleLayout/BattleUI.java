@@ -38,12 +38,12 @@ public class BattleUI {
     public static void showAttacks(Pokemon pokemon) {
         System.out.println();
         System.out.println("  ATTACKS");
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+---------------+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+----------------+");
         System.out.printf(
                 "| %-14s | %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                "Choice", "Name", "Value", "Accuracy", "Type", "Attack Category"
+                "Choice", "Name", "Value", "Accuracy", "Type", "Attack Cat."
         );
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+---------------+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+----------------+");
 
         for (int i = 0; i < pokemon.getAttacks().size(); i++) {
 
