@@ -85,7 +85,7 @@ public class RegularBattle {
                     jsonHandler
             );
 
-            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics, jsonHandler);
+            handleVictory(scanner, pokedex, myPokemon, opponent, wildPokemons, statistics, jsonHandler);
         }
     }
 
@@ -128,29 +128,9 @@ public class RegularBattle {
         }
     }
 
-    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
 
-        separator();
-        System.out.println("  " + myPokemon.getName() + prompt);
-        recordPokemonUse(statistics, myPokemon);
-
-        if (won) {
-            recordWin(statistics, myPokemon);
-            recordLoss(statistics, opponent);
-            myPokemon.heal(myPokemon.getMaxHp());
-            opponent.heal(opponent.getMaxHp());
-        } else {
-            recordWin(statistics, opponent);
-            recordLoss(statistics, myPokemon);
-            myPokemon.heal(myPokemon.getMaxHp());
-            opponent.heal(opponent.getMaxHp());
-        }
-
-        jsonHandler.saveStatistics("statistic.json", statistics);
-        System.out.println("  Statistics saved!");
-    }
-
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
+    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon pokemon,Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
+        evolvePokemon(pokemon, statistics);
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
         menuOption(2, "No");
@@ -160,7 +140,6 @@ public class RegularBattle {
             recordPokemonCatch(statistics, caught);
             pokedex.addPokemon(caught);
             jsonHandler.saveStatistics("statistic.json", statistics);
-            System.out.println("  Statistics saved!");
         }
         ;
         subTitle("Play again");
@@ -175,6 +154,14 @@ public class RegularBattle {
             return;
         }
         System.out.println("  Returning to menu");
+    }
+
+    public static void evolvePokemon(Pokemon pokemon, BattleStatistics statistics) {
+        int wins = statistics.getPokemonWins()
+                .getOrDefault(pokemon.getName(), 0);
+        if (wins > 0 && wins % 3 == 0) {
+            pokemon.evolve();
+        }
     }
 }
 

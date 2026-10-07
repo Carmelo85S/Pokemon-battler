@@ -93,6 +93,12 @@ public class SaveLoadPokemons {
     }
 
     public static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
+        try{
+            boolean delete = Files.deleteIfExists(Path.of("statistic.json"));
+        } catch (IOException e){
+            System.out.println("  File for statistic does not exist. A file will be created after a battle.");
+        }
+
         try {
             List<Pokemon> pokemons = jsonHandler.loadPokemon("seed-pokemons.json");
             pokedex.removeAllPokemon();

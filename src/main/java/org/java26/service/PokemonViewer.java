@@ -35,22 +35,23 @@ public class PokemonViewer {
                 Pokemon pokemon = pokedex.getPokemon(choice);
                 separator();
                 title(pokemon.getName());
-                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
                 System.out.printf(
-                        "| %-14s | %-14s | %-14s | %-14s |%n",
-                        "Name", "Type", "Max HP", "Current HP"
+                        "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                        "Name", "Level", "Type", "Max HP", "Current HP"
                 );
-                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+--------------------------------++----------------+----------------+");
 
                 System.out.printf(
-                        "| %-14s | %-14s | %-14d | %-14d |%n",
+                        "| %-14s | %-14d | %-14s | %-14d | %-14d |%n",
                         pokemon.getName(),
+                        pokemon.getLevel(),
                         pokemon.getType(),
                         pokemon.getMaxHp(),
                         pokemon.getCurrentHp()
                 );
 
-                System.out.println("+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+--------------------------------++----------------+----------------+");
 
                 // Attack information
                 separator();
@@ -94,27 +95,28 @@ public class PokemonViewer {
         }
 
         System.out.println();
-        System.out.println("+----------------+----------------+");
-        System.out.println("|        AVAILABLE POKEMONS       |");
-        System.out.println("+----------------+----------------+");
 
+        System.out.println("+----------------+---------+---------------+");
+        System.out.println("|              AVAILABLE POKEMONS          |");
+        System.out.println("+----------------+---------+---------------+");
         System.out.printf(
-                "| %-14s | %-14s |%n",
-                "Name", "Type"
+                "| %-14s | %-6s | %-14s |%n",
+                "Name", "Level", "Type"
         );
 
         System.out.println(
-                "+----------------+----------------+"
+                "+----------------+---------+---------------+"
         );
         for (Pokemon p : pokedex.getPokemons()) {
             System.out.printf(
-                    "| %-14s | %-14s |%n",
+                    "| %-14s | %-6s | %-14s |%n",
                     p.getName(),
+                    p.getLevel(),
                     p.getType().getLabel()
             );
         }
         System.out.println(
-                "+----------------+----------------+"
+                "+----------------+---------+---------------+"
         );
 
     }

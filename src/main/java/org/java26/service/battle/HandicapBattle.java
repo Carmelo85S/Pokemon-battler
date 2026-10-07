@@ -159,25 +159,6 @@ public class HandicapBattle {
         }
     }
 
-    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
-
-        separator();
-        System.out.println("  " + myPokemon.getName() + prompt);
-        if (won) {
-            recordWin(statistics, myPokemon);
-            recordLoss(statistics, opponent);
-            myPokemon.heal(myPokemon.getMaxHp());
-            opponent.heal(opponent.getMaxHp());
-        } else {
-            recordWin(statistics, opponent);
-            recordLoss(statistics, myPokemon);
-            myPokemon.heal(myPokemon.getMaxHp());
-            opponent.heal(opponent.getMaxHp());
-        }
-        jsonHandler.saveStatistics("statistic.json", statistics);
-        System.out.println("  Statistics saved!");
-    }
-
 
     public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
         subTitle("Gotta catch them all!");

@@ -8,29 +8,32 @@ This project is an extension of my previous **Pokédex CRUD application**. The o
 
 ### Pokédex
 
-* Create Pokémon
-* View Pokémon
-* Update Pokémon
-* Delete Pokémon
-* Add and remove attacks
-* Save and load Pokémon data
-* Input validation
-* Error handling
+- Create Pokémon
+- View Pokémon
+- Update Pokémon
+- Delete Pokémon
+- Add and remove attacks
+- Save and load Pokémon data
+- Pokémon levels
+- Input validation
+- Error handling
 
 ### Battle System
 
-* Choose a Pokémon to battle with
-* Fight against a random wild Pokémon
-* Turn-based battles
-* Choose attacks
-* CPU chooses attacks randomly
-* Accuracy affects whether attacks hit
-* Type effectiveness
-* Random damage factor
-* Critical hits
-* Battle log
-* Win/loss result
-* Persistent win/loss statistics
+- Choose a Pokémon to battle with
+- Fight against a random wild Pokémon
+- Turn-based battles
+- Choose attacks
+- CPU chooses attacks randomly
+- Accuracy affects whether attacks hit
+- Type effectiveness
+- Random damage factor
+- Critical hits
+- Battle log
+- Win/loss result
+- Persistent win/loss statistics
+- Pokémon level progression and evolution
+- Pokémon evolution through the `Evolveable` interface
 
 ## Damage Formula
 
@@ -164,9 +167,26 @@ Where:
 Critical Multiplier = 2.0 when critical
 Critical Multiplier = 1.0 when normal
 ```
+## Pokémon Levels and Evolution (Interface)
 
+Pokémon have a persistent level that increases through battle progression.
+
+- Each Pokémon starts with a level.
+- A Pokémon evolves after every 3 wins.
+- Evolution increases the Pokémon's level by 1.
+- The Pokémon keeps the same base name while the level is displayed separately.
+- For example, `Charizard Lv5` becomes `Charizard Lv6`.
+- The level is saved together with the Pokémon data in JSON.
+
+The level is kept separate from the Pokémon name so the application's name validation remains intact and battle statistics continue to use a stable Pokémon name.
+
+```text
+3 wins  →  Lv1 → Lv2
+6 wins  →  Lv2 → Lv3
+9 wins  →  Lv3 → Lv4
+```
+  ...
 ## Battle Flow
-
 1. The player selects a Pokémon from their Pokédex.
 2. The CPU randomly selects a Pokémon from the wild Pokémon pool.
 3. The first player is selected randomly.
@@ -174,7 +194,7 @@ Critical Multiplier = 1.0 when normal
 5. The CPU selects an attack randomly.
 6. Accuracy determines whether the attack hits.
 7. A critical hit is randomly determined.
-8. The attack is executed through the polymorphic `execute()` method.
+8. The attack is executed through the polymorphic execute() method.
 9. Type effectiveness and random damage variation are applied.
 10. Critical hits double the calculated damage.
 11. HP is reduced by the calculated damage.

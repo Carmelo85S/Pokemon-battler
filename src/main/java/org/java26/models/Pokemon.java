@@ -8,9 +8,10 @@ import org.java26.exceptions.InvalidPokemonException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pokemon {
+public class Pokemon implements Evolveable {
 
     private static final int MAX_ATTACKS = 4;
+    private int level = 1;
 
     private String name;
     private PokemonType type;
@@ -119,6 +120,10 @@ public class Pokemon {
         currentHp = Math.min(maxHp, currentHp + amount);
     }
 
+    public void fullHeal() {
+        currentHp = maxHp;
+    }
+
     public void takeDamage(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException(
@@ -127,15 +132,29 @@ public class Pokemon {
         }
         currentHp = Math.max(0, currentHp - amount);
     }
+
     @JsonIgnore
     public boolean isFainted() {
         return currentHp == 0;
     }
+
+
+    public int getLevel() {
+        return level;
+    }
+
 
     @Override
     public String toString() {
         return "Pokemon: " + name +
                 " | Type: " + type.getLabel() +
                 " | HP: " + currentHp + " / " + maxHp;
+    }
+
+    @Override
+    public void evolve() {
+        level++;
+        maxHp += 20;
+        currentHp = maxHp;
     }
 }

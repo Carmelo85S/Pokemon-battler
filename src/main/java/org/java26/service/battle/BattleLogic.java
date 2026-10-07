@@ -1,10 +1,14 @@
 package org.java26.service.battle;
 
+import org.java26.handlers.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokemon;
 import org.java26.models.PokemonType;
 
 import java.util.Random;
+
+import static org.java26.consoleLayout.Layout.separator;
+import static org.java26.service.StatisticsService.*;
 
 public class BattleLogic {
     /*static int calculateDamage(Pokemon pokemon, Attack attack, Random random) {
@@ -16,6 +20,27 @@ public class BattleLogic {
                         * randomFactor
         );
     }*/
+    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
+
+        separator();
+        System.out.println("  " + myPokemon.getName() + prompt);
+        recordPokemonUse(statistics, myPokemon);
+
+        if (won) {
+            recordWin(statistics, myPokemon);
+            recordLoss(statistics, opponent);
+
+            myPokemon.fullHeal();
+            opponent.fullHeal();
+        } else {
+            recordWin(statistics, opponent);
+            recordLoss(statistics, myPokemon);
+
+            myPokemon.fullHeal();
+            opponent.fullHeal();
+        }
+        jsonHandler.saveStatistics("statistic.json", statistics);
+    }
 
     public static double effectiveness(Pokemon defender, Attack attack) {
         PokemonType attackType = attack.getType();
