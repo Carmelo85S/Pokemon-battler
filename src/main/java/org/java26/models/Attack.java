@@ -22,7 +22,7 @@ public abstract class Attack {
     private final PokemonType type;
     private final AttackClassType attackClassType;
 
-    protected Attack(int heal, PokemonType type, AttackClassType attackClassType) {
+    protected Attack(PokemonType type, AttackClassType attackClassType) {
 
         if (type == null) {
             throw new IllegalArgumentException(
