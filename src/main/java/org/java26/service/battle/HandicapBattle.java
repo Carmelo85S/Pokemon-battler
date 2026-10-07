@@ -15,7 +15,6 @@ import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
-import static org.java26.service.battle.BattleLogic.*;
 
 public class HandicapBattle {
     public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
@@ -95,96 +94,42 @@ public class HandicapBattle {
 
             } else {
                 subTitle(opponent.getName() + " turn.");
-                Attack opponentAttack = chooseRandomAttack(opponent, random);
+                Attack opponentAttack = BattleLogic.chooseRandomAttack(opponent, random);
                 runTurnAccuracyBonus(opponentAttack, opponent, myPokemon, random, opponentAccuracyBonus, statistics);
             }
             round++;
             playerTurn = !playerTurn;
         }
         if (myPokemon.isFainted()) {
-            handleEndFight(
-                    " lost the battle",
-                    myPokemon,
-                    opponent,
-                    false,
-                    statistics,
-                    jsonHandler
+            BattleLogic.handleEndFight(" lost the battle", myPokemon, opponent, false, statistics, jsonHandler
 
             );
         } else {
-            handleEndFight(
-                    " won the battle",
-                    myPokemon,
-                    opponent,
-                    true,
-                    statistics,
-                    jsonHandler
-            );
+            BattleLogic.handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
 
-            handleVictory(scanner, pokedex, opponent, wildPokemons, statistics, jsonHandler);
+            BattleLogic.handleVictory(scanner, pokedex, myPokemon, opponent, statistics, jsonHandler, () -> startHandicapBattle(scanner, pokedex, wildPokemons, statistics, jsonHandler));
         }
     }
 
-    private static void runTurnAccuracyBonus(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyBonus, BattleStatistics statistics) {
+    private static void runTurnAccuracyBonus(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyPenalty, BattleStatistics statistics) {
         recordAttacksUse(statistics, attack);
         recordPokemonAttackUse(statistics, attacker, attack);
 
         int hitChance = random.nextInt(100) + 1;
-        int accuracy = Math.min(100, attack.getAccuracy() - accuracyBonus);
+        int accuracy = Math.clamp(attack.getAccuracy() - accuracyPenalty, 0, 100);
         boolean isHit = hitChance <= accuracy;
         if (!isHit) {
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " used " + attack.getName() +
-                            " but missed!"
-            );
+            System.out.println("  " + attacker.getName() + " used " + attack.getName() + " but missed!");
             separator();
         } else {
             boolean criticalHit = random.nextInt(15) == 0;
             attack.execute(attacker, defender, criticalHit);
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " used " + attack.getName() + "!"
-            );
+            System.out.println("  " + attacker.getName() + " used " + attack.getName() + "!");
 
-            System.out.println(
-                    "  " + defender.getName() +
-                            " HP: " +
-                            defender.getCurrentHp() +
-                            "/" +
-                            defender.getMaxHp()
-            );
+            System.out.println("  " + defender.getName() + " HP: " + defender.getCurrentHp() + "/" + defender.getMaxHp());
 
             separator();
         }
-    }
-
-
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
-        subTitle("Gotta catch them all!");
-        menuOption(1, "Yes");
-        menuOption(2, "No");
-        int choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
-        separator();
-        if (choice == 1) {
-            recordPokemonCatch(statistics, caught);
-            pokedex.addPokemon(caught);
-            jsonHandler.saveStatistics("statistic.json", statistics);
-            System.out.println("  Statistics saved!");
-        }
-        ;
-        subTitle("Play again");
-        menuOption(1, "Yes");
-        menuOption(2, "Exit");
-        separator();
-        choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
-        separator();
-
-        if (choice == 1) {
-            startHandicapBattle(scanner, pokedex, wildPokemon, statistics, jsonHandler);
-            return;
-        }
-        System.out.println("  Returning to menu");
     }
 
 }

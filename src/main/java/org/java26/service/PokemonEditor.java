@@ -101,9 +101,6 @@ public class PokemonEditor {
                 }
                 case 4 -> {
                         try {
-                            System.out.println("  Current attacks:");
-                            System.out.println(pokemon);
-
                             if (pokemon.hasMaxAttacks()) {
                                 System.out.println("  Attack slots are already full.");
                                 break;
@@ -117,11 +114,6 @@ public class PokemonEditor {
                                 );
 
                                 pokemon.addAttack(newAttack);
-
-                                System.out.println(
-                                        "  Attack '" + newAttack.getName()
-                                                + "' added successfully."
-                                );
 
                                 if (pokemon.hasMaxAttacks()) {
                                     System.out.println("  Attack slots filled");

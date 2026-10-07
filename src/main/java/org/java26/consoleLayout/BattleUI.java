@@ -4,7 +4,6 @@ import org.java26.exceptions.InvalidPokemonException;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
-import org.java26.service.battle.BattleStatistics;
 
 import java.util.List;
 import java.util.Random;

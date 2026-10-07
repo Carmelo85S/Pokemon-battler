@@ -13,17 +13,24 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = DamageAttack.class, name = "damage"),
         @JsonSubTypes.Type(value = HealAttack.class, name = "heal"),
-        // @JsonSubTypes.Type(value = StatusAttack.class, name = "status")
 })
 
 public abstract class Attack {
     private String name;
     private int baseDamage;
     private int accuracy;
+    private final int heal;
     private final PokemonType type;
     private final AttackClassType attackClassType;
 
-    protected Attack(PokemonType type, AttackClassType attackClassType) {
+    protected Attack(int heal, PokemonType type, AttackClassType attackClassType) {
+        if (heal <= 0 || heal > 30) {
+            throw new IllegalArgumentException(
+                    "  Heal value is not in the range"
+            );
+        }
+        this.heal = heal;
+
         if (type == null) {
             throw new IllegalArgumentException(
                     "  Pokemon type cannot be null"
@@ -39,7 +46,7 @@ public abstract class Attack {
         this.attackClassType = attackClassType;
     }
 
-    protected Attack(String name, int baseDamage, int accuracy, PokemonType type, AttackClassType attackClassType) {
+    protected Attack(String name, int baseDamage, int accuracy, PokemonType type, AttackClassType attackClassType, int heal) {
         setName(name);
         setBaseDamage(baseDamage);
         setAccuracy(accuracy);
@@ -56,10 +63,21 @@ public abstract class Attack {
             );
         }
         this.attackClassType = attackClassType;
+
+        if (heal <= 0 || heal > 30) {
+            throw new IllegalArgumentException(
+                    "  Heal value is not in the range"
+            );
+        }
+        this.heal = heal;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getHeal() {
+        return heal;
     }
 
     public void setName(String name) {
@@ -100,8 +118,9 @@ public abstract class Attack {
     public PokemonType getType() {
         return type;
     }
+
     @JsonIgnore
-    public AttackClassType getAttackClassType(){
+    public AttackClassType getAttackClassType() {
         return attackClassType;
     }
 

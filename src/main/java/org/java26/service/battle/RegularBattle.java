@@ -56,12 +56,12 @@ public class RegularBattle {
                 subTitle(myPokemon.getName() + " turn.");
                 Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
 
-                runTurn(selectedPlayerAttack, myPokemon, opponent, random, statistics);
+                BattleLogic.runTurn(selectedPlayerAttack, myPokemon, opponent, random, statistics);
             } else {
                 subTitle(opponent.getName() + " turn.");
                 Attack opponentAttack = chooseRandomAttack(opponent, random);
 
-                runTurn(opponentAttack, opponent, myPokemon, random, statistics);
+                BattleLogic.runTurn(opponentAttack, opponent, myPokemon, random, statistics);
             }
             round++;
             playerTurn = !playerTurn;
@@ -85,82 +85,21 @@ public class RegularBattle {
                     jsonHandler
             );
 
-            handleVictory(scanner, pokedex, myPokemon, opponent, wildPokemons, statistics, jsonHandler);
-        }
-    }
-
-    private static void runTurn(Attack attack, Pokemon attacker, Pokemon defender, Random random, BattleStatistics statistics) {
-        recordPokemonAttackUse(statistics, attacker, attack);
-        int hitChance = random.nextInt(100) + 1;
-        boolean isHit = hitChance <= attack.getAccuracy();
-        if (!isHit) {
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " used " + attack.getName() +
-                            " but missed!"
+            handleVictory(
+                    scanner,
+                    pokedex,
+                    myPokemon,
+                    opponent,
+                    statistics,
+                    jsonHandler,
+                    () -> startBattle(
+                            scanner,
+                            pokedex,
+                            wildPokemons,
+                            statistics,
+                            jsonHandler
+                    )
             );
-            separator();
-        } else {
-            boolean criticalHit = random.nextInt(15) == 0;
-            attack.execute(attacker, defender, criticalHit);
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " used " + attack.getName() + "!"
-           );
-
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " !!! HP: " +
-                            attacker.getCurrentHp() +
-                            "/" +
-                            attacker.getMaxHp()
-            );
-
-            System.out.println(
-                    "  " + defender.getName() +
-                            " HP: " +
-                            defender.getCurrentHp() +
-                            "/" +
-                            defender.getMaxHp()
-            );
-
-            separator();
-        }
-    }
-
-
-    public static void handleVictory(Scanner scanner, Pokedex pokedex, Pokemon pokemon,Pokemon caught, List<Pokemon> wildPokemon, BattleStatistics statistics, JsonHandler jsonHandler) {
-        evolvePokemon(pokemon, statistics);
-        subTitle("Gotta catch them all!");
-        menuOption(1, "Yes");
-        menuOption(2, "No");
-        int choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
-        separator();
-        if (choice == 1) {
-            recordPokemonCatch(statistics, caught);
-            pokedex.addPokemon(caught);
-            jsonHandler.saveStatistics("statistic.json", statistics);
-        }
-        ;
-        subTitle("Play again");
-        menuOption(1, "Yes");
-        menuOption(2, "Exit");
-        separator();
-        choice = readIntBetween(scanner, 1, 2, "  Select on option: > ");
-        separator();
-
-        if (choice == 1) {
-            startBattle(scanner, pokedex, wildPokemon, statistics, jsonHandler);
-            return;
-        }
-        System.out.println("  Returning to menu");
-    }
-
-    public static void evolvePokemon(Pokemon pokemon, BattleStatistics statistics) {
-        int wins = statistics.getPokemonWins()
-                .getOrDefault(pokemon.getName(), 0);
-        if (wins > 0 && wins % 3 == 0) {
-            pokemon.evolve();
         }
     }
 }
