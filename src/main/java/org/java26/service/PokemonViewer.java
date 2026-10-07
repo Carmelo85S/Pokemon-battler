@@ -58,17 +58,16 @@ public class PokemonViewer {
                 title("ATTACKS");
                 System.out.println("+----------------+----------------+----------------+----------------+----------------+");
                 System.out.printf(
-                        "| %-14s | %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                        "Name", "Damage", "Heal", "Accuracy", "Type", "Category"
+                        "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                        "Name", "Damage", "Accuracy", "Type", "Category"
                 );
                 System.out.println("+----------------+----------------+----------------+----------------+----------------+");
 
                 for (Attack attack : pokemon.getAttacks()) {
                     System.out.printf(
-                            "| %-14s | %-14d | %-14d | %-14d | %-14s | %-14s |%n",
+                            "| %-14s | %-14d | %-14d | %-14s | %-14s |%n",
                             attack.getName(),
                             attack.getBaseDamage(),
-                            attack.getHeal(),
                             attack.getAccuracy(),
                             attack.getType().getLabel(),
                             attack.getAttackClassType().getLabel()
