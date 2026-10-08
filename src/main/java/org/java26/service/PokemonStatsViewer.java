@@ -24,21 +24,23 @@ public class PokemonStatsViewer {
 
 
         System.out.println(
-                "+----------------+------------+------------+--------+--------+--------+----------------+--------+"
+                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+"
         );
 
         System.out.printf(
-                "| %-14s | %-10s | %-10s | %-6s | %-6s | %-6s | %-14s | %-6s | %n",
-                "Name", "Caught ", "Used Times", "Win", "Loss", "Ratio", "Attack used", "Times"
+                "| %-14s | %-6s | %-10s | %-10s | %-6s | %-6s | %-6s | %-14s | %-6s | %n",
+                "Name", "Level", "Caught ", "Used Times", "Win", "Loss", "Ratio", "Attack used", "Times"
         );
 
         System.out.println(
-                "+----------------+------------+------------+--------+--------+--------+----------------+--------+"
+                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+"
         );
 
         for (Pokemon pokemon : pokedex.getPokemons()) {
             String caught = statistics.getPokemonCatch()
                     .containsKey(pokemon.getName()) ? "Yes" : "No";
+
+            int level = pokemon.getLevel();
 
             int pokemonUsedTimes = statistics.getPokemonUse()
                     .getOrDefault(pokemon.getName(), 0);
@@ -66,8 +68,9 @@ public class PokemonStatsViewer {
             int attackUsed = attacks.getOrDefault(mostUsedAttack, 0);
 
             System.out.printf(
-                    "| %-14s | %-10s | %-10s | %-6d | %-6d | %-6.2f | %-14s | %-6d |%n",
+                    "| %-14s | %-6d | %-10s | %-10s | %-6d | %-6d | %-6.2f | %-14s | %-6d |%n",
                     pokemon.getName(),
+                    level,
                     caught,
                     pokemonUsedTimes,
                     wins,
@@ -79,7 +82,7 @@ public class PokemonStatsViewer {
         }
 
         System.out.println(
-                "+----------------+------------+------------+--------+--------+--------+----------------+--------+"
+                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+"
         );
     }
 }

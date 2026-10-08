@@ -21,7 +21,6 @@ public class RegularBattle {
     public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
         title("Regular Battle");
         showRegularBattleRules();
-        int round = 1;
 
         Random random = new Random();
 
@@ -30,46 +29,17 @@ public class RegularBattle {
             return;
         }
 
-        if (pokedex.getPokemons().isEmpty()) {
-            showOptions(scanner, pokedex);
-
-            if (pokedex.getPokemons().isEmpty()) {
-                return;
-            }
-        }
-
-        title("Choose your pokemon");
-        showPokemons(pokedex);
-
-        Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
-        hasPokemonAttack(scanner, myPokemon);
+        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex);
 
         Pokemon opponent = chooseOpponent(random, wildPokemons);
         if (isNull(opponent)) {
             return;
         }
+
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
-        title("---Random Start---");
-        boolean playerTurn = random.nextBoolean();
+        runBattle(scanner, myPokemon, opponent, random, statistics);
 
-        while (!myPokemon.isFainted() && !opponent.isFainted()) {
-
-            title("ROUND " + round);
-            if (playerTurn) {
-                subTitle(myPokemon.getName() + " turn.");
-                Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
-
-                BattleLogic.runTurn(selectedPlayerAttack, myPokemon, opponent, random, statistics);
-            } else {
-                subTitle(opponent.getName() + " turn.");
-                Attack opponentAttack = chooseRandomAttack(opponent, random);
-
-                BattleLogic.runTurn(opponentAttack, opponent, myPokemon, random, statistics);
-                round++;
-            }
-            playerTurn = !playerTurn;
-        }
         if (myPokemon.isFainted()) {
             handleEndFight(
                     " lost the battle",
@@ -104,6 +74,74 @@ public class RegularBattle {
                             jsonHandler
                     )
             );
+        }
+    }
+
+    private static Pokemon preparePlayerPokemon(Scanner scanner, Pokedex pokedex) {
+        if (pokedex.getPokemons().isEmpty()) {
+            showOptions(scanner, pokedex);
+
+            if (pokedex.getPokemons().isEmpty()) {
+                return null;
+            }
+        }
+
+        title("Choose your pokemon");
+        showPokemons(pokedex);
+
+        Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
+        hasPokemonAttack(scanner, myPokemon);
+
+        return myPokemon;
+    }
+
+    private static void runBattle(
+            Scanner scanner,
+            Pokemon myPokemon,
+            Pokemon opponent,
+            Random random,
+            BattleStatistics statistics
+    ) {
+        int round = 1;
+        boolean playerTurn = random.nextBoolean();
+
+        title("---Random Start---");
+
+        while (!myPokemon.isFainted() && !opponent.isFainted()) {
+
+            title("ROUND " + round);
+
+            if (playerTurn) {
+                subTitle(myPokemon.getName() + " turn.");
+
+                Attack selectedPlayerAttack =
+                        chooseAttack(scanner, myPokemon);
+
+                runTurn(
+                        selectedPlayerAttack,
+                        myPokemon,
+                        opponent,
+                        random,
+                        statistics
+                );
+
+            } else {
+                subTitle(opponent.getName() + " turn.");
+
+                Attack opponentAttack =
+                        chooseRandomAttack(opponent, random);
+
+                runTurn(
+                        opponentAttack,
+                        opponent,
+                        myPokemon,
+                        random,
+                        statistics
+                );
+            }
+
+            round++;
+            playerTurn = !playerTurn;
         }
     }
 }
