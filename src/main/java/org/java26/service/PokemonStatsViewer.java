@@ -1,17 +1,11 @@
 package org.java26.service;
 
-import org.java26.exceptions.InvalidPokemonException;
-import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.service.battle.BattleStatistics;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.java26.consoleLayout.Layout.backOption;
-import static org.java26.service.PokemonViewer.showPokemons;
 
 public class PokemonStatsViewer {
 

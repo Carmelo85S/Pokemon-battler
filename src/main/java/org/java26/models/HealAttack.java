@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Random;
 
-import static org.java26.consoleLayout.Layout.subTitle;
+import static org.java26.UI.Layout.subTitle;
 
 public class HealAttack extends Attack {
 

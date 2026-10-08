@@ -10,7 +10,7 @@ import org.java26.service.battle.RegularBattle;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.Layout.*;
+import static org.java26.UI.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.repository.SaveLoadPokemons.*;
 import static org.java26.service.battle.HandicapBattle.startHandicapBattle;

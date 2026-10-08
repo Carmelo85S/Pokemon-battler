@@ -1,4 +1,4 @@
-package org.java26.consoleLayout;
+package org.java26.UI;
 
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.models.*;
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.Layout.*;
-import static org.java26.consoleLayout.Layout.menuOption;
+import static org.java26.UI.Layout.*;
+import static org.java26.UI.Layout.menuOption;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.inputHelpers.InputHelper.readString;
 import static org.java26.service.PokemonCreator.createPokemon;

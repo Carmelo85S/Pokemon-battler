@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.BattleUI.*;
-import static org.java26.consoleLayout.Layout.*;
+import static org.java26.UI.BattleUI.*;
+import static org.java26.UI.Layout.*;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
@@ -56,14 +56,12 @@ public class RegularBattle {
                     statistics,
                     jsonHandler
             );
-
+            evolvePokemon(myPokemon, statistics);
             handleVictory(
                     scanner,
                     pokedex,
-                    myPokemon,
                     opponent,
                     statistics,
-                    jsonHandler,
                     () -> startBattle(
                             scanner,
                             pokedex,
@@ -72,6 +70,9 @@ public class RegularBattle {
                             jsonHandler
                     )
             );
+
+
+
         }
     }
 

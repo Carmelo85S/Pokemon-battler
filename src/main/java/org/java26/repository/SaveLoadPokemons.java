@@ -4,14 +4,13 @@ import org.java26.models.Pokemon;
 import org.java26.exceptions.*;
 import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
-import org.java26.service.battle.BattleStatistics;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.java26.consoleLayout.Layout.*;
+import static org.java26.UI.Layout.*;
 
 public class SaveLoadPokemons {
 

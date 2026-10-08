@@ -1,4 +1,4 @@
-package org.java26.consoleLayout;
+package org.java26.UI;
 
 import java.util.Locale;
 

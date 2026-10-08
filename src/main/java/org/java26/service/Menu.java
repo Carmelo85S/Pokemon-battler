@@ -7,7 +7,7 @@ import org.java26.service.battle.BattleStatistics;
 
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.Layout.*;
+import static org.java26.UI.Layout.*;
 import static org.java26.repository.SaveLoadPokemons.*;
 import static org.java26.service.BattleMenu.battleMenu;
 import static org.java26.service.PokemonCreator.createPokemon;

@@ -9,9 +9,9 @@ import org.java26.models.Pokemon;
 
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.Layout.*;
-import static org.java26.consoleLayout.Layout.separator;
-import static org.java26.consoleLayout.Layout.subTitle;
+import static org.java26.UI.Layout.*;
+import static org.java26.UI.Layout.separator;
+import static org.java26.UI.Layout.subTitle;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.inputHelpers.InputHelper.readString;
 import static org.java26.service.PokemonCreator.createPokemon;

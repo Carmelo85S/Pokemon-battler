@@ -9,11 +9,11 @@ import org.java26.models.PokemonType;
 import java.util.Random;
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.BattleUI.chooseMyPokemon;
-import static org.java26.consoleLayout.BattleUI.showOptions;
-import static org.java26.consoleLayout.Layout.*;
-import static org.java26.consoleLayout.Layout.menuOption;
-import static org.java26.consoleLayout.Layout.subTitle;
+import static org.java26.UI.BattleUI.chooseMyPokemon;
+import static org.java26.UI.BattleUI.showOptions;
+import static org.java26.UI.Layout.*;
+import static org.java26.UI.Layout.menuOption;
+import static org.java26.UI.Layout.subTitle;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.PokemonViewer.showPokemons;
@@ -55,18 +55,16 @@ public class BattleLogic {
         myPokemon.fullHeal();
         opponent.fullHeal();
         jsonHandler.saveStatistics("statistic.json", statistics);
+        System.out.println("  Statistic saved!");
     }
 
     public static void handleVictory(
             Scanner scanner,
             Pokedex pokedex,
-            Pokemon pokemon,
             Pokemon caught,
             BattleStatistics statistics,
-            JsonHandler jsonHandler,
             Runnable playAgain
     ) {
-        evolvePokemon(pokemon, statistics);
 
         subTitle("Gotta catch them all!");
         menuOption(1, "Yes");
@@ -100,9 +98,6 @@ public class BattleLogic {
         );
 
         separator();
-
-        jsonHandler.saveStatistics("statistic.json", statistics);
-        System.out.println("  Statistics saved!");
 
         if (choice == 1) {
             playAgain.run();

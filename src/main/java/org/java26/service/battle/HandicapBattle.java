@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.BattleUI.*;
-import static org.java26.consoleLayout.Layout.*;
+import static org.java26.UI.BattleUI.*;
+import static org.java26.UI.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.battle.BattleLogic.*;
 
@@ -53,7 +53,21 @@ public class HandicapBattle {
             );
         } else {
             handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
-            handleVictory(scanner, pokedex, myPokemon, opponent, statistics, jsonHandler, () -> startHandicapBattle(scanner, pokedex, wildPokemons, statistics, jsonHandler));
+            evolvePokemon(myPokemon, statistics);
+            handleVictory(
+                    scanner,
+                    pokedex,
+                    opponent,
+                    statistics,
+                    () -> startHandicapBattle(
+                            scanner,
+                            pokedex,
+                            wildPokemons,
+                            statistics,
+                            jsonHandler
+                    )
+            );
+
         }
     }
 
@@ -135,7 +149,7 @@ public class HandicapBattle {
                 subTitle(opponent.getName() + " turn.");
 
                 Attack opponentAttack =
-                        BattleLogic.chooseRandomAttack(opponent, random);
+                        chooseRandomAttack(opponent, random);
 
                 runTurn(
                         opponentAttack,

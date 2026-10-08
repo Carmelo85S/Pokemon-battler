@@ -6,11 +6,11 @@ import org.java26.exceptions.QuitPokemonOperationException;
 
 import java.util.Scanner;
 
-import static org.java26.consoleLayout.Layout.backOption;
-import static org.java26.consoleLayout.Layout.menuOption;
-import static org.java26.consoleLayout.Layout.separator;
-import static org.java26.consoleLayout.Layout.subTitle;
-import static org.java26.consoleLayout.Layout.title;
+import static org.java26.UI.Layout.backOption;
+import static org.java26.UI.Layout.menuOption;
+import static org.java26.UI.Layout.separator;
+import static org.java26.UI.Layout.subTitle;
+import static org.java26.UI.Layout.title;
 import static org.java26.inputHelpers.InputHelper.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 
