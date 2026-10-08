@@ -4,6 +4,7 @@ import org.java26.handlers.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.models.PokemonType;
 
 import java.util.List;
 import java.util.Random;
@@ -11,6 +12,8 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.BattleUI.*;
 import static org.java26.consoleLayout.Layout.*;
+import static org.java26.inputHelpers.InputHelper.readIntBetween;
+import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.battle.BattleLogic.*;
 
@@ -39,8 +42,27 @@ public class RegularBattle {
         showPokemons(pokedex);
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
-
+        if (myPokemon.getAttacks().isEmpty()) {
+            System.out.println("  No attacks available.");
+            title("Create attack");
+            menuOption(1, "Yes");
+            menuOption(2, "No");
+            separator();
+            int choice = readIntBetween(scanner, 1, 2, "  Select an option: >");
+            switch (choice) {
+                case 1 -> {
+                    Attack attack = createAttack(scanner, myPokemon.getType());
+                    myPokemon.addAttack(attack);
+                }
+                case 2 -> {
+                    return;
+                }
+            }
+        }
         Pokemon opponent = chooseOpponent(random, wildPokemons);
+        if (isNull(opponent)) {
+            return;
+        }
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
         title("---Random Start---");

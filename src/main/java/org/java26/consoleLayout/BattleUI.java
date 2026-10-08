@@ -6,6 +6,7 @@ import org.java26.models.HealAttack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -88,7 +89,6 @@ public class BattleUI {
     }
 
     public static Pokemon chooseMyPokemon(Scanner scanner, Pokedex pokedex) {
-
         while (true) {
             try {
                 String choice = readString(
@@ -102,12 +102,23 @@ public class BattleUI {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 
     public static Pokemon chooseOpponent(Random random, List<Pokemon> wildPokemons) {
-        int randomOpponent = random.nextInt(wildPokemons.size());
-        return wildPokemons.get(randomOpponent);
+        List<Pokemon> playablePokemons = new ArrayList<>();
+        for(Pokemon pokemon : wildPokemons){
+            if(pokemon.isPlayable()){
+                playablePokemons.add(pokemon);
+            }
+        }
+        if(playablePokemons.isEmpty()){
+            System.out.println("  No playable wild pokemons available.");
+            return null;
+        }
+
+        int randomOpponent = random.nextInt(playablePokemons.size());
+        return playablePokemons.get((randomOpponent));
+
     }
 
     public static void showRegularBattleRules() {

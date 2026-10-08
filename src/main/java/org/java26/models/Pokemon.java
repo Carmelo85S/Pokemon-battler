@@ -144,6 +144,9 @@ public class Pokemon implements Evolveable {
     }
 
 
+    public boolean isPlayable(){
+        return !attacks.isEmpty();
+    }
     @Override
     public String toString() {
         return "Pokemon: " + name +

@@ -1,20 +1,20 @@
 [
   {
-    "name": "Pikachu",
+    "name": "Pisaro",
     "type": "ELECTRIC",
     "maxHp": 300,
     "currentHp": 300,
     "attacks": [
       {
         "attackClassType": "damage",
-        "name": "Thunder Shock",
+        "name": "Bolt",
         "baseDamage": 40,
         "accuracy": 95,
         "type": "ELECTRIC"
       },
       {
         "attackClassType": "damage",
-        "name": "Quick Attack",
+        "name": "Miasola",
         "baseDamage": 50,
         "accuracy": 90,
         "type": "NORMAL"
@@ -26,160 +26,6 @@
     "type": "FIRE",
     "maxHp": 300,
     "currentHp": 300,
-    "attacks": [
-      {
-        "attackClassType": "damage",
-        "name": "Flamethrower",
-        "baseDamage": 70,
-        "accuracy": 85,
-        "type": "FIRE"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Wing Attack",
-        "baseDamage": 60,
-        "accuracy": 90,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Blastoise",
-    "type": "WATER",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "attackClassType": "damage",
-        "name": "Water Gun",
-        "baseDamage": 50,
-        "accuracy": 95,
-        "type": "WATER"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Aqua Tail",
-        "baseDamage": 70,
-        "accuracy": 85,
-        "type": "WATER"
-      }
-    ]
-  },
-  {
-    "name": "Bulbasaur",
-    "type": "GRASS",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "attackClassType": "damage",
-        "name": "Vine Whip",
-        "baseDamage": 45,
-        "accuracy": 95,
-        "type": "GRASS"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Razor Leaf",
-        "baseDamage": 55,
-        "accuracy": 90,
-        "type": "GRASS"
-      }
-    ]
-  },
-  {
-    "name": "Raichu",
-    "type": "ELECTRIC",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "attackClassType": "damage",
-        "name": "Thunder Shock",
-        "baseDamage": 40,
-        "accuracy": 95,
-        "type": "ELECTRIC"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Spark",
-        "baseDamage": 50,
-        "accuracy": 90,
-        "type": "ELECTRIC"
-      }
-    ]
-  },
-  {
-    "name": "Charmander",
-    "type": "FIRE",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "attackClassType": "damage",
-        "name": "Ember",
-        "baseDamage": 40,
-        "accuracy": 95,
-        "type": "FIRE"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Scratch",
-        "baseDamage": 45,
-        "accuracy": 95,
-        "type": "NORMAL"
-      }
-    ]
-  },
-  {
-    "name": "Magnemite",
-    "type": "ELECTRIC",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "attackClassType": "damage",
-        "name": "Thunder Shock",
-        "baseDamage": 40,
-        "accuracy": 95,
-        "type": "ELECTRIC"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Spark",
-        "baseDamage": 50,
-        "accuracy": 90,
-        "type": "ELECTRIC"
-      }
-    ]
-  },
-  {
-    "name": "Magmar",
-    "type": "FIRE",
-    "maxHp": 300,
-    "currentHp": 300,
-    "attacks": [
-      {
-        "attackClassType": "damage",
-        "name": "Ember",
-        "baseDamage": 40,
-        "accuracy": 95,
-        "type": "FIRE"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Flame Wheel",
-        "baseDamage": 60,
-        "accuracy": 90,
-        "type": "FIRE"
-      },
-      {
-        "attackClassType": "damage",
-        "name": "Flamethrower",
-        "baseDamage": 70,
-        "accuracy": 85,
-        "type": "FIRE"
-      }
-    ]
+    "attacks": []
   }
 ]

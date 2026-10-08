@@ -15,6 +15,7 @@ import static org.java26.consoleLayout.Layout.*;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
+import static org.java26.service.battle.BattleLogic.isNull;
 
 public class HandicapBattle {
     public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
@@ -42,6 +43,9 @@ public class HandicapBattle {
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
         Pokemon opponent = chooseOpponent(random, wildPokemons);
+        if(isNull(opponent)){
+            return;
+        }
 
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 

@@ -91,7 +91,7 @@ public abstract class Attack {
     public void setAccuracy(int accuracy) {
         if (accuracy < 10 || accuracy > 100) {
             throw new IllegalArgumentException(
-                    "  Accuracy must be between 10 and 1000"
+                    "  Accuracy must be between 10 and 100"
             );
         }
         this.accuracy = accuracy;

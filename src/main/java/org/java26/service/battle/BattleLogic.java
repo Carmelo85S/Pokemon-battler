@@ -173,4 +173,9 @@ public class BattleLogic {
             separator();
         }
     }
+
+    public static boolean isNull(Pokemon pokemon) {
+        return pokemon == null;
+    }
+
 }
