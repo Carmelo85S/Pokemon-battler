@@ -13,6 +13,7 @@ import static org.java26.consoleLayout.Layout.*;
 import static org.java26.consoleLayout.Layout.menuOption;
 import static org.java26.consoleLayout.Layout.subTitle;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
+import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.StatisticsService.*;
 
 public class BattleLogic {
@@ -171,6 +172,26 @@ public class BattleLogic {
             );
 
             separator();
+        }
+    }
+
+    public static void hasPokemonAttack(Scanner scanner, Pokemon pokemon) {
+        if (pokemon.getAttacks().isEmpty()) {
+            System.out.println("  No attacks available.");
+            title("Create attack");
+            menuOption(1, "Yes");
+            menuOption(2, "No");
+            separator();
+            int choice = readIntBetween(scanner, 1, 2, "  Select an option: >");
+            switch (choice) {
+                case 1 -> {
+                    Attack attack = createAttack(scanner, pokemon.getType());
+                    pokemon.addAttack(attack);
+                }
+                case 2 -> {
+                    return;
+                }
+            }
         }
     }
 

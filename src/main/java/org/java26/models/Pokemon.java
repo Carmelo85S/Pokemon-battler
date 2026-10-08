@@ -143,7 +143,7 @@ public class Pokemon implements Evolveable {
         return level;
     }
 
-
+    @JsonIgnore
     public boolean isPlayable(){
         return !attacks.isEmpty();
     }

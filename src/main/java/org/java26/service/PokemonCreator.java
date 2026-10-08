@@ -52,23 +52,7 @@ public class PokemonCreator {
             );
             System.out.println();
 
-            int answer = readIntBetween(
-                    scanner,
-                    1,
-                    2,
-                    "  Do you want to enter attacks? [1] Yes / [2] No: "
-            );
-            System.out.println();
-
-            if (answer == 2) {
-                System.out.println("  You cannot create a Pokemon without attacks.");
-                System.out.println("  Redirect to 'Main' menu");
-                return;
-            }
-
-
             Pokemon pokemon = new Pokemon(name, type, maxHp);
-
 
             boolean addAttack = true;
 

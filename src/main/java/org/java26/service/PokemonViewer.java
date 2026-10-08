@@ -142,7 +142,7 @@ public class PokemonViewer {
                     scanner,
                     1,
                     2,
-                    "  Select an option %d or %d: "
+                    "  Select an option: > "
             );
             System.out.println();
             if (choice == 1) {

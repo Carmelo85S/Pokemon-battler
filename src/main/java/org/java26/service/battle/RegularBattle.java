@@ -42,23 +42,8 @@ public class RegularBattle {
         showPokemons(pokedex);
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
-        if (myPokemon.getAttacks().isEmpty()) {
-            System.out.println("  No attacks available.");
-            title("Create attack");
-            menuOption(1, "Yes");
-            menuOption(2, "No");
-            separator();
-            int choice = readIntBetween(scanner, 1, 2, "  Select an option: >");
-            switch (choice) {
-                case 1 -> {
-                    Attack attack = createAttack(scanner, myPokemon.getType());
-                    myPokemon.addAttack(attack);
-                }
-                case 2 -> {
-                    return;
-                }
-            }
-        }
+        hasPokemonAttack(scanner, myPokemon);
+
         Pokemon opponent = chooseOpponent(random, wildPokemons);
         if (isNull(opponent)) {
             return;

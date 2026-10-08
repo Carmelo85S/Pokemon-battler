@@ -5,7 +5,6 @@ import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.service.battle.BattleStatistics;
-import org.java26.service.battle.HandicapBattle;
 import org.java26.service.battle.RegularBattle;
 
 import java.util.List;

@@ -16,7 +16,8 @@ public class AttackCreator {
             PokemonType type
     ) throws QuitPokemonOperationException {
 
-        title("Select attack type");
+        title("Create Attack");
+        subTitle("Attack type");
         menuOption(1, "Damage");
         menuOption(2, "Heal");
         separator();
