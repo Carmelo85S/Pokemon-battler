@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.util.Random;
+
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
@@ -102,11 +104,16 @@ public abstract class Attack {
     }
 
     @JsonIgnore
-    public AttackClassType getAttackClassType(){
+    public AttackClassType getAttackClassType() {
         return attackClassType;
     }
 
 
-    public abstract void execute(Pokemon attacker, Pokemon defender, boolean criticalHit);
-
+    public abstract void execute(
+            Pokemon attacker,
+            Pokemon defender,
+            boolean criticalHit,
+            double effectiveness,
+            Random random
+    );
 }

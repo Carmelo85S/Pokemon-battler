@@ -1,10 +1,7 @@
 package org.java26.consoleLayout;
 
 import org.java26.exceptions.InvalidPokemonException;
-import org.java26.models.Attack;
-import org.java26.models.HealAttack;
-import org.java26.models.Pokedex;
-import org.java26.models.Pokemon;
+import org.java26.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ import static org.java26.consoleLayout.Layout.menuOption;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.inputHelpers.InputHelper.readString;
 import static org.java26.service.PokemonCreator.createPokemon;
+import static org.java26.service.battle.BattleLogic.calculateEffectiveness;
 
 public class BattleUI {
     public static Attack chooseAttack(Scanner scanner, Pokemon pokemon) {
@@ -89,6 +87,8 @@ public class BattleUI {
     }
 
     public static Pokemon chooseMyPokemon(Scanner scanner, Pokedex pokedex) {
+        title("Effect table");
+        showTypeEffectiveness();
         while (true) {
             try {
                 String choice = readString(
@@ -106,12 +106,12 @@ public class BattleUI {
 
     public static Pokemon chooseOpponent(Random random, List<Pokemon> wildPokemons) {
         List<Pokemon> playablePokemons = new ArrayList<>();
-        for(Pokemon pokemon : wildPokemons){
-            if(pokemon.isPlayable()){
+        for (Pokemon pokemon : wildPokemons) {
+            if (pokemon.isPlayable()) {
                 playablePokemons.add(pokemon);
             }
         }
-        if(playablePokemons.isEmpty()){
+        if (playablePokemons.isEmpty()) {
             System.out.println("  No playable wild pokemons available.");
             return null;
         }
@@ -157,6 +157,37 @@ public class BattleUI {
         subTitle("Opponent + 50 max HP");
         subTitle("Player - 20 accuracy");
         subTitle("Opponent - 20 accuracy");
+        separator();
+    }
+
+    public static void showTypeEffectiveness() {
+        System.out.println("+--------------+--------------+----------+");
+        System.out.println("|                TYPE EFFECT             |");
+        System.out.println("+--------------+--------------+----------+");
+        System.out.printf(
+                "| %-12s | %-12s | %-8s | %n",
+                "Attacker","Defender", "Factor"
+        );
+        System.out.println("+--------------+--------------+----------+");
+
+        for (PokemonType attackType : PokemonType.values()) {
+            for (PokemonType defenderType : PokemonType.values()) {
+
+                double effectiveness = calculateEffectiveness(
+                        attackType,
+                        defenderType
+                );
+
+                System.out.printf(
+                        "| %-12s | %-12s | %-8s | %n",
+                        attackType.getLabel(),
+                        defenderType.getLabel(),
+                        effectiveness + "x"
+                );
+            }
+
+        }
+        System.out.println("+--------------+--------------+----------+");
         separator();
     }
 }

@@ -4,7 +4,6 @@ import org.java26.handlers.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
-import org.java26.models.PokemonType;
 
 import java.util.List;
 import java.util.Random;
@@ -12,9 +11,6 @@ import java.util.Scanner;
 
 import static org.java26.consoleLayout.BattleUI.*;
 import static org.java26.consoleLayout.Layout.*;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
-import static org.java26.service.AttackCreator.createAttack;
-import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
@@ -30,9 +26,11 @@ public class RegularBattle {
         }
 
         Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex);
-
+        if (myPokemon == null) {
+            return;
+        }
         Pokemon opponent = chooseOpponent(random, wildPokemons);
-        if (isNull(opponent)) {
+        if (opponent == null) {
             return;
         }
 
@@ -77,24 +75,6 @@ public class RegularBattle {
         }
     }
 
-    private static Pokemon preparePlayerPokemon(Scanner scanner, Pokedex pokedex) {
-        if (pokedex.getPokemons().isEmpty()) {
-            showOptions(scanner, pokedex);
-
-            if (pokedex.getPokemons().isEmpty()) {
-                return null;
-            }
-        }
-
-        title("Choose your pokemon");
-        showPokemons(pokedex);
-
-        Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
-        hasPokemonAttack(scanner, myPokemon);
-
-        return myPokemon;
-    }
-
     private static void runBattle(
             Scanner scanner,
             Pokemon myPokemon,
@@ -122,6 +102,7 @@ public class RegularBattle {
                         myPokemon,
                         opponent,
                         random,
+                        0,
                         statistics
                 );
 
@@ -136,6 +117,7 @@ public class RegularBattle {
                         opponent,
                         myPokemon,
                         random,
+                        0,
                         statistics
                 );
             }

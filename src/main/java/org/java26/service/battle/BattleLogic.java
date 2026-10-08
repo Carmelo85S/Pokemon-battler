@@ -9,14 +9,35 @@ import org.java26.models.PokemonType;
 import java.util.Random;
 import java.util.Scanner;
 
+import static org.java26.consoleLayout.BattleUI.chooseMyPokemon;
+import static org.java26.consoleLayout.BattleUI.showOptions;
 import static org.java26.consoleLayout.Layout.*;
 import static org.java26.consoleLayout.Layout.menuOption;
 import static org.java26.consoleLayout.Layout.subTitle;
 import static org.java26.inputHelpers.InputHelper.readIntBetween;
 import static org.java26.service.AttackCreator.createAttack;
+import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
 
 public class BattleLogic {
+
+    public static Pokemon preparePlayerPokemon(Scanner scanner, Pokedex pokedex) {
+        if (pokedex.getPokemons().isEmpty()) {
+            showOptions(scanner, pokedex);
+
+            if (pokedex.getPokemons().isEmpty()) {
+                return null;
+            }
+        }
+
+        title("Choose your pokemon");
+        showPokemons(pokedex);
+
+        Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
+        hasPokemonAttack(scanner, myPokemon);
+
+        return myPokemon;
+    }
 
     public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
 
@@ -91,39 +112,46 @@ public class BattleLogic {
         System.out.println("  Returning to menu");
     }
 
-    public static double effectiveness(Pokemon defender, Attack attack) {
-        PokemonType attackType = attack.getType();
-        PokemonType opponentType = defender.getType();
+    public static double calculateEffectiveness(Pokemon defender, Attack attack) {
+        return calculateEffectiveness(
+                attack.getType(),
+                defender.getType()
+        );
+    }
 
-        if (attackType == PokemonType.FIRE && opponentType == PokemonType.GRASS) {
+    public static double calculateEffectiveness(
+            PokemonType attackType,
+            PokemonType defenderType
+    ) {
+        if (attackType == PokemonType.FIRE && defenderType == PokemonType.GRASS) {
             return 2.0;
         }
 
-        if (attackType == PokemonType.WATER && opponentType == PokemonType.FIRE) {
+        if (attackType == PokemonType.WATER && defenderType == PokemonType.FIRE) {
             return 2.0;
         }
 
-        if (attackType == PokemonType.GRASS && opponentType == PokemonType.WATER) {
+        if (attackType == PokemonType.GRASS && defenderType == PokemonType.WATER) {
             return 2.0;
         }
 
-        if (attackType == PokemonType.ELECTRIC && opponentType == PokemonType.WATER) {
+        if (attackType == PokemonType.ELECTRIC && defenderType == PokemonType.WATER) {
             return 2.0;
         }
 
-        if (attackType == PokemonType.FIRE && opponentType == PokemonType.WATER) {
+        if (attackType == PokemonType.FIRE && defenderType == PokemonType.WATER) {
             return 0.5;
         }
 
-        if (attackType == PokemonType.WATER && opponentType == PokemonType.GRASS) {
+        if (attackType == PokemonType.WATER && defenderType == PokemonType.GRASS) {
             return 0.5;
         }
 
-        if (attackType == PokemonType.GRASS && opponentType == PokemonType.FIRE) {
+        if (attackType == PokemonType.GRASS && defenderType == PokemonType.FIRE) {
             return 0.5;
         }
 
-        if (attackType == PokemonType.ELECTRIC && opponentType == PokemonType.GRASS) {
+        if (attackType == PokemonType.ELECTRIC && defenderType == PokemonType.GRASS) {
             return 0.5;
         }
 
@@ -143,33 +171,23 @@ public class BattleLogic {
         }
     }
 
-    public static void runTurn(Attack attack, Pokemon attacker, Pokemon defender, Random random, BattleStatistics statistics) {
+    public static void runTurn(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyPenalty, BattleStatistics statistics) {
         recordPokemonAttackUse(statistics, attacker, attack);
+
         int hitChance = random.nextInt(100) + 1;
-        boolean isHit = hitChance <= attack.getAccuracy();
+        int accuracy = Math.clamp(attack.getAccuracy() - accuracyPenalty, 0, 100);
+        boolean isHit = hitChance <= accuracy;
         if (!isHit) {
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " used " + attack.getName() +
-                            " but missed!"
-            );
+            System.out.println("  " + attacker.getName() + " used " + attack.getName() + " but missed!");
             separator();
         } else {
             boolean criticalHit = random.nextInt(15) == 0;
-            attack.execute(attacker, defender, criticalHit);
-            System.out.println(
-                    "  " + attacker.getName() +
-                            " used " + attack.getName() + "!"
-            );
+            double effectiveness = calculateEffectiveness(defender, attack);
 
+            attack.execute(attacker, defender, criticalHit, effectiveness, random);
+            System.out.println("  " + attacker.getName() + " used " + attack.getName() + "!");
 
-            System.out.println(
-                    "  " + defender.getName() +
-                            " HP: " +
-                            defender.getCurrentHp() +
-                            "/" +
-                            defender.getMaxHp()
-            );
+            System.out.println("  " + defender.getName() + " HP: " + defender.getCurrentHp() + "/" + defender.getMaxHp());
 
             separator();
         }
@@ -193,10 +211,6 @@ public class BattleLogic {
                 }
             }
         }
-    }
-
-    public static boolean isNull(Pokemon pokemon) {
-        return pokemon == null;
     }
 
 }

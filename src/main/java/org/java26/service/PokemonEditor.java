@@ -3,7 +3,6 @@ package org.java26.service;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.models.Attack;
-import org.java26.models.DamageAttack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
@@ -120,11 +119,15 @@ public class PokemonEditor {
                                     break;
                                 }
 
+                                subTitle("Do you want to enter another attack?");
+                                menuOption(1, "Yes");
+                                menuOption(2, "No");
+                                separator();
                                 int userChoice = readIntBetween(
                                         scanner,
                                         1,
                                         2,
-                                        "  Do you want to enter another attack? [1] Yes / [2] No: "
+                                        "  Select an option: >  "
                                 );
 
                                 separator();
