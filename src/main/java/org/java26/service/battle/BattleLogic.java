@@ -9,8 +9,7 @@ import org.java26.models.PokemonType;
 import java.util.Random;
 import java.util.Scanner;
 
-import static org.java26.UI.BattleUI.chooseMyPokemon;
-import static org.java26.UI.BattleUI.showOptions;
+import static org.java26.UI.BattleUI.*;
 import static org.java26.UI.Layout.*;
 import static org.java26.UI.Layout.menuOption;
 import static org.java26.UI.Layout.subTitle;
@@ -37,6 +36,63 @@ public class BattleLogic {
         hasPokemonAttack(scanner, myPokemon);
 
         return myPokemon;
+    }
+
+    public static void runBattle(
+            Scanner scanner,
+            Pokemon myPokemon,
+            Pokemon opponent,
+            Random random,
+            BattleStatistics statistics,
+            int playerAccuracyPenalty,
+            int opponentAccuracyPenalty
+    ) {
+        int round = 1;
+
+        int playerStart = myPokemon.getSpeed() + random.nextInt(50);
+        int opponentStart = opponent.getSpeed() + random.nextInt(50);
+
+        boolean playerTurn = playerStart > opponentStart;
+
+        title("---Random Start---");
+
+        while (!myPokemon.isFainted() && !opponent.isFainted()) {
+
+            title("ROUND " + round);
+
+            if (playerTurn) {
+                subTitle(myPokemon.getName() + " turn.");
+
+                Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
+
+                runTurn(
+                        selectedPlayerAttack,
+                        myPokemon,
+                        opponent,
+                        random,
+                        playerAccuracyPenalty,
+                        statistics
+                );
+
+            } else {
+                subTitle(opponent.getName() + " turn.");
+
+                Attack opponentAttack =
+                        chooseRandomAttack(opponent, random);
+
+                runTurn(
+                        opponentAttack,
+                        opponent,
+                        myPokemon,
+                        random,
+                        opponentAccuracyPenalty,
+                        statistics
+                );
+            }
+
+            round++;
+            playerTurn = !playerTurn;
+        }
     }
 
     public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {

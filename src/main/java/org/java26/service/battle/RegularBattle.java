@@ -35,7 +35,7 @@ public class RegularBattle {
 
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
-        runBattle(scanner, myPokemon, opponent, random, statistics);
+        runBattle(scanner, myPokemon, opponent, random, statistics,0,0);
 
         if (myPokemon.isFainted()) {
             handleEndFight(
@@ -74,60 +74,6 @@ public class RegularBattle {
         }
     }
 
-    private static void runBattle(
-            Scanner scanner,
-            Pokemon myPokemon,
-            Pokemon opponent,
-            Random random,
-            BattleStatistics statistics
-    ) {
-        int round = 1;
 
-        int playerStart = myPokemon.getSpeed() + random.nextInt(50);
-        int opponentStart = opponent.getSpeed() + random.nextInt(50);
-
-        boolean playerTurn = playerStart > opponentStart;
-
-        title("---Random Start---");
-
-        while (!myPokemon.isFainted() && !opponent.isFainted()) {
-
-            title("ROUND " + round);
-
-            if (playerTurn) {
-                subTitle(myPokemon.getName() + " turn.");
-
-                Attack selectedPlayerAttack =
-                        chooseAttack(scanner, myPokemon);
-
-                runTurn(
-                        selectedPlayerAttack,
-                        myPokemon,
-                        opponent,
-                        random,
-                        0,
-                        statistics
-                );
-
-            } else {
-                subTitle(opponent.getName() + " turn.");
-
-                Attack opponentAttack =
-                        chooseRandomAttack(opponent, random);
-
-                runTurn(
-                        opponentAttack,
-                        opponent,
-                        myPokemon,
-                        random,
-                        0,
-                        statistics
-                );
-            }
-
-            round++;
-            playerTurn = !playerTurn;
-        }
-    }
 }
 

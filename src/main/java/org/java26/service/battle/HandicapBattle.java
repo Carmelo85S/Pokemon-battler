@@ -113,58 +113,6 @@ public class HandicapBattle {
         return new int[]{playerAccuracyPenalty, opponentAccuracyPenalty};
     }
 
-    private static void runBattle(
-            Scanner scanner,
-            Pokemon myPokemon,
-            Pokemon opponent,
-            Random random,
-            BattleStatistics statistics,
-            int playerAccuracyPenalty,
-            int opponentAccuracyPenalty
-    ) {
-        int round = 1;
-        boolean playerTurn = random.nextBoolean();
-
-        title("---Random Start---");
-
-        while (!myPokemon.isFainted() && !opponent.isFainted()) {
-
-            title("ROUND " + round);
-
-            if (playerTurn) {
-                subTitle(myPokemon.getName() + " turn.");
-
-                Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
-
-                runTurn(
-                        selectedPlayerAttack,
-                        myPokemon,
-                        opponent,
-                        random,
-                        playerAccuracyPenalty,
-                        statistics
-                );
-
-            } else {
-                subTitle(opponent.getName() + " turn.");
-
-                Attack opponentAttack =
-                        chooseRandomAttack(opponent, random);
-
-                runTurn(
-                        opponentAttack,
-                        opponent,
-                        myPokemon,
-                        random,
-                        opponentAccuracyPenalty,
-                        statistics
-                );
-            }
-
-            round++;
-            playerTurn = !playerTurn;
-        }
-    }
 }
 
 
