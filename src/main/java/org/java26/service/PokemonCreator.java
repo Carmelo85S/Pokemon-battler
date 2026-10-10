@@ -20,6 +20,7 @@ public class PokemonCreator {
         String name;
         PokemonType type;
         int maxHp;
+        int speed;
 
         // Attack obj
         int attackCount = 0;
@@ -52,7 +53,15 @@ public class PokemonCreator {
             );
             System.out.println();
 
-            Pokemon pokemon = new Pokemon(name, type, maxHp);
+            speed = readIntBetween(
+                    scanner,
+                    10,
+                    50,
+                    "  Enter speed between %d and %d: "
+            );
+            System.out.println();
+
+            Pokemon pokemon = new Pokemon(name, type, maxHp, speed);
 
             boolean addAttack = true;
 

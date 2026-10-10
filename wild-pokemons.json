@@ -4,6 +4,7 @@
     "type": "ELECTRIC",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -26,6 +27,7 @@
     "type": "FIRE",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 50,
     "attacks": []
   }
 ]

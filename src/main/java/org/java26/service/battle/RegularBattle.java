@@ -15,10 +15,9 @@ import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
     public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
+        Random random = new Random();
         title("Regular Battle");
         showRegularBattleRules();
-
-        Random random = new Random();
 
         if (wildPokemons.isEmpty()) {
             title("No wild pokemons available");
@@ -72,7 +71,6 @@ public class RegularBattle {
             );
 
 
-
         }
     }
 
@@ -84,7 +82,11 @@ public class RegularBattle {
             BattleStatistics statistics
     ) {
         int round = 1;
-        boolean playerTurn = random.nextBoolean();
+
+        int playerStart = myPokemon.getSpeed() + random.nextInt(50);
+        int opponentStart = opponent.getSpeed() + random.nextInt(50);
+
+        boolean playerTurn = playerStart > opponentStart;
 
         title("---Random Start---");
 

@@ -7,6 +7,7 @@ import org.java26.inputHelpers.InputHelper;
 import org.java26.service.battle.BattleStatistics;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static org.java26.service.Menu.*;
@@ -23,8 +24,8 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         int choice;
-
-        do {
+        try {
+            do {
                 showMenu();
                 choice = InputHelper.readMenuChoice(
                         scanner,
@@ -34,8 +35,14 @@ public class Main {
                 );
                 runAction(choice, scanner, pokedex, jsonHandler, statistics);
 
-        } while (choice != 0);
-        scanner.close();
+            } while (choice != 0);
+        } catch (NoSuchElementException e) {
+            System.out.println("  Looks like you entered a special combination. App will close. Please be nice.");
+        } catch (QuitPokemonOperationException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            scanner.close();
+        }
     }
 }
 

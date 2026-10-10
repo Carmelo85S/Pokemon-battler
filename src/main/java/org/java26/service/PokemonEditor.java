@@ -50,16 +50,17 @@ public class PokemonEditor {
             menuOption(1, "Change name");
             menuOption(2, "Change type");
             menuOption(3, "Change HP");
-            menuOption(4, "Add attack");
-            menuOption(5, "Remove attack");
-            menuOption(6, "Back to menu");
+            menuOption(4, "Change speed");
+            menuOption(5, "Add attack");
+            menuOption(6, "Remove attack");
+            menuOption(7, "Back to menu");
             separator();
             int chooseOperation;
             try {
                 chooseOperation = readIntBetween(
                         scanner,
                         1,
-                        6,
+                        7,
                         "  Choose an option between %d and %d%n  > ");
             } catch (QuitPokemonOperationException e) {
                 System.out.println(e.getMessage());
@@ -70,7 +71,7 @@ public class PokemonEditor {
                 case 1 -> {
                     try {
                         pokemon.setName(readString(scanner, "  Enter new name: ", "  New name is "));
-                        System.out.println();
+                        separator();
 
                     } catch (QuitPokemonOperationException e) {
                         System.out.println(e.getMessage());
@@ -80,7 +81,7 @@ public class PokemonEditor {
                 case 2 -> {
                     try {
                         pokemon.setType(readType(scanner, "  Enter new type: "));
-                        System.out.println();
+                        separator();
                     } catch (QuitPokemonOperationException e) {
                         System.out.println(e.getMessage());
                     }
@@ -99,51 +100,59 @@ public class PokemonEditor {
                     }
                 }
                 case 4 -> {
-                        try {
+                    try {
+                        pokemon.setSpeed(readIntBetween(scanner, 10, 50, "  Enter new hp value: "));
+                        separator();
+                    } catch (QuitPokemonOperationException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 5 -> {
+                    try {
+                        if (pokemon.hasMaxAttacks()) {
+                            System.out.println("  Attack slots are already full.");
+                            break;
+                        }
+
+                        while (!pokemon.hasMaxAttacks()) {
+
+                            Attack newAttack = AttackCreator.createAttack(
+                                    scanner,
+                                    pokemon.getType()
+                            );
+
+                            pokemon.addAttack(newAttack);
+
                             if (pokemon.hasMaxAttacks()) {
-                                System.out.println("  Attack slots are already full.");
+                                System.out.println("  Attack slots filled");
                                 break;
                             }
 
-                            while (!pokemon.hasMaxAttacks()) {
+                            subTitle("Do you want to enter another attack?");
+                            menuOption(1, "Yes");
+                            menuOption(2, "No");
+                            separator();
+                            int userChoice = readIntBetween(
+                                    scanner,
+                                    1,
+                                    2,
+                                    "  Select an option: >  "
+                            );
 
-                                Attack newAttack = AttackCreator.createAttack(
-                                        scanner,
-                                        pokemon.getType()
-                                );
+                            separator();
 
-                                pokemon.addAttack(newAttack);
-
-                                if (pokemon.hasMaxAttacks()) {
-                                    System.out.println("  Attack slots filled");
-                                    break;
-                                }
-
-                                subTitle("Do you want to enter another attack?");
-                                menuOption(1, "Yes");
-                                menuOption(2, "No");
-                                separator();
-                                int userChoice = readIntBetween(
-                                        scanner,
-                                        1,
-                                        2,
-                                        "  Select an option: >  "
-                                );
-
-                                separator();
-
-                                if (userChoice == 2) {
-                                    break;
-                                }
+                            if (userChoice == 2) {
+                                break;
                             }
-
-                        } catch (QuitPokemonOperationException e) {
-                            System.out.println(e.getMessage());
                         }
+
+                    } catch (QuitPokemonOperationException e) {
+                        System.out.println(e.getMessage());
+                    }
 
                 }
 
-                case 5 -> {
+                case 6 -> {
                     System.out.println("  Current attacks:");
 
                     for (Attack attack : pokemon.getAttacks()) {
@@ -189,7 +198,7 @@ public class PokemonEditor {
                         }
                     }
                 }
-                case 6 -> {
+                case 7 -> {
                     System.out.println("  Back to menu");
                     return;
                 }

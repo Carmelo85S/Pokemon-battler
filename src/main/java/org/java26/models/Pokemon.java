@@ -8,7 +8,7 @@ import org.java26.exceptions.InvalidPokemonException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pokemon implements Evolveable {
+public class Pokemon implements Evolveable{
 
     private static final int MAX_ATTACKS = 4;
     private int level = 1;
@@ -18,16 +18,33 @@ public class Pokemon implements Evolveable {
     private int maxHp;
     private int currentHp;
 
+    private int speed;
+
     private ArrayList<Attack> attacks = new ArrayList<>();
 
     public Pokemon() {
     }
 
-    public Pokemon(String name, PokemonType type, int maxHp) {
+
+    public Pokemon(String name, PokemonType type, int maxHp, int speed) {
         setName(name);
         setType(type);
         setMaxHp(maxHp);
         setCurrentHp(maxHp);
+        setSpeed(speed);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        if (speed <= 10 || speed > 50) {
+            throw new IllegalArgumentException(
+                    "  Speed must be between 10 and 50"
+            );
+        }
+        this.speed = speed;
     }
 
     public void addAttack(Attack attack) {
@@ -144,9 +161,10 @@ public class Pokemon implements Evolveable {
     }
 
     @JsonIgnore
-    public boolean isPlayable(){
+    public boolean isPlayable() {
         return !attacks.isEmpty();
     }
+
     @Override
     public String toString() {
         return "Pokemon: " + name +

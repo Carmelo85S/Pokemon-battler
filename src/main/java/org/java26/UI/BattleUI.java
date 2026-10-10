@@ -124,15 +124,16 @@ public class BattleUI {
     public static void showRegularBattleRules() {
         title("Battle Rules");
         subTitle("Choose one of your Pokemon.");
-        subTitle("You and the opponent take turns attacking.");
+        subTitle("Each Pokemon's Speed stat and a random value determine who starts the battle.");
+        subTitle("Turn order alternates after each turn.");
         subTitle("Each attack has its own damage and accuracy.");
-        subTitle("An attack can miss.");
+        subTitle("Attacks can miss.");
         subTitle("The battle ends when one Pokemon faints.");
-        subTitle("The winner is the Pokemon that remains standing.");
+        subTitle("The last Pokemon standing wins.");
         subTitle("Pokemon HP is restored after the battle.");
-        subTitle("Winner can catch pokemon opponent");
-        subTitle("Statistic saved automatically at the end of the battle");
-        subTitle("Statistic saved automatically if user catch pokemon opponent");
+        subTitle("Player can catch the opponent's Pokemon.");
+        subTitle("Battle statistics are saved automatically at the end of the battle.");
+        subTitle("Statistics are also saved if the winner catches the opponent's Pokemon.");
 
         separator();
     }

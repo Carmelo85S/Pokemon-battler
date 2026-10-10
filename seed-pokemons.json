@@ -4,6 +4,7 @@
     "type": "ELECTRIC",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -26,6 +27,7 @@
     "type": "FIRE",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -48,6 +50,7 @@
     "type": "WATER",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -70,6 +73,7 @@
     "type": "GRASS",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -92,6 +96,7 @@
     "type": "ELECTRIC",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -114,6 +119,7 @@
     "type": "FIRE",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -136,6 +142,7 @@
     "type": "ELECTRIC",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",
@@ -158,6 +165,7 @@
     "type": "FIRE",
     "maxHp": 300,
     "currentHp": 300,
+    "speed": 35,
     "attacks": [
       {
         "attackClassType": "damage",

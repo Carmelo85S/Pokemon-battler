@@ -18,22 +18,61 @@ This project is an extension of my previous **Pokédex CRUD application**. The o
 - Input validation
 - Error handling
 
-### Battle System
+## Battle System
 
 - Choose a Pokémon to battle with
 - Fight against a random wild Pokémon
-- Turn-based battles
-- Choose attacks
-- CPU chooses attacks randomly
-- Accuracy affects whether attacks hit
-- Type effectiveness
-- Random damage factor
-- Critical hits
-- Battle log
-- Win/loss result
-- Persistent win/loss statistics
-- Pokémon level progression and evolution
-- Pokémon evolution through the `Evolveable` interface
+- Turn-based combat with speed-based starting order and random variation.
+- Choose attacks from a menu
+- CPU controlled opponents select attacks randomly
+- Accuracy affects whether attacks hits
+- Type effectiveness modifies damage
+- Random damage variation
+- Critical hits with double damage
+- Battle log and win / loss results
+- Persistent battle statistics
+- Pokémon level progression and evolution through the Evolveable interface.
+- Catch the opponent's pokemon after winning
+
+## Turn Order
+
+The starting Pokémon is determined by combining each Pokémon's Speed stat with an independent random value.
+
+```java
+int playerStart = myPokemon.getSpeed() + random.nextInt(50);
+int opponentStart = opponent.getSpeed() + random.nextInt(50);
+
+boolean playerTurn = playerStart > opponentStart;
+```
+Each Pokémon receives a random value between 0 and 49, which is added to its Speed stat.
+
+A higher Speed stat increases the probability of starting first, but does not guarantee it. If both scores are equal, the opponent starts first.
+
+After the initial turn, the Pokémon alternate turns until one faints.
+
+## Battle Flow
+
+- The player selects a Pokémon from the Pokédex.
+- The CPU randomly selects a wild Pokémon.
+- Speed and random variation determine who attacks first.
+- The player selects an attack, or the CPU chooses one randomly.
+- Attack accuracy determines whether the attack hits.
+- Critical hits are determined randomly.
+- The attack executes through the polymorphic execute() method.
+- Type effectiveness and random damage variation are applied.
+- Critical hits double the calculated damage.
+- HP is updated.
+- The battle continues until one Pokémon faints.
+- The result is displayed and battle statistics are updated.
+- The winning Pokémon may be evolved according to its progression rules.
+- Pokémon HP is restored after battle.
+- Battle statistics are saved.
+
+## Pokémon Speed
+
+- Each Pokémon has a Speed stat that influences the starting order of a battle.
+- Speed is stored as part of the Pokémon data and loaded from JSON. The starting order combines Speed with random variation, allowing a slower Pokémon to start first occasionally.
+- This introduces variability while still giving faster Pokémon an advantage.
 
 ## Damage Formula
 
