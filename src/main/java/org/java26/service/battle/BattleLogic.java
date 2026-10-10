@@ -49,10 +49,7 @@ public class BattleLogic {
     ) {
         int round = 1;
 
-        int playerStart = myPokemon.getSpeed() + random.nextInt(50);
-        int opponentStart = opponent.getSpeed() + random.nextInt(50);
-
-        boolean playerTurn = playerStart > opponentStart;
+        boolean playerTurn = isTurn(myPokemon, opponent, random);
 
         title("---Random Start---");
 
@@ -262,6 +259,13 @@ public class BattleLogic {
                 }
             }
         }
+    }
+
+    public static boolean isTurn(Pokemon player, Pokemon opponent, Random random){
+        int playerStart = player.getSpeed() + random.nextInt(50);
+        int opponentStart = opponent.getSpeed() + random.nextInt(50);
+
+        return playerStart > opponentStart;
     }
 
 }
