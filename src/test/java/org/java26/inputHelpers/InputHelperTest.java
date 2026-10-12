@@ -25,7 +25,7 @@ class InputHelperTest {
     }
 
     @Test
-    void inputShouldContainAtLeastOneLetter(){
+    void inputShouldContainAtLeastOneLetter() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString("123")
         );
@@ -33,9 +33,8 @@ class InputHelperTest {
 
     }
 
-
     @Test
-    void specialCharShouldThrowInvalidPokemonException(){
+    void specialCharShouldThrowInvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString(" %&!Pizza")
         );
@@ -43,20 +42,39 @@ class InputHelperTest {
         assertEquals("  No special char allowed.", exception.getMessage());
     }
 
-
     @Test
-    void inputToShortThrowInvalidPokemonException(){
+    void inputToShortThrowInvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString("A")
-                );
+        );
         assertEquals("  Input must be between 2 and 11 characters.", exception.getMessage());
     }
 
     @Test
-    void inputToLongThrowInvalidPokemonException(){
+    void inputToLongThrowInvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString("CharizardEvolve")
         );
         assertEquals("  Input must be between 2 and 11 characters.", exception.getMessage());
+    }
+
+    @Test
+    void blankInputShouldThrowInvalidPokemonException() {
+        var exception = assertThrows(
+                InvalidPokemonException.class, () -> InputHelper.validateInt(
+                        " ", 1, 2
+                )
+        );
+        assertEquals("  Your input is blank", exception.getMessage());
+    }
+
+    @Test
+    void notNumericInputShouldThrowInvalidPokemonException(){
+        var exception = assertThrows(
+                InvalidPokemonException.class, () -> InputHelper.validateInt(
+                        "abc", 1, 3
+                    )
+
+        );
     }
 }

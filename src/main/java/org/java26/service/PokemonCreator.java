@@ -99,7 +99,6 @@ public class PokemonCreator {
                 }
             }
 
-            // Add Pokemon only after it has at least one attack
             pokedex.addPokemon(pokemon);
 
             System.out.println("  Pokemon '" + pokemon.getName() + "' created successfully.");

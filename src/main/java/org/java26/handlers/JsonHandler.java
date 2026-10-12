@@ -56,7 +56,6 @@ public class JsonHandler {
             return new BattleStatistics();
         }
 
-
         String json = Files.readString(path);
 
         if (json.isBlank()) {

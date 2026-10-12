@@ -93,7 +93,7 @@ public class InputHelper {
             throw new InvalidPokemonException("  Input must contain at least one letter.");
         }
         if (userInput.length() > 11 || userInput.length() < 2) {
-            throw new InvalidPokemonException("  Input must be between 2 and 11 characters. ");
+            throw new InvalidPokemonException("  Input must be between 2 and 11 characters.");
         }
 
     }
