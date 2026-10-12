@@ -12,7 +12,7 @@ import java.util.Scanner;
 import static org.java26.UI.Layout.*;
 import static org.java26.UI.Layout.menuOption;
 import static org.java26.UI.Layout.separator;
-import static org.java26.inputHelpers.InputHelper.*;
+import static org.java26.handlers.InputHelper.*;
 import static org.java26.service.PokemonViewer.showPokemons;
 
 public class PokemonEditor {

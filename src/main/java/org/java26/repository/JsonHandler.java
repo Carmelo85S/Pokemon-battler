@@ -1,4 +1,4 @@
-package org.java26.handlers;
+package org.java26.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

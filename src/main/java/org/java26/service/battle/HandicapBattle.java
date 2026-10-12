@@ -1,8 +1,7 @@
 package org.java26.service.battle;
 
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.handlers.JsonHandler;
-import org.java26.models.Attack;
+import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
@@ -12,7 +11,7 @@ import java.util.Scanner;
 
 import static org.java26.UI.BattleUI.*;
 import static org.java26.UI.Layout.*;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
+import static org.java26.handlers.InputHelper.readIntBetween;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class HandicapBattle {
@@ -26,7 +25,7 @@ public class HandicapBattle {
             return;
         }
 
-        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex);
+        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex,statistics);
         if (myPokemon == null) {
             return;
         }

@@ -1,6 +1,7 @@
 package org.java26.inputHelpers;
 
 import org.java26.exceptions.InvalidPokemonException;
+import org.java26.handlers.InputHelper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

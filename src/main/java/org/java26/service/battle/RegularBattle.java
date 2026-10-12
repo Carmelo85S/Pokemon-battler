@@ -1,6 +1,6 @@
 package org.java26.service.battle;
 
-import org.java26.handlers.JsonHandler;
+import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
@@ -23,7 +23,7 @@ public class RegularBattle {
             return;
         }
 
-        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex);
+        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex,statistics);
         if (myPokemon == null) {
             return;
         }

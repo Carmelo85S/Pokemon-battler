@@ -11,8 +11,8 @@ import static org.java26.UI.Layout.menuOption;
 import static org.java26.UI.Layout.separator;
 import static org.java26.UI.Layout.subTitle;
 import static org.java26.UI.Layout.title;
-import static org.java26.inputHelpers.InputHelper.*;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
+import static org.java26.handlers.InputHelper.*;
+import static org.java26.handlers.InputHelper.readIntBetween;
 
 public class PokemonCreator {
     public static void createPokemon(Scanner scanner, Pokedex pokedex) {

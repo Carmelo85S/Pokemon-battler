@@ -1,7 +1,7 @@
 package org.java26.service;
 
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.handlers.JsonHandler;
+import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.service.battle.BattleStatistics;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.java26.UI.Layout.*;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
+import static org.java26.handlers.InputHelper.readIntBetween;
 import static org.java26.repository.SaveLoadPokemons.*;
 import static org.java26.service.battle.HandicapBattle.startHandicapBattle;
 

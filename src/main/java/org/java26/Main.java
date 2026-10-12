@@ -1,9 +1,9 @@
 package org.java26;
 
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.handlers.JsonHandler;
+import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
-import org.java26.inputHelpers.InputHelper;
+import org.java26.handlers.InputHelper;
 import org.java26.service.battle.BattleStatistics;
 
 import java.io.IOException;

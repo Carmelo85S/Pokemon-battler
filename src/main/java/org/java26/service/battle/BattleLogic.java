@@ -1,6 +1,6 @@
 package org.java26.service.battle;
 
-import org.java26.handlers.JsonHandler;
+import org.java26.repository.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
@@ -13,14 +13,14 @@ import static org.java26.UI.BattleUI.*;
 import static org.java26.UI.Layout.*;
 import static org.java26.UI.Layout.menuOption;
 import static org.java26.UI.Layout.subTitle;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
+import static org.java26.handlers.InputHelper.readIntBetween;
 import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
 
 public class BattleLogic {
 
-    public static Pokemon preparePlayerPokemon(Scanner scanner, Pokedex pokedex) {
+    public static Pokemon preparePlayerPokemon(Scanner scanner, Pokedex pokedex, BattleStatistics statistics) {
         if (pokedex.getPokemons().isEmpty()) {
             showOptions(scanner, pokedex);
 
@@ -33,6 +33,7 @@ public class BattleLogic {
         showPokemons(pokedex);
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
+        statistics.trackPokemon(myPokemon.getName());
         hasPokemonAttack(scanner, myPokemon);
 
         return myPokemon;

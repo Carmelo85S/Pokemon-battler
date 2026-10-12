@@ -2,7 +2,6 @@ package org.java26.repository;
 
 import org.java26.models.Pokemon;
 import org.java26.exceptions.*;
-import org.java26.handlers.JsonHandler;
 import org.java26.models.Pokedex;
 
 import java.io.IOException;

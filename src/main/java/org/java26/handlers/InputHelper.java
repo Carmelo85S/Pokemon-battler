@@ -1,4 +1,4 @@
-package org.java26.inputHelpers;
+package org.java26.handlers;
 
 import org.java26.models.PokemonType;
 import org.java26.exceptions.InvalidPokemonException;

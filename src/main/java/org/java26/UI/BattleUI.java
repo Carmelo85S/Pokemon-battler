@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 import static org.java26.UI.Layout.*;
 import static org.java26.UI.Layout.menuOption;
-import static org.java26.inputHelpers.InputHelper.readIntBetween;
-import static org.java26.inputHelpers.InputHelper.readString;
+import static org.java26.handlers.InputHelper.readIntBetween;
+import static org.java26.handlers.InputHelper.readString;
 import static org.java26.service.PokemonCreator.createPokemon;
 import static org.java26.service.battle.BattleLogic.calculateEffectiveness;
 

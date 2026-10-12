@@ -18,16 +18,16 @@ public class PokemonStatsViewer {
 
 
         System.out.println(
-                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+"
+                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+----------------------+"
         );
 
         System.out.printf(
-                "| %-14s | %-6s | %-10s | %-10s | %-6s | %-6s | %-6s | %-14s | %-6s | %n",
-                "Name", "Level", "Caught ", "Used Times", "Win", "Loss", "Ratio", "Attack used", "Times"
+                "| %-14s | %-6s | %-10s | %-10s | %-6s | %-6s | %-6s | %-14s | %-6s | %-20s | %n",
+                "Name", "Level", "Caught ", "Used Times", "Win", "Loss", "Ratio", "Attack used", "Times", "Last time"
         );
 
         System.out.println(
-                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+"
+                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+----------------------+"
         );
 
         for (Pokemon pokemon : pokedex.getPokemons()) {
@@ -60,9 +60,11 @@ public class PokemonStatsViewer {
                     .orElse("-");
 
             int attackUsed = attacks.getOrDefault(mostUsedAttack, 0);
+            String lastUse = statistics.getPokemonLastUse()
+                    .getOrDefault(pokemon.getName(), "Never");
 
             System.out.printf(
-                    "| %-14s | %-6d | %-10s | %-10s | %-6d | %-6d | %-6.2f | %-14s | %-6d |%n",
+                    "| %-14s | %-6d | %-10s | %-10s | %-6d | %-6d | %-6.2f | %-14s | %-6d | %-20s |%n",
                     pokemon.getName(),
                     level,
                     caught,
@@ -71,12 +73,13 @@ public class PokemonStatsViewer {
                     losses,
                     ratio,
                     mostUsedAttack,
-                    attackUsed
+                    attackUsed,
+                    lastUse
             );
         }
 
         System.out.println(
-                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+"
+                "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+----------------------+"
         );
     }
 }
