@@ -26,7 +26,7 @@ public class BattleMenu {
             menuOption(3, "Exit & Save");
             backOption();
 
-            choice = readIntBetween(scanner, 0,3, "Choose your battle mode: ");
+            choice = readIntBetween(scanner, 1,3, "Choose your battle mode: ");
 
             runBattleMenuAction(
                     choice,

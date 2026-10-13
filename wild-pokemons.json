@@ -1,6 +1,6 @@
 [
   {
-    "name": "Pisaro",
+    "name": "Voltiger",
     "type": "ELECTRIC",
     "maxHp": 300,
     "currentHp": 300,
@@ -8,14 +8,14 @@
     "attacks": [
       {
         "attackClassType": "damage",
-        "name": "Bolt",
+        "name": "Lightning Pulse",
         "baseDamage": 40,
         "accuracy": 95,
         "type": "ELECTRIC"
       },
       {
         "attackClassType": "damage",
-        "name": "Miasola",
+        "name": "Rapid Strike",
         "baseDamage": 50,
         "accuracy": 90,
         "type": "NORMAL"
@@ -23,11 +23,171 @@
     ]
   },
   {
-    "name": "Charizard",
+    "name": "Infernox",
     "type": "FIRE",
     "maxHp": 300,
     "currentHp": 300,
-    "speed": 50,
-    "attacks": []
+    "speed": 35,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Inferno Wave",
+        "baseDamage": 70,
+        "accuracy": 85,
+        "type": "FIRE"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Sky Slash",
+        "baseDamage": 60,
+        "accuracy": 90,
+        "type": "NORMAL"
+      }
+    ]
+  },
+  {
+    "name": "Aquarion",
+    "type": "WATER",
+    "maxHp": 300,
+    "currentHp": 300,
+    "speed": 35,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Aqua Blast",
+        "baseDamage": 50,
+        "accuracy": 95,
+        "type": "WATER"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Tidal Strike",
+        "baseDamage": 70,
+        "accuracy": 85,
+        "type": "WATER"
+      }
+    ]
+  },
+  {
+    "name": "Florabeast",
+    "type": "GRASS",
+    "maxHp": 300,
+    "currentHp": 300,
+    "speed": 35,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Thorn Lash",
+        "baseDamage": 45,
+        "accuracy": 95,
+        "type": "GRASS"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Emerald Blade",
+        "baseDamage": 55,
+        "accuracy": 90,
+        "type": "GRASS"
+      }
+    ]
+  },
+  {
+    "name": "Stormclaw",
+    "type": "ELECTRIC",
+    "maxHp": 300,
+    "currentHp": 300,
+    "speed": 35,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Volt Strike",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "ELECTRIC"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Static Burst",
+        "baseDamage": 50,
+        "accuracy": 90,
+        "type": "ELECTRIC"
+      }
+    ]
+  },
+  {
+    "name": "Cinderling",
+    "type": "FIRE",
+    "maxHp": 300,
+    "currentHp": 300,
+    "speed": 35,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Ember Shot",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "FIRE"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Claw Swipe",
+        "baseDamage": 45,
+        "accuracy": 95,
+        "type": "NORMAL"
+      }
+    ]
+  },
+  {
+    "name": "Magnetron",
+    "type": "ELECTRIC",
+    "maxHp": 300,
+    "currentHp": 300,
+    "speed": 35,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Electric Arc",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "ELECTRIC"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Magnetic Surge",
+        "baseDamage": 50,
+        "accuracy": 90,
+        "type": "ELECTRIC"
+      }
+    ]
+  },
+  {
+    "name": "Pyrofang",
+    "type": "FIRE",
+    "maxHp": 300,
+    "currentHp": 300,
+    "speed": 35,
+    "attacks": [
+      {
+        "attackClassType": "damage",
+        "name": "Blazing Claw",
+        "baseDamage": 40,
+        "accuracy": 95,
+        "type": "FIRE"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Fire Spiral",
+        "baseDamage": 60,
+        "accuracy": 90,
+        "type": "FIRE"
+      },
+      {
+        "attackClassType": "damage",
+        "name": "Crimson Inferno",
+        "baseDamage": 70,
+        "accuracy": 85,
+        "type": "FIRE"
+      }
+    ]
   }
 ]
