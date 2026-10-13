@@ -52,7 +52,7 @@ public class HandicapBattle {
             );
         } else {
             handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
-            evolvePokemon(myPokemon, statistics);
+            evolvePokemon(myPokemon, statistics, pokedex, jsonHandler);
             handleVictory(
                     scanner,
                     pokedex,

@@ -14,6 +14,7 @@ import static org.java26.UI.Layout.*;
 import static org.java26.UI.Layout.menuOption;
 import static org.java26.UI.Layout.subTitle;
 import static org.java26.handlers.InputHelper.readIntBetween;
+import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
@@ -212,11 +213,18 @@ public class BattleLogic {
         return pokemon.getAttacks().get(randomAttack);
     }
 
-    public static void evolvePokemon(Pokemon pokemon, BattleStatistics statistics) {
-        int wins = statistics.getPokemonWins().getOrDefault(pokemon.getName(), 0);
+    public static void evolvePokemon(
+            Pokemon pokemon,
+            BattleStatistics statistics,
+            Pokedex pokedex,
+            JsonHandler jsonHandler
+    ) {
+        int wins = statistics.getPokemonWins()
+                .getOrDefault(pokemon.getName(), 0);
 
         if (wins > 0 && wins % 3 == 0) {
             pokemon.evolve();
+            saveToFile(pokedex, jsonHandler);
         }
     }
 

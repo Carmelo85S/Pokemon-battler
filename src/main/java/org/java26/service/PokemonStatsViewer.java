@@ -34,8 +34,6 @@ public class PokemonStatsViewer {
             String caught = statistics.getPokemonCatch()
                     .containsKey(pokemon.getName()) ? "Yes" : "No";
 
-            int level = pokemon.getLevel();
-
             int pokemonUsedTimes = statistics.getPokemonUse()
                     .getOrDefault(pokemon.getName(), 0);
 
@@ -66,7 +64,7 @@ public class PokemonStatsViewer {
             System.out.printf(
                     "| %-14s | %-6d | %-10s | %-10s | %-6d | %-6d | %-6.2f | %-14s | %-6d | %-20s |%n",
                     pokemon.getName(),
-                    level,
+                    pokemon.getLevel(),
                     caught,
                     pokemonUsedTimes,
                     wins,

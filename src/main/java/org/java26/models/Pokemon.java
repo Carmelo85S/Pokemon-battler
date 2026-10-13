@@ -1,9 +1,10 @@
-package org.java26.models;
+ package org.java26.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.java26.exceptions.InvalidPokemonException;
+import org.java26.repository.JsonHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public class Pokemon implements Evolveable{
 
     private static final int MAX_ATTACKS = 4;
-    private int level;
+    private int level = 1;
 
     private String name;
     private PokemonType type;
@@ -155,7 +156,15 @@ public class Pokemon implements Evolveable{
         return currentHp == 0;
     }
 
+    public void setLevel(int level) {
+        if (level < 1) {
+            throw new IllegalArgumentException(
+                    "Level must be at least 1"
+            );
+        }
 
+        this.level = level;
+    }
     public int getLevel() {
         return level;
     }
