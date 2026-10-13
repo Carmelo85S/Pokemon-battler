@@ -11,7 +11,7 @@ import java.util.List;
 public class Pokemon implements Evolveable{
 
     private static final int MAX_ATTACKS = 4;
-    private int level = 1;
+    private int level;
 
     private String name;
     private PokemonType type;
