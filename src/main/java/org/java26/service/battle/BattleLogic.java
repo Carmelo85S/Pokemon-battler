@@ -5,6 +5,7 @@ import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.models.PokemonType;
+import org.java26.service.Menu;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -35,7 +36,10 @@ public class BattleLogic {
 
         Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
         statistics.trackPokemon(myPokemon.getName());
-        hasPokemonAttack(scanner, myPokemon);
+
+        if (!hasPokemonAttack(scanner, myPokemon)) {
+            return null;
+        }
 
         return myPokemon;
     }
@@ -249,27 +253,35 @@ public class BattleLogic {
         }
     }
 
-    public static void hasPokemonAttack(Scanner scanner, Pokemon pokemon) {
-        if (pokemon.getAttacks().isEmpty()) {
-            System.out.println("  No attacks available.");
-            title("Create attack");
-            menuOption(1, "Yes");
-            menuOption(2, "No");
-            separator();
-            int choice = readIntBetween(scanner, 1, 2, "  Select an option: >");
-            switch (choice) {
-                case 1 -> {
-                    Attack attack = createAttack(scanner, pokemon.getType());
-                    pokemon.addAttack(attack);
-                }
-                case 2 -> {
-                    return;
-                }
-            }
+    public static boolean hasPokemonAttack(Scanner scanner, Pokemon pokemon) {
+        if (!pokemon.getAttacks().isEmpty()) {
+            return true;
         }
+
+        System.out.println("  NO attacks available.");
+
+        title("Create attack");
+        menuOption(1, "Yes");
+        menuOption(2, "No");
+        separator();
+
+        int choice = readIntBetween(scanner, 1, 2, "  Select an option: >");
+        if (choice == 2) {
+            System.out.println("  You will be redirected to battle menu.");
+            return false;
+        }
+
+        Attack attack = createAttack(scanner, pokemon.getType());
+        if (attack == null) {
+            return false;
+        }
+        pokemon.addAttack(attack);
+        return true;
+
     }
 
-    public static boolean isTurn(Pokemon player, Pokemon opponent, Random random){
+
+    public static boolean isTurn(Pokemon player, Pokemon opponent, Random random) {
         int playerStart = player.getSpeed() + random.nextInt(50);
         int opponentStart = opponent.getSpeed() + random.nextInt(50);
 
