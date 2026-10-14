@@ -14,8 +14,10 @@ import static org.java26.service.PokemonCreator.createPokemon;
 import static org.java26.service.PokemonEditor.deletePokemon;
 import static org.java26.service.PokemonEditor.updatePokemon;
 import static org.java26.service.PokemonStatsViewer.getPokemonsStats;
+import static org.java26.service.PokemonStatsViewer.resetPokemonsStats;
 import static org.java26.service.PokemonViewer.getPokemonInfo;
 import static org.java26.service.PokemonViewer.showAllPokemon;
+import static org.java26.service.StatisticsService.resetAllStatistic;
 
 public class Menu {
 
@@ -43,6 +45,7 @@ public class Menu {
         menuOption(8, "Pokemon info");
         menuOption(9, "Start battle");
         menuOption(10, "Show stats");
+        menuOption(11, "Reset stats");
         menuOption(0, "Exit & Save");
 
     }
@@ -60,6 +63,7 @@ public class Menu {
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics);
                 case 10 -> getPokemonsStats(pokedex, statistics);
+                case 11 -> resetAllStatistic(pokedex, statistics, jsonHandler);
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {

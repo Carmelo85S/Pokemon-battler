@@ -19,7 +19,7 @@ public class SaveLoadPokemons {
                     "pokemon.json",
                     pokedex.getPokemons()
             );
-            System.out.println("  Pokemon saved successfully.");
+            System.out.println("  Saving successfully.");
         } catch (PokemonSaveException e) {
             System.out.println(e.getMessage());
         }

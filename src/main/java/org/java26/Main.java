@@ -30,7 +30,7 @@ public class Main {
                 choice = InputHelper.readMenuChoice(
                         scanner,
                         0,
-                        10,
+                        11,
                         "  Select an option %n  > "
                 );
                 runAction(choice, scanner, pokedex, jsonHandler, statistics);

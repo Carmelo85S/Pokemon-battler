@@ -80,4 +80,23 @@ public class PokemonStatsViewer {
                 "+----------------+--------+------------+------------+--------+--------+--------+----------------+--------+----------------------+"
         );
     }
+
+
+    public static void resetPokemonsStats(
+            Pokedex pokedex,
+            BattleStatistics statistics
+    ) {
+        statistics.setTotalWins(0);
+        statistics.setTotalLosses(0);
+
+        statistics.getPokemonWins().clear();
+        statistics.getPokemonLosses().clear();
+        statistics.getPokemonCatch().clear();
+        statistics.getPokemonUse().clear();
+        statistics.getPokemonAttackUse().clear();
+        statistics.getPokemonLastUse().clear();
+
+        System.out.println("  Pokemon statistics reset successfully.");
+    }
+
 }
