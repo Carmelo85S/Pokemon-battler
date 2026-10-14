@@ -28,9 +28,7 @@ public class InputHelper {
             System.out.printf(prompt, min, max);
             try {
                 String userInput = scanner.nextLine().trim();
-                if (userInput.equalsIgnoreCase("B")) {
-                    throw new QuitPokemonOperationException("  Operation cancelled");
-                }
+                checkCancellation(userInput);
                 validateInt(userInput, min, max);
                 return Integer.parseInt(userInput);
             } catch (InvalidPokemonException e) {
@@ -44,9 +42,7 @@ public class InputHelper {
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().trim();
-                if (userInput.equalsIgnoreCase("B")) {
-                    throw new QuitPokemonOperationException("  Operation cancelled");
-                }
+                checkCancellation(userInput);
                 validateString(userInput);
                 System.out.println(confirm + "'"+userInput+"'");
                 return userInput;
@@ -61,9 +57,7 @@ public class InputHelper {
             System.out.print(prompt);
             try {
                 String userInput = scanner.nextLine().trim().toUpperCase(Locale.ROOT);
-                if (userInput.equalsIgnoreCase("B")) {
-                    throw new QuitPokemonOperationException("  Operation cancelled");
-                }
+                checkCancellation(userInput);
                 if (userInput.isBlank()) {
                     System.out.println("  Type cannot be empty.");
                     continue;
@@ -111,6 +105,14 @@ public class InputHelper {
         if (value < min || value > max) {
             throw new InvalidPokemonException(
                     "  Value should be between " + min + " and " + max
+            );
+        }
+    }
+
+    private static void checkCancellation(String input) {
+        if (input.equalsIgnoreCase("B")) {
+            throw new QuitPokemonOperationException(
+                    "  Operation cancelled"
             );
         }
     }
