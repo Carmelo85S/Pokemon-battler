@@ -63,7 +63,9 @@ public class PokemonViewer {
                         "Name", "Value", "Accuracy", "Type", "Category"
                 );
                 System.out.println("+----------------+----------------+----------------+----------------+----------------+");
-
+                if(pokemon.getAttacks().isEmpty()){
+                    subTitle("No attacks available");
+                }
                 for (Attack attack : pokemon.getAttacks()) {
                     int value = attack.getBaseDamage();
                     if(attack instanceof HealAttack healAttack){
