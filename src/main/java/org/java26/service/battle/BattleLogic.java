@@ -213,19 +213,18 @@ public class BattleLogic {
         return pokemon.getAttacks().get(randomAttack);
     }
 
-    public static void evolvePokemon(
+    public static boolean evolvePokemon(
             Pokemon pokemon,
-            BattleStatistics statistics,
-            Pokedex pokedex,
-            JsonHandler jsonHandler
+            BattleStatistics statistics
     ) {
         int wins = statistics.getPokemonWins()
                 .getOrDefault(pokemon.getName(), 0);
 
         if (wins > 0 && wins % 3 == 0) {
             pokemon.evolve();
-            saveToFile(pokedex, jsonHandler);
+            return true;
         }
+        return false;
     }
 
     public static void runTurn(Attack attack, Pokemon attacker, Pokemon defender, Random random, int accuracyPenalty, BattleStatistics statistics) {

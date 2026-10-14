@@ -12,6 +12,7 @@ import java.util.Scanner;
 import static org.java26.UI.BattleUI.*;
 import static org.java26.UI.Layout.*;
 import static org.java26.handlers.InputHelper.readIntBetween;
+import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class HandicapBattle {
@@ -52,7 +53,10 @@ public class HandicapBattle {
             );
         } else {
             handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
-            evolvePokemon(myPokemon, statistics, pokedex, jsonHandler);
+            boolean isEvolving = evolvePokemon(myPokemon, statistics);
+            if(isEvolving){
+                saveToFile(pokedex, jsonHandler);
+            }
             handleVictory(
                     scanner,
                     pokedex,
