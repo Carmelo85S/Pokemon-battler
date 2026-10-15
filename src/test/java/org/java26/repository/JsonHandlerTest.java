@@ -8,28 +8,35 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertThrows;
 
-class JsonHandlerTest {
+public class JsonHandlerTest {
     @Test
-    void corruptedJson_ShouldThrowPokemonLoadException(@TempDir Path tempDir) throws IOException {
+    void corruptedJson_ShouldThrowPokemonLoadException(
+            @TempDir Path tempDir) throws IOException {
+
         Path file = tempDir.resolve("pokemon.json");
         Files.writeString(file, "{invalid.json}");
+
         JsonHandler handler = new JsonHandler();
 
         assertThrows(
-                PokemonLoadException.class, ()-> handler.loadPokemon(file.toString())
+                PokemonLoadException.class,
+                () -> handler.loadPokemon(file.toString())
         );
-
     }
 
     @Test
-    void missingJson_ShouldThrowException(@TempDir Path tempDir){
+    void missingJson_ShouldThrowPokemonLoadException(
+            @TempDir Path tempDir) {
+
         Path file = tempDir.resolve("missing.json");
+
         JsonHandler handler = new JsonHandler();
+
         assertThrows(
-                PokemonLoadException.class, () ->handler.loadPokemon(file.toString())
+                PokemonLoadException.class,
+                () -> handler.loadPokemon(file.toString())
         );
     }
-
 }
