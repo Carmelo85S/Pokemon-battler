@@ -1,13 +1,17 @@
 package org.java26.service.battle;
 
+import org.java26.models.Attack;
 import org.java26.models.Pokemon;
 import org.java26.models.PokemonType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BattleLogicTest {
@@ -41,6 +45,7 @@ class BattleLogicTest {
         Pokemon opponent = new Pokemon();
 
         player.setCurrentHp(0);
+        opponent.setMaxHp(200);
 
         Scanner scanner = new Scanner("");
         Random random = new Random(1);
@@ -59,5 +64,61 @@ class BattleLogicTest {
         assertFalse(result);
     }
 
+    @Test
+    void pokemonWith_0Attacks_shouldNotStart_TheBattle() {
+        Pokemon player = new Pokemon();
+        Pokemon opponent = new Pokemon();
+
+        player.setMaxHp(200);
+        player.setCurrentHp(200);
+        opponent.setMaxHp(200);
+        opponent.setCurrentHp(200);
+
+        List<Attack> attack = new ArrayList<>();
+        player.setAttacks(attack);
+
+        Scanner scanner = new Scanner("");
+        Random random = new Random(1);
+        BattleStatistics statistics = new BattleStatistics();
+
+        boolean result =
+                BattleLogic.runBattle(
+                        scanner,
+                        player,
+                        opponent,
+                        random,
+                        statistics,
+                        0,
+                        0
+                );
+        assertFalse(result);
+
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            "1, false",
+            "2, false",
+            "3, true",
+            "4, false",
+            "5, false",
+            "6, true",
+            "7, false",
+            "8, false",
+            "9, true"
+    })
+    void evolve_EveryThree_Wins(int wins, boolean isEvolving) {
+        Pokemon pokemon = new Pokemon();
+        BattleStatistics statistics = new BattleStatistics();
+        statistics.getPokemonWins().put(pokemon.getName(), wins);
+
+        boolean evolve = BattleLogic.evolvePokemon(
+                pokemon,
+                statistics
+        );
+
+        assertEquals(evolve, isEvolving);
+    }
 
 }
