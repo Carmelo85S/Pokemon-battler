@@ -5,7 +5,6 @@ import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.models.PokemonType;
-import org.java26.service.Menu;
 
 import java.util.Random;
 import java.util.Scanner;

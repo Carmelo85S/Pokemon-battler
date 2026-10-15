@@ -8,8 +8,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Random;
 import java.util.Scanner;
-
-import static org.java26.service.battle.BattleLogic.runBattle;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BattleLogicTest {
@@ -48,7 +46,7 @@ class BattleLogicTest {
         Random random = new Random(1);
         BattleStatistics statistics = new BattleStatistics();
 
-        assertDoesNotThrow(() ->
+        boolean result =
                 BattleLogic.runBattle(
                         scanner,
                         player,
@@ -57,6 +55,9 @@ class BattleLogicTest {
                         statistics,
                         0,
                         0
-                ));
+                );
+        assertFalse(result);
     }
+
+
 }
