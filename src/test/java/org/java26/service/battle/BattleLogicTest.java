@@ -128,4 +128,15 @@ class BattleLogicTest {
         assertEquals(evolve, isEvolving);
     }
 
+    @Test
+    void emptyPokedex_shouldNotStartBattle(){
+
+        Pokedex pokedex = new Pokedex();
+        BattleStatistics statistics = new BattleStatistics();
+        Scanner scanner = new Scanner("2\n");
+
+        Pokemon result = BattleLogic.preparePlayerPokemon(scanner, pokedex, statistics);
+        assertNull(result);
+        assertTrue(pokedex.getPokemons().isEmpty());
+    }
 }
