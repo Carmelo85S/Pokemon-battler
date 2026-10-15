@@ -129,7 +129,7 @@ class BattleLogicTest {
     }
 
     @Test
-    void emptyPokedex_shouldNotStartBattle(){
+    void emptyPokedex_shouldNotStartBattle() {
 
         Pokedex pokedex = new Pokedex();
         BattleStatistics statistics = new BattleStatistics();
@@ -139,4 +139,50 @@ class BattleLogicTest {
         assertNull(result);
         assertTrue(pokedex.getPokemons().isEmpty());
     }
+
+    @Test
+    void cancelInputDuringBattle_shouldStopBattle() {
+        Pokemon player = new Pokemon();
+        player.setName("Player");
+        player.setMaxHp(200);
+        player.setCurrentHp(200);
+        player.setSpeed(50);
+        player.addAttack(
+                new DamageAttack("Thunder", 50, 100, PokemonType.ELECTRIC)
+        );
+
+        Pokemon opponent = new Pokemon();
+        opponent.setName("Opponent");
+        opponent.setMaxHp(200);
+        opponent.setCurrentHp(200);
+        opponent.setSpeed(30);
+        opponent.addAttack(
+                new DamageAttack("Thunder", 50, 100, PokemonType.ELECTRIC)
+        );
+
+        Scanner scanner = new Scanner("B\n");
+        BattleStatistics statistics = new BattleStatistics();
+
+        Random random = new Random() {
+            @Override
+            public int nextInt(int bound) {
+                return 0;
+            }
+        };
+
+        boolean result = BattleLogic.runBattle(
+                scanner,
+                player,
+                opponent,
+                random,
+                statistics,
+                0,
+                0
+        );
+
+        assertFalse(result);
+        assertEquals(200, player.getCurrentHp());
+        assertEquals(200, opponent.getCurrentHp());
+    }
+
 }

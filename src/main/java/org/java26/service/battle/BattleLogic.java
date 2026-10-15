@@ -1,5 +1,6 @@
 package org.java26.service.battle;
 
+import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
@@ -83,17 +84,22 @@ public class BattleLogic {
 
             if (playerTurn) {
                 subTitle(myPokemon.getName() + " turn.");
+                try {
+                    Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
 
-                Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
+                    runTurn(
+                            selectedPlayerAttack,
+                            myPokemon,
+                            opponent,
+                            random,
+                            playerAccuracyPenalty,
+                            statistics
+                    );
 
-                runTurn(
-                        selectedPlayerAttack,
-                        myPokemon,
-                        opponent,
-                        random,
-                        playerAccuracyPenalty,
-                        statistics
-                );
+                } catch (QuitPokemonOperationException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
 
             } else {
                 subTitle(opponent.getName() + " turn.");
