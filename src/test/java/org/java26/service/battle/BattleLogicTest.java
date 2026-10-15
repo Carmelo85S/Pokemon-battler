@@ -1,8 +1,6 @@
 package org.java26.service.battle;
 
-import org.java26.models.Attack;
-import org.java26.models.Pokemon;
-import org.java26.models.PokemonType;
+import org.java26.models.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -46,6 +44,7 @@ class BattleLogicTest {
 
         player.setCurrentHp(0);
         opponent.setMaxHp(200);
+        opponent.setCurrentHp(200);
 
         Scanner scanner = new Scanner("");
         Random random = new Random(1);
@@ -70,12 +69,20 @@ class BattleLogicTest {
         Pokemon opponent = new Pokemon();
 
         player.setMaxHp(200);
-        player.setCurrentHp(200);
+        player.setCurrentHp(0);
+
         opponent.setMaxHp(200);
         opponent.setCurrentHp(200);
 
         List<Attack> attack = new ArrayList<>();
         player.setAttacks(attack);
+        Attack opponentAttack = new DamageAttack(
+                "TestAttack",
+                50,
+                100,
+                PokemonType.FIRE
+        );
+        opponent.addAttack(opponentAttack);
 
         Scanner scanner = new Scanner("");
         Random random = new Random(1);
