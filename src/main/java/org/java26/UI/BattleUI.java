@@ -86,9 +86,11 @@ public class BattleUI {
         }
     }
 
+
     public static Pokemon chooseMyPokemon(Scanner scanner, Pokedex pokedex) {
         title("Effect table");
         showTypeEffectiveness();
+
         while (true) {
             try {
                 String choice = readString(
@@ -96,7 +98,26 @@ public class BattleUI {
                         "  Choose your Pokemon for the battle: ",
                         "  You choose "
                 );
-                return pokedex.getPokemon(choice);
+
+                Pokemon pokemon = pokedex.getPokemon(choice);
+
+                if (pokemon == null) {
+                    System.out.println("  Pokemon not found.");
+                    continue;
+                }
+
+                if (pokemon.isFainted()) {
+                    System.out.println("  Pokemon cannot battle with 0 HP.");
+                    continue;
+                }
+
+                if (pokemon.getAttacks() == null ||
+                        pokemon.getAttacks().isEmpty()) {
+                    System.out.println("  Pokemon has no attacks.");
+                    continue;
+                }
+
+                return pokemon;
 
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
@@ -104,21 +125,22 @@ public class BattleUI {
         }
     }
 
-    public static Pokemon chooseOpponent(Random random, List<Pokemon> wildPokemons) {
-        List<Pokemon> playablePokemons = new ArrayList<>();
-        for (Pokemon pokemon : wildPokemons) {
-            if (pokemon.isPlayable()) {
-                playablePokemons.add(pokemon);
-            }
-        }
+    public static Pokemon chooseOpponent(
+            Random random,
+            List<Pokemon> wildPokemons
+    ) {
+        List<Pokemon> playablePokemons = wildPokemons.stream()
+                .filter(Pokemon::isPlayable)
+                .toList();
+
         if (playablePokemons.isEmpty()) {
             System.out.println("  No playable wild pokemons available.");
             return null;
         }
 
-        int randomOpponent = random.nextInt(playablePokemons.size());
-        return playablePokemons.get((randomOpponent));
-
+        return playablePokemons.get(
+                random.nextInt(playablePokemons.size())
+        );
     }
 
     public static void showRegularBattleRules() {

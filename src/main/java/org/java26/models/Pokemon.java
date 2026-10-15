@@ -175,7 +175,9 @@ public class Pokemon implements Evolveable{
 
     @JsonIgnore
     public boolean isPlayable() {
-        return !attacks.isEmpty();
+        return !isFainted()
+                && attacks != null
+                && !attacks.isEmpty();
     }
 
     @Override

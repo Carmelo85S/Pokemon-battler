@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class InputHelperTest {
 
     @Test
-    void nullShouldThrowInvalidPokemonException() {
+    void null_ShouldThrow_InvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString(null)
         );
@@ -18,7 +18,7 @@ class InputHelperTest {
     }
 
     @Test
-    void blankShouldThrowInvalidPokemonException() {
+    void blank_ShouldThrow_InvalidPokemonException() {
         assertThrows(
                 InvalidPokemonException.class,
                 () -> InputHelper.validateString(" ")
@@ -26,7 +26,7 @@ class InputHelperTest {
     }
 
     @Test
-    void inputShouldContainAtLeastOneLetter() {
+    void input_ShouldContain_AtLeast_OneLetter() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString("123")
         );
@@ -35,7 +35,7 @@ class InputHelperTest {
     }
 
     @Test
-    void specialCharShouldThrowInvalidPokemonException() {
+    void specialChar_ShouldThrow_InvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString(" %&!Pizza")
         );
@@ -44,7 +44,7 @@ class InputHelperTest {
     }
 
     @Test
-    void inputToShortThrowInvalidPokemonException() {
+    void inputToShort_Throw_InvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString("A")
         );
@@ -52,7 +52,7 @@ class InputHelperTest {
     }
 
     @Test
-    void inputToLongThrowInvalidPokemonException() {
+    void inputToLong_Throw_InvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateString("CharizardEvolve")
         );
@@ -60,7 +60,7 @@ class InputHelperTest {
     }
 
     @Test
-    void blankInputShouldThrowInvalidPokemonException() {
+    void blankInput_ShouldThrow_InvalidPokemonException() {
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateInt(
                         " ", 1, 2
@@ -70,7 +70,7 @@ class InputHelperTest {
     }
 
     @Test
-    void notNumericInputShouldThrowInvalidPokemonException(){
+    void notNumericInput_ShouldThrow_InvalidPokemonException(){
         var exception = assertThrows(
                 InvalidPokemonException.class, () -> InputHelper.validateInt(
                         "abc", 1, 3

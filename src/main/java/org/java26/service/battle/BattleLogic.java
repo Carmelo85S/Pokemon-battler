@@ -15,7 +15,6 @@ import static org.java26.UI.Layout.*;
 import static org.java26.UI.Layout.menuOption;
 import static org.java26.UI.Layout.subTitle;
 import static org.java26.handlers.InputHelper.readIntBetween;
-import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
@@ -34,17 +33,23 @@ public class BattleLogic {
         title("Choose your pokemon");
         showPokemons(pokedex);
 
-        Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
-        statistics.trackPokemon(myPokemon.getName());
+        boolean hasPlayablePokemon = pokedex.getPokemons()
+                .stream()
+                .anyMatch(Pokemon::isPlayable);
 
-        if (!hasPokemonAttack(scanner, myPokemon)) {
+        if (!hasPlayablePokemon) {
+            title("No playable Pokemon available.");
+            subTitle("Create or edit your available Pokemons");
             return null;
         }
+
+        Pokemon myPokemon = chooseMyPokemon(scanner, pokedex);
+        statistics.trackPokemon(myPokemon.getName());
 
         return myPokemon;
     }
 
-    public static void runBattle(
+    public static boolean runBattle(
             Scanner scanner,
             Pokemon myPokemon,
             Pokemon opponent,
@@ -54,6 +59,20 @@ public class BattleLogic {
             int opponentAccuracyPenalty
     ) {
         int round = 1;
+
+        if(myPokemon.isFainted() || opponent.isFainted()){
+            System.out.println("  Cannot start battle: Pokemon has 0 HP.");
+            return false;
+        }
+
+        if (myPokemon.getAttacks() == null ||
+                opponent.getAttacks() == null ||
+                myPokemon.getAttacks().isEmpty() ||
+                opponent.getAttacks().isEmpty()) {
+
+            System.out.println("  Cannot start battle: Pokemon has no attacks.");
+            return false;
+        }
 
         boolean playerTurn = isTurn(myPokemon, opponent, random);
 
@@ -96,6 +115,7 @@ public class BattleLogic {
             round++;
             playerTurn = !playerTurn;
         }
+        return true;
     }
 
     public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
