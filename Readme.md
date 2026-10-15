@@ -555,6 +555,47 @@ The original Pokémon management functionality was kept while the project was ex
 
 The refactoring also improves separation of responsibilities and encapsulation.
 
+## Testing (JUnit 5)
+
+The project uses **JUnit 5** to test battle rules, input validation, and JSON error handling. Tests are organized by the component being tested and run independently of the interactive console application.
+
+### BattleLogicTest
+
+- **Type effectiveness:** Parameterized tests verify damage multipliers (`2.0`, `0.5`, and `1.0`) for different Pokémon type combinations.
+- **Evolution:** Parameterized tests verify that evolution is triggered at every third win and not at other win counts.
+- **Zero HP:** A battle must not start when either Pokémon has `0 HP`.
+- **No attacks:** A battle must not start if a Pokémon has no available attacks.
+- **Empty Pokédex:** A player without Pokémon can decline to create one; Pokémon selection then returns `null`.
+- **Cancel during battle:** Entering `B` at attack selection is intended to cancel the battle safely, without changing either Pokémon's HP. This scenario requires `runBattle()` to handle `QuitPokemonOperationException` and return `false`.
+
+### InputHelperTest
+
+Input-validation tests check that invalid values are rejected using `InvalidPokemonException`. Examples include blank input, nonnumeric input, invalid Pokémon names, and values outside permitted ranges. Invalid attack choices such as `-1`, `99`, and `abc` can be tested against the attack menu's allowed range.
+
+### JsonHandlerTest
+
+JSON-loading tests cover two error cases:
+
+- **Corrupted JSON:** A file containing malformed JSON causes `loadPokemon()` to throw `PokemonLoadException`.
+- **Missing JSON:** Attempting to load a nonexistent file also causes `PokemonLoadException`.
+
+JUnit's `@TempDir` creates a temporary directory for each test, so test files do not overwrite real files such as `pokemon.json`, `wild-pokemons.json`, or `statistic.json`. `Path.resolve()` builds a file path, while `Files.writeString()` creates a file containing the test data.
+
+The `isValidJSON()` method can be tested directly with JSON strings without creating temporary files.
+
+### Additional test coverage
+
+Saving and displaying statistics with no previous battles is another important scenario to verify. The tests should confirm that an empty battle history can be handled without errors.
+
+### Running tests
+
+Run the tests from IntelliJ IDEA or with Maven:
+
+```bash
+mvn test
+```
+
+
 ## Technologies
 
 * **Java 21**
