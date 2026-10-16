@@ -53,6 +53,7 @@ public class JsonHandler {
         Path path = Path.of(filePath);
 
         if (!Files.exists(path)) {
+            System.out.println("  Json file does not exist.");
             return new BattleStatistics();
         }
 

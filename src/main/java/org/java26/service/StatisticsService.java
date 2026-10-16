@@ -58,18 +58,26 @@ public class StatisticsService {
                 .merge(pokemon.getName(), 1, Integer::sum);
     }
 
-
     public static void resetAllStatistic(Path path, Pokedex pokedex, BattleStatistics statistics, JsonHandler jsonHandler) {
-        statistics.resetStatistics();
-        for (Pokemon pokemon : pokedex.getPokemons()) {
-            pokemon.resetLevel();
+        boolean level = pokedex.getPokemons()
+                .stream()
+                .allMatch(p -> p.getLevel() == 1);
+
+        if (!Files.exists(path)) {
+            subTitle("File doesn't exist. Play battles and save your Pokemon progress");
+        } else if (statistics.isEmpty() && level) {
+            subTitle("Nothing to reset.");
+        } else {
+            statistics.resetStatistics();
+
+            for (Pokemon pokemon : pokedex.getPokemons()) {
+                pokemon.resetLevel();
+            }
+
+            subTitle("All statistics reset to default values.");
+            jsonHandler.saveStatistics(path.toString(), statistics);
+            saveToFile(pokedex, jsonHandler);
         }
-
-        subTitle("All statistics and levels reset.");
-        jsonHandler.saveStatistics(path.toString(), statistics);
-        saveToFile(pokedex, jsonHandler);
-
-        subTitle("File doesn't exist. Play battles and save your Pokemon progress");
     }
 
 }

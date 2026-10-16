@@ -69,7 +69,7 @@ public class Menu {
                 case 0 -> {
                     saveToFile(pokedex, jsonHandler);
                     jsonHandler.saveStatistics("statistic.json", statistics);
-                    System.out.println("  Pokemon and statistics saved. Goodbye!");
+                    System.out.println("  Goodbye!");
                 }
                 default -> System.out.println("  Invalid input");
             }

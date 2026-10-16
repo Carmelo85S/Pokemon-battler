@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class BattleStatistics {
 
-    private int totalWins;
+    public int totalWins;
     private int totalLosses;
 
     private HashMap<String, Integer> pokemonWins = new HashMap<>();
@@ -78,5 +78,16 @@ public class BattleStatistics {
         pokemonCatch.clear();
         pokemonLastUse.clear();
         pokemonAttackUse.clear();
+    }
+
+    public boolean isEmpty(){
+        return totalWins == 0
+                && totalLosses == 0
+                && pokemonWins.isEmpty()
+                && pokemonLosses.isEmpty()
+                && pokemonUse.isEmpty()
+                && pokemonCatch.isEmpty()
+                && pokemonLastUse.isEmpty()
+                && pokemonAttackUse.isEmpty();
     }
 }
