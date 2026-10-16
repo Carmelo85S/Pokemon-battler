@@ -1,5 +1,7 @@
 package org.java26.service.battle;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -80,6 +82,7 @@ public class BattleStatistics {
         pokemonAttackUse.clear();
     }
 
+    @JsonIgnore
     public boolean isEmpty(){
         return totalWins == 0
                 && totalLosses == 0
