@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class DamageAttack extends Attack {
 
-    private final int power;
 
     @JsonCreator
     public DamageAttack(
@@ -18,25 +17,12 @@ public class DamageAttack extends Attack {
 
     ) {
         super(name, baseDamage, accuracy, type, AttackClassType.DAMAGE);
-        this.power = baseDamage;
-    }
-
-    public DamageAttack(
-            String name,
-            int baseDamage,
-            int accuracy,
-            PokemonType type,
-            int power
-    ) {
-        super(name, baseDamage, accuracy, type, AttackClassType.DAMAGE
-        );
-        this.power = power;
     }
 
     @Override
     public void execute(Pokemon attacker, Pokemon defender, boolean criticalHit, double effectiveness, Random random) {
 
-        double randomFactor = 0.85 + new Random().nextDouble() * 0.15;
+        double randomFactor = 0.85 + random.nextDouble() * 0.15;
         double damage = getBaseDamage() * randomFactor * effectiveness;
 
         if (criticalHit) {

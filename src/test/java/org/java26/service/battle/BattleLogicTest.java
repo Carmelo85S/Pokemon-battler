@@ -69,7 +69,8 @@ class BattleLogicTest {
         Pokemon opponent = new Pokemon();
 
         player.setMaxHp(200);
-        player.setCurrentHp(0);
+        player.setCurrentHp(200);
+        player.setAttacks(new ArrayList<>());
 
         opponent.setMaxHp(200);
         opponent.setCurrentHp(200);

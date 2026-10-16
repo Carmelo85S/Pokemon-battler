@@ -89,7 +89,7 @@ This project implements the advanced requirements for the VG grade.
 
 ### Known Limitations
 - Single Pokémon battles: Each battle involves one player Pokémon and one wild Pokémon. Team-based battles are not supported.
-- Handicap mode: Handicap match battle implements only 2 types of handicap, and they can affects player or opponent, depending on if the player wants an hard or easyer match.
+- Handicap mode: The battle system supports two types of handicaps: HP adjustments and accuracy penalties. These can be applied to either the player or the opponent, allowing for easier or more challenging battles.
 
 ## Battle System
 
@@ -149,33 +149,42 @@ After the initial turn, the Pokémon alternate turns until one faints.
 
 ## Damage Formula
 
-Damage is calculated using three factors:
+Damage is calculated using four factors: baseDamage, type effectiveness, random variation, and a critical hit multiplier.
 
 ```text
-Damage = Base Damage × Type Effectiveness × Random Factor
+Damage = BaseDamage × Type Effectiveness × Random Factor
 ```
 
 The random factor introduces a small amount of variation to each attack.
 
 ```java
-double randomFactor = power + random.nextDouble() * 0.15;
+double randomFactor = 0.85 + random.nextDouble() * 0.15;
 ```
 
-`random.nextDouble()` generates a value between `0.0` and `1.0`, resulting in a random factor between **power and 1.00**.
+`random.nextDouble()` generates a value between `0.0` and `1.0`, resulting in a random factor between **0.85 and 1.00**.
 
 The final damage is rounded down to the nearest integer.
 
 ### Example
 
+Final Damage = (int) (Base Damage × Type Effectiveness × Random Factor × Critical Multiplier)
+
 ```text
-Base Damage       = 50
+Base Damage        = 50
 Type Effectiveness = 2.0
-Random Factor     = 0.90
+Random Factor      = 0.90
+Critical Hit       = Yes
+Critical Multiplier = 2
 ```
 
 ```text
-Damage = 50 × 2.0 × 0.90
-       = 90
+Damage = 50 × 2.0 × 0.90 × 2 = 180
+```
+
+If the attack is not critical, the multiplier is 1:
+
+```text
+Damage = 50 × 2.0 × 0.90 × 1 = 90
 ```
 
 ## Type Effectiveness
@@ -211,8 +220,7 @@ boolean criticalHit = random.nextInt(15) == 0;
 The critical-hit result is passed to the attack through `execute()`:
 
 ```java
-attack.execute(attacker, defender, criticalHit);
-```
+attack.execute(attacker, defender, criticalHit, effectiveness, random);```
 
 The concrete attack implementation then applies the critical-hit multiplier together with the other damage modifiers:
 
@@ -221,24 +229,18 @@ The concrete attack implementation then applies the critical-hit multiplier toge
 public void execute(
         Pokemon attacker,
         Pokemon defender,
-        boolean criticalHit
+        boolean criticalHit,
+        double effectiveness,
+        Random random
 ) {
-    double effectiveness =
-            BattleLogic.effectiveness(defender, this);
+   double randomFactor = 0.85 + random.nextDouble() * 0.15;
+   double damage = getBaseDamage() * randomFactor * effectiveness;
 
-    double randomFactor =
-            0.85 + random.nextDouble() * 0.15;
+   if (criticalHit) {
+      damage *= 2;
+   }
 
-    double damage =
-            getBaseDamage()
-                    * effectiveness
-                    * randomFactor;
-
-    if (criticalHit) {
-        damage *= 2;
-    }
-
-    defender.takeDamage((int) damage);
+   defender.takeDamage((int) damage);
 }
 ```
 
@@ -297,23 +299,6 @@ The level is kept separate from the Pokémon name so the application's name vali
 6 wins  →  Lv2 → Lv3
 9 wins  →  Lv3 → Lv4
 ```
-  ...
-## Battle Flow
-1. The player selects a Pokémon from their Pokédex.
-2. The CPU randomly selects a Pokémon from the wild Pokémon pool.
-3. The first player is selected randomly.
-4. The player selects an attack from a menu.
-5. The CPU selects an attack randomly.
-6. Accuracy determines whether the attack hits.
-7. A critical hit is randomly determined.
-8. The attack is executed through the polymorphic execute() method.
-9. Type effectiveness and random damage variation are applied.
-10. Critical hits double the calculated damage.
-11. HP is reduced by the calculated damage.
-12. The battle continues until one Pokémon reaches 0 HP.
-13. The result is displayed.
-14. Win/loss statistics are updated.
-15. Pokémon HP is restored after the battle.
 
 ## Object-Oriented Programming
 
@@ -365,7 +350,9 @@ It defines the common structure of an attack and requires every concrete subclas
 public abstract void execute(
         Pokemon attacker,
         Pokemon defender,
-        boolean criticalHit
+        boolean criticalHit,
+        double effectiveness,
+        Random random
 );
 ```
 
@@ -380,7 +367,9 @@ For example, `DamageAttack` deals damage:
 public void execute(
         Pokemon attacker,
         Pokemon defender,
-        boolean criticalHit
+        boolean criticalHit,
+        double effectiveness,
+        Random random
 ) {
     // Calculate and apply damage
     defender.takeDamage(...);
@@ -394,7 +383,9 @@ While `HealAttack` restores HP:
 public void execute(
         Pokemon attacker,
         Pokemon defender,
-        boolean criticalHit
+        boolean criticalHit,
+        double effectiveness,
+        Random random
 ) {
     attacker.heal(heal);
 }
@@ -402,7 +393,9 @@ public void execute(
 
 ### Polymorphism
 
-The battle system works with the general `Attack` type instead of depending on a specific attack implementation.
+Both DamageAttack and HealAttack override the same execute() method. 
+DamageAttack calculates and applies damage using type effectiveness, random variation, and critical hits, while HealAttack restores the attacker's HP. 
+This demonstrates runtime polymorphism through a shared abstract Attack type.
 
 For example:
 
@@ -418,7 +411,9 @@ The selected attack is then executed through the common method:
 attack.execute(
         attacker,
         defender,
-        criticalHit
+        criticalHit,
+        effectiveness,
+        random
 );
 ```
 
@@ -556,7 +551,6 @@ The attack system therefore combines the main OOP concepts:
 
 The result is a more extensible battle system where new attack types can be introduced by creating a new subclass of `Attack` and implementing its `execute()` method.
 
-
 ## Persistence
 
 Pokémon and battle statistics are saved between sessions using **JSON** and **Jackson**.
@@ -567,6 +561,7 @@ The application can:
 * Load Pokémon data
 * Save battle statistics
 * Load battle statistics
+* Reset statistic
 * Maintain statistics between application sessions
 
 ## Validation and Error Handling
@@ -595,10 +590,9 @@ src/
     └── java/
         └── org/
             └── java26/
-                ├── consoleLayout/
+                ├── UI/
                 ├── exceptions/
                 ├── handlers/
-                ├── inputHelpers/
                 ├── models/
                 ├── repository/
                 └── service/
@@ -630,7 +624,8 @@ The refactoring also improves separation of responsibilities and encapsulation.
 
 ## Testing (JUnit 5)
 
-The project uses **JUnit 5** to test battle rules, input validation, and JSON error handling. Tests are organized by the component being tested and run independently of the interactive console application.
+The project uses **JUnit 5** to test battle rules, input validation, and JSON error handling. 
+Tests are organized by the component being tested and run independently of the interactive console application.
 
 ### BattleLogicTest
 
@@ -639,11 +634,18 @@ The project uses **JUnit 5** to test battle rules, input validation, and JSON er
 - **Zero HP:** A battle must not start when either Pokémon has `0 HP`.
 - **No attacks:** A battle must not start if a Pokémon has no available attacks.
 - **Empty Pokédex:** A player without Pokémon can decline to create one; Pokémon selection then returns `null`.
-- **Cancel during battle:** Entering `B` at attack selection is intended to cancel the battle safely, without changing either Pokémon's HP. This scenario requires `runBattle()` to handle `QuitPokemonOperationException` and return `false`.
-
+- **Cancel during battle:** Verifies that entering `B` during attack selection safely cancels the battle, returns `false`, and leaves both Pokémon's HP unchanged.
 ### InputHelperTest
 
-Input-validation tests check that invalid values are rejected using `InvalidPokemonException`. Examples include blank input, nonnumeric input, invalid Pokémon names, and values outside permitted ranges. Invalid attack choices such as `-1`, `99`, and `abc` can be tested against the attack menu's allowed range.
+Input-validation tests check that invalid values are rejected using `InvalidPokemonException`. 
+Examples include 
+- blank input, 
+- nonnumeric input, 
+- invalid Pokémon names, and values outside permitted ranges. 
+
+Invalid attack choices such as 
+`-1`, `99`, `abc`
+can be tested against the attack menu's allowed range.
 
 ### JsonHandlerTest
 
@@ -656,12 +658,4 @@ JUnit's `@TempDir` creates a temporary directory for each test, so test files do
 
 The `isValidJSON()` method can be tested directly with JSON strings without creating temporary files.
 
-
-### Running tests
-
-Run the tests from IntelliJ IDEA or with Maven:
-
-```bash
-mvn test
-```
 
