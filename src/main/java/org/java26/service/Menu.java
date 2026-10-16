@@ -5,6 +5,7 @@ import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.service.battle.BattleStatistics;
 
+import java.nio.file.Path;
 import java.util.Scanner;
 
 import static org.java26.UI.Layout.*;
@@ -57,13 +58,17 @@ public class Menu {
                 case 2 -> createPokemon(scanner, pokedex);
                 case 3 -> updatePokemon(scanner, pokedex);
                 case 4 -> deletePokemon(scanner, pokedex);
-                case 5, 0 -> saveToFile(pokedex, jsonHandler);
+                case 5 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics);
                 case 10 -> getPokemonsStats(pokedex, statistics);
-                case 11 -> resetAllStatistic(pokedex, statistics, jsonHandler);
+                case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
+                case 0 -> {
+                    saveToFile(pokedex, jsonHandler);
+                    jsonHandler.saveStatistics("statistic.json", statistics);
+                }
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {

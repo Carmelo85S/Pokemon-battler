@@ -6,6 +6,8 @@ import org.java26.models.Pokemon;
 import org.java26.repository.JsonHandler;
 import org.java26.service.battle.BattleStatistics;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 
 import static org.java26.UI.Layout.subTitle;
@@ -56,15 +58,23 @@ public class StatisticsService {
                 .merge(pokemon.getName(), 1, Integer::sum);
     }
 
-    public static void resetAllStatistic(Pokedex pokedex, BattleStatistics statistics, JsonHandler jsonHandler){
-        statistics.resetStatistics();
-        for(Pokemon pokemon : pokedex.getPokemons()){
-            pokemon.resetLevel();
-        }
+    public static boolean exist(Path path) {
+        return Files.exists(path);
+    }
 
-        subTitle("  All statistics and levels resetted.");
-        jsonHandler.saveStatistics("statistic.json", statistics);
-        saveToFile(pokedex, jsonHandler);
+    public static void resetAllStatistic(Path path, Pokedex pokedex, BattleStatistics statistics, JsonHandler jsonHandler) {
+        if (exist(path)) {
+            statistics.resetStatistics();
+            for (Pokemon pokemon : pokedex.getPokemons()) {
+                pokemon.resetLevel();
+            }
+
+            subTitle("All statistics and levels resetted.");
+            jsonHandler.saveStatistics("path", statistics);
+            saveToFile(pokedex, jsonHandler);
+        } else {
+            subTitle("File doesn't exist. Play battles and save your Pokemon progress");
+        }
     }
 
 }
