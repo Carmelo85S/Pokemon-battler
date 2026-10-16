@@ -78,6 +78,5 @@ public class BattleStatistics {
         pokemonCatch.clear();
         pokemonLastUse.clear();
         pokemonAttackUse.clear();
-
     }
 }

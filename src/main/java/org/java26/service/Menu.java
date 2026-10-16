@@ -25,29 +25,30 @@ public class Menu {
     public static void printWelcome() {
         title("WELCOME TRAINER");
         separator();
-        title("POKEDEX APP");
+        title("POKEARENA CLI");
         separator();
         subTitle("Manage your Pokemon collection");
-        subTitle("customize their stats and attacks,");
-        subTitle("and keep your Pokedex organized");
+        subTitle("Customize stats and attacks");
+        subTitle("Battle opponents and track your progress");
+        subTitle("Save your journey and master the arena");
         subTitle("by Carmelo Salis.");
         separator();
     }
 
     public static void showMenu() {
-        title("Pokedex");
-        menuOption(1, "Show all Pokemon");
-        menuOption(2, "Insert a new Pokemon");
-        menuOption(3, "Customize your Pokemon");
-        menuOption(4, "Delete your Pokemon");
-        menuOption(5, "Save to file");
-        menuOption(6, "Load from file");
-        menuOption(7, "Reset to seed data");
-        menuOption(8, "Pokemon info");
-        menuOption(9, "Start battle");
-        menuOption(10, "Show stats");
-        menuOption(11, "Reset stats");
-        menuOption(0, "Exit & Save");
+        title("POKEARENA");
+        menuOption(1, "View all Pokemon");
+        menuOption(2, "Add a new Pokemon");
+        menuOption(3, "Customize Pokemon");
+        menuOption(4, "Delete Pokemon");
+        menuOption(5, "Save Pokemon");
+        menuOption(6, "Load Pokemon");
+        menuOption(7, "Restore default Pokemon");
+        menuOption(8, "View Pokemon details");
+        menuOption(9, "Enter Battle Arena");
+        menuOption(10, "View Battle Statistics");
+        menuOption(11, "Reset Battle Statistics");
+        menuOption(0, "Save & Exit");
 
     }
 
@@ -68,6 +69,7 @@ public class Menu {
                 case 0 -> {
                     saveToFile(pokedex, jsonHandler);
                     jsonHandler.saveStatistics("statistic.json", statistics);
+                    System.out.println("  Pokemon and statistics saved. Goodbye!");
                 }
                 default -> System.out.println("  Invalid input");
             }

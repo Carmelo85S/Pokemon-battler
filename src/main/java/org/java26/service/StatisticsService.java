@@ -58,23 +58,18 @@ public class StatisticsService {
                 .merge(pokemon.getName(), 1, Integer::sum);
     }
 
-    public static boolean exist(Path path) {
-        return Files.exists(path);
-    }
 
     public static void resetAllStatistic(Path path, Pokedex pokedex, BattleStatistics statistics, JsonHandler jsonHandler) {
-        if (exist(path)) {
-            statistics.resetStatistics();
-            for (Pokemon pokemon : pokedex.getPokemons()) {
-                pokemon.resetLevel();
-            }
-
-            subTitle("All statistics and levels resetted.");
-            jsonHandler.saveStatistics("path", statistics);
-            saveToFile(pokedex, jsonHandler);
-        } else {
-            subTitle("File doesn't exist. Play battles and save your Pokemon progress");
+        statistics.resetStatistics();
+        for (Pokemon pokemon : pokedex.getPokemons()) {
+            pokemon.resetLevel();
         }
+
+        subTitle("All statistics and levels reset.");
+        jsonHandler.saveStatistics(path.toString(), statistics);
+        saveToFile(pokedex, jsonHandler);
+
+        subTitle("File doesn't exist. Play battles and save your Pokemon progress");
     }
 
 }

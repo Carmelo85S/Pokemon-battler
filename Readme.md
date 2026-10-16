@@ -6,7 +6,7 @@ This project is an extension of my previous **Pokédex CRUD application**. The o
 
 ## Features
 
-### Pokédex
+### POKÉARENA
 
 - Create Pokémon
 - View Pokémon
