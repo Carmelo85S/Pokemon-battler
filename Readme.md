@@ -4,6 +4,39 @@ A Java console application where the player can manage Pokémon and battle again
 
 This project is an extension of my previous **Pokédex CRUD application**. The original functionality has been refactored and extended with a turn-based battle system.
 
+
+## How to Run
+
+### Requirements
+- Java 25
+- Maven
+- IntelliJ IDEA (recommended)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Carmelo85S/Pokemon-battler.git
+   ```
+
+2. Open the project in IntelliJ IDEA.
+
+3. Make sure the Project SDK is set to Java 25.
+
+4. Reload the Maven project to download dependencies.
+
+5. Locate the application's main class and run its `main()` method.
+
+### Running Tests
+
+Run JUnit 5 tests directly from IntelliJ IDEA,
+or execute the following command if Maven is installed:
+
+```bash
+mvn test
+```
+
 ## Features
 
 ### POKÉARENA
@@ -17,6 +50,46 @@ This project is an extension of my previous **Pokédex CRUD application**. The o
 - Pokémon levels
 - Input validation
 - Error handling
+
+## VG Requirements (Väl Godkänt)
+
+This project implements the advanced requirements for the VG grade.
+
+### 1. Type Effectiveness
+- Implements a type effectiveness system with damage multipliers of `2.0×`, `0.5×`, and `1.0×`.
+- Supports Fire, Water, Grass, Electric, and Normal Pokémon types.
+- Type effectiveness is applied during damage calculation.
+
+### 2. JSON Persistence (Jackson)
+- Uses Jackson for JSON serialization and deserialization.
+- Saves and loads Pokémon collections, including their attacks and levels.
+- Stores wild Pokémon in a separate JSON file.
+- Persists battle statistics between application sessions.
+- Supports polymorphic serialization of `DamageAttack` and `HealAttack`.
+
+### 3. Critical Hits
+- Each attack has a `1/15` probability of being critical.
+- Critical hits multiply the calculated damage by `2`.
+- Critical hits are displayed in the battle log.
+
+### 4. Persistent Battle Statistics
+- Tracks total wins and losses.
+- Tracks individual Pokémon wins and losses.
+- Records Pokémon usage and attack usage.
+- Tracks captured Pokémon and their last usage.
+- Saves statistics to `statistic.json` using Jackson.
+- Provides a menu option to display battle statistics.
+
+### 5. Object-Oriented Programming and Polymorphism
+- Uses an abstract `Attack` class with concrete `DamageAttack` and `HealAttack` subclasses.
+- Implements polymorphism through the overridden `execute()` method.
+- Uses the `Evolveable` interface for Pokémon progression.
+- Separates models, battle logic, services, input handling, and persistence into dedicated classes and packages.
+- Extends and refactors the original Pokédex application while preserving its CRUD functionality.
+
+### Known Limitations
+- Single Pokémon battles: Each battle involves one player Pokémon and one wild Pokémon. Team-based battles are not supported.
+- Handicap mode: Handicap match battle implements only 2 types of handicap, and they can affects player or opponent, depending on if the player wants an hard or easyer match.
 
 ## Battle System
 
@@ -583,9 +656,6 @@ JUnit's `@TempDir` creates a temporary directory for each test, so test files do
 
 The `isValidJSON()` method can be tested directly with JSON strings without creating temporary files.
 
-### Additional test coverage
-
-Saving and displaying statistics with no previous battles is another important scenario to verify. The tests should confirm that an empty battle history can be handled without errors.
 
 ### Running tests
 
@@ -595,12 +665,3 @@ Run the tests from IntelliJ IDEA or with Maven:
 mvn test
 ```
 
-
-## Technologies
-
-* **Java 21**
-* **Maven**
-* **Jackson**
-* **JUnit 5**
-* **IntelliJ IDEA**
-* **Git / GitHub**
