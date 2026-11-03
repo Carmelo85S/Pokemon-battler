@@ -1,10 +1,7 @@
  package org.java26.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.java26.exceptions.InvalidPokemonException;
-import org.java26.repository.JsonHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +86,7 @@ public class Pokemon implements Evolveable{
     }
 
     public void setMaxHp(int maxHp) {
-        if (maxHp < 10 || maxHp > 1000) {
+        if (maxHp < 200 || maxHp > 300) {
             throw new IllegalArgumentException(
                     "  Max HP must be between 10 and 1000"
             );
