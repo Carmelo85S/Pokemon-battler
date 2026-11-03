@@ -40,3 +40,9 @@ build/
 
 pokemon.json
 statistic.json
+
+### SECRETS ###
+.env
+
+### DOCKER ###
+docker-compose.yaml
