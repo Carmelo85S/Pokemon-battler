@@ -2,14 +2,23 @@ package org.java26.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
 import java.util.Random;
 
 import static org.java26.UI.Layout.subTitle;
 
+@Entity
+@DiscriminatorValue("HEAL")
 public class HealAttack extends Attack {
+    @Column(name = "heal")
+    private int heal;
 
-    private final int heal;
+    protected HealAttack() {
+        super();
+    }
 
     @JsonCreator
     public HealAttack(

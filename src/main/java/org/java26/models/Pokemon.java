@@ -1,28 +1,51 @@
- package org.java26.models;
+package org.java26.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import org.java26.exceptions.InvalidPokemonException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pokemon implements Evolveable{
+@Entity
+@Table(name = "pokemon")
+public class Pokemon implements Evolveable {
 
-    private static final int MAX_ATTACKS = 4;
-    private int level = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
-    private PokemonType type;
+
+    @Column(name = "max_hp", nullable = false)
     private int maxHp;
+
+    @Column(name = "current_hp", nullable = false)
     private int currentHp;
 
+    @Column(name = "speed", nullable = false)
     private int speed;
 
-    private ArrayList<Attack> attacks = new ArrayList<>();
+    @Column(name = "level", nullable = false)
+    private int level = 1;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false, length = 30)
+    private PokemonType type;
+
+
+    @OneToMany(
+            mappedBy = "pokemon",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Attack> attacks = new ArrayList<>();
+
+    private static final int MAX_ATTACKS = 4;
 
     public Pokemon() {
     }
-
 
     public Pokemon(String name, PokemonType type, int maxHp, int speed) {
         setName(name);
@@ -37,7 +60,7 @@ public class Pokemon implements Evolveable{
     }
 
     public void setSpeed(int speed) {
-        if (speed <= 10 || speed > 50) {
+        if (speed < 10 || speed > 50) {
             throw new IllegalArgumentException(
                     "  Speed must be between 10 and 50"
             );
@@ -46,12 +69,13 @@ public class Pokemon implements Evolveable{
     }
 
     public void addAttack(Attack attack) {
-        if (attacks.size() >= MAX_ATTACKS) {
+        if (attack == null || attacks.size() >= MAX_ATTACKS) {
             throw new InvalidPokemonException(
                     "  " + name + " has max number of attacks available (" + MAX_ATTACKS + ")."
             );
         }
         attacks.add(attack);
+        attack.setPokemon(this);
     }
 
     public List<Attack> getAttacks() {
@@ -66,6 +90,10 @@ public class Pokemon implements Evolveable{
         }
 
         this.attacks = new ArrayList<>(attacks);
+
+        for (Attack attack : this.attacks) {
+            attack.setPokemon(this);
+        }
     }
 
     public String getName() {
@@ -88,7 +116,7 @@ public class Pokemon implements Evolveable{
     public void setMaxHp(int maxHp) {
         if (maxHp < 200 || maxHp > 300) {
             throw new IllegalArgumentException(
-                    "  Max HP must be between 10 and 1000"
+                    "  Max HP must be between 200 and 300"
             );
         }
         this.maxHp = maxHp;
@@ -162,11 +190,12 @@ public class Pokemon implements Evolveable{
 
         this.level = level;
     }
+
     public int getLevel() {
         return level;
     }
 
-    public void resetLevel(){
+    public void resetLevel() {
         this.level = 1;
     }
 
