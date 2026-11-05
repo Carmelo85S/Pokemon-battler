@@ -19,7 +19,7 @@ import java.util.Random;
 
 public abstract class Attack {
     private String name;
-    private int baseDamage;
+    private int power;
     private int accuracy;
     private final PokemonType type;
     private final AttackClassType attackClassType;
@@ -41,9 +41,9 @@ public abstract class Attack {
         this.attackClassType = attackClassType;
     }
 
-    protected Attack(String name, int baseDamage, int accuracy, PokemonType type, AttackClassType attackClassType) {
+    protected Attack(String name, int power, int accuracy, PokemonType type, AttackClassType attackClassType) {
         setName(name);
-        setBaseDamage(baseDamage);
+        setPower(power);
         setAccuracy(accuracy);
         if (type == null) {
             throw new IllegalArgumentException(
@@ -73,17 +73,17 @@ public abstract class Attack {
         this.name = name;
     }
 
-    public int getBaseDamage() {
-        return baseDamage;
+    public int getPower() {
+        return power;
     }
 
-    public void setBaseDamage(int baseDamage) {
-        if (baseDamage < 10 || baseDamage > 100) {
+    public void setPower(int power) {
+        if (power < 10 || power > 100) {
             throw new IllegalArgumentException(
-                    "  Base damage must be between 10 and 1000"
+                    "  Power must be between 10 and 1000"
             );
         }
-        this.baseDamage = baseDamage;
+        this.power = power;
     }
 
     public int getAccuracy() {

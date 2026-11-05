@@ -9,14 +9,14 @@
       {
         "attackClassType": "damage",
         "name": "Lightning Pulse",
-        "baseDamage": 40,
+        "power": 40,
         "accuracy": 95,
         "type": "ELECTRIC"
       },
       {
         "attackClassType": "damage",
         "name": "Rapid Strike",
-        "baseDamage": 50,
+        "power": 50,
         "accuracy": 90,
         "type": "NORMAL"
       }
@@ -32,14 +32,14 @@
       {
         "attackClassType": "damage",
         "name": "Inferno Wave",
-        "baseDamage": 70,
+        "power": 70,
         "accuracy": 85,
         "type": "FIRE"
       },
       {
         "attackClassType": "damage",
         "name": "Sky Slash",
-        "baseDamage": 60,
+        "power": 60,
         "accuracy": 90,
         "type": "NORMAL"
       }
@@ -55,14 +55,14 @@
       {
         "attackClassType": "damage",
         "name": "Aqua Blast",
-        "baseDamage": 50,
+        "power": 50,
         "accuracy": 95,
         "type": "WATER"
       },
       {
         "attackClassType": "damage",
         "name": "Tidal Strike",
-        "baseDamage": 70,
+        "power": 70,
         "accuracy": 85,
         "type": "WATER"
       }
@@ -78,14 +78,14 @@
       {
         "attackClassType": "damage",
         "name": "Thorn Lash",
-        "baseDamage": 45,
+        "power": 45,
         "accuracy": 95,
         "type": "GRASS"
       },
       {
         "attackClassType": "damage",
         "name": "Emerald Blade",
-        "baseDamage": 55,
+        "power": 55,
         "accuracy": 90,
         "type": "GRASS"
       }
@@ -101,14 +101,14 @@
       {
         "attackClassType": "damage",
         "name": "Volt Strike",
-        "baseDamage": 40,
+        "power": 40,
         "accuracy": 95,
         "type": "ELECTRIC"
       },
       {
         "attackClassType": "damage",
         "name": "Static Burst",
-        "baseDamage": 50,
+        "power": 50,
         "accuracy": 90,
         "type": "ELECTRIC"
       }
@@ -124,14 +124,14 @@
       {
         "attackClassType": "damage",
         "name": "Ember Shot",
-        "baseDamage": 40,
+        "power": 40,
         "accuracy": 95,
         "type": "FIRE"
       },
       {
         "attackClassType": "damage",
         "name": "Claw Swipe",
-        "baseDamage": 45,
+        "power": 45,
         "accuracy": 95,
         "type": "NORMAL"
       }
@@ -147,14 +147,14 @@
       {
         "attackClassType": "damage",
         "name": "Electric Arc",
-        "baseDamage": 40,
+        "power": 40,
         "accuracy": 95,
         "type": "ELECTRIC"
       },
       {
         "attackClassType": "damage",
         "name": "Magnetic Surge",
-        "baseDamage": 50,
+        "power": 50,
         "accuracy": 90,
         "type": "ELECTRIC"
       }
@@ -170,21 +170,21 @@
       {
         "attackClassType": "damage",
         "name": "Blazing Claw",
-        "baseDamage": 40,
+        "power": 40,
         "accuracy": 95,
         "type": "FIRE"
       },
       {
         "attackClassType": "damage",
         "name": "Fire Spiral",
-        "baseDamage": 60,
+        "power": 60,
         "accuracy": 90,
         "type": "FIRE"
       },
       {
         "attackClassType": "damage",
         "name": "Crimson Inferno",
-        "baseDamage": 70,
+        "power": 70,
         "accuracy": 85,
         "type": "FIRE"
       }

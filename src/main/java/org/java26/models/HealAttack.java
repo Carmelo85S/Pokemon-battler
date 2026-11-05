@@ -14,12 +14,12 @@ public class HealAttack extends Attack {
     @JsonCreator
     public HealAttack(
             @JsonProperty("name") String name,
-            @JsonProperty("baseDamage") int baseDamage,
+            @JsonProperty("power") int power,
             @JsonProperty("accuracy") int accuracy,
             @JsonProperty("type") PokemonType type,
             @JsonProperty("heal") int heal
     ) {
-        super(name, baseDamage, accuracy, type, AttackClassType.HEAL);
+        super(name, power, accuracy, type, AttackClassType.HEAL);
         this.heal = heal;
     }
 

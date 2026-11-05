@@ -46,11 +46,11 @@ public class AttackCreator {
 
         if (choice == 1) {
 
-            int baseDamage = readIntBetween(
+            int power = readIntBetween(
                     scanner,
                     10,
                     100,
-                    "  Enter attack damage. Value between %d and %d: "
+                    "  Enter attack damage power amount. Value between %d and %d: "
             );
 
             System.out.println();
@@ -58,7 +58,7 @@ public class AttackCreator {
 
             return new DamageAttack(
                     attackName,
-                    baseDamage,
+                    power,
                     accuracy,
                     type
             );
@@ -68,7 +68,7 @@ public class AttackCreator {
                 scanner,
                 10,
                 30,
-                "  Enter heal amount. Value between %d and %d: "
+                "  Enter heal power amount. Value between %d and %d: "
         );
 
         System.out.println();
