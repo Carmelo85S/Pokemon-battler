@@ -16,6 +16,7 @@ import static org.java26.handlers.InputHelper.readIntBetween;
 
 public class PokemonCreator {
     public static void createPokemon(Scanner scanner, Pokedex pokedex) {
+
         // Pokemon obj
         String name;
         PokemonType type;
@@ -100,7 +101,6 @@ public class PokemonCreator {
             }
 
             pokedex.addPokemon(pokemon);
-
             System.out.println("  Pokemon '" + pokemon.getName() + "' created successfully.");
 
         } catch (InvalidPokemonException | QuitPokemonOperationException e) {
