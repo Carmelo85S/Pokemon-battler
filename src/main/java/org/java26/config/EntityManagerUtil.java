@@ -18,7 +18,7 @@ public class EntityManagerUtil {
 
         Map<String, Object> properties = new HashMap<>();
 
-        String url = "jdbc:postgresql://localhost:5433/"
+        String url = "jdbc:postgresql://localhost:5432/"
                 + dotenv.get("POSTGRES_DB");
 
         properties.put("jakarta.persistence.jdbc.url", url);
