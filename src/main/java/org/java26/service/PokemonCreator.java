@@ -3,6 +3,8 @@ package org.java26.service;
 import org.java26.models.*;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
+import org.java26.repository.PokemonRepository;
+import org.java26.repository.PokemonRepositoryImpl;
 
 import java.util.Scanner;
 
@@ -15,7 +17,9 @@ import static org.java26.handlers.InputHelper.*;
 import static org.java26.handlers.InputHelper.readIntBetween;
 
 public class PokemonCreator {
+
     public static void createPokemon(Scanner scanner, Pokedex pokedex) {
+        PokemonRepositoryImpl impl = new PokemonRepositoryImpl();
 
         // Pokemon obj
         String name;
@@ -99,7 +103,7 @@ public class PokemonCreator {
                     addAttack = false;
                 }
             }
-
+            impl.save(pokemon);
             pokedex.addPokemon(pokemon);
             System.out.println("  Pokemon '" + pokemon.getName() + "' created successfully.");
 

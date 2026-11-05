@@ -67,7 +67,7 @@ public class PokemonViewer {
                     subTitle("No attacks available");
                 }
                 for (Attack attack : pokemon.getAttacks()) {
-                    int value = attack.getBaseDamage();
+                    int value = attack.getPower();
                     if(attack instanceof HealAttack healAttack){
                         value = healAttack.getHeal();
                     }

@@ -10,8 +10,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- Här listar vi våra entiteter -->
-        <class>model.Pokemon</class>
-        <class>model.Attack</class>
+        <class>org.java26.models.Pokemon</class>
+        <class>org.java26.models.Attack</class>
 
         <properties>
             <property name="hibernate.show_sql" value="false"/>

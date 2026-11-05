@@ -48,7 +48,7 @@ public class BattleUI {
 
             Attack attack = pokemon.getAttacks().get(i);
 
-            int value = attack.getBaseDamage();
+            int value = attack.getPower();
 
             if (attack instanceof HealAttack healAttack) {
                 value = healAttack.getHeal();
