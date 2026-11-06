@@ -39,7 +39,7 @@
       {
         "attackClassType": "damage",
         "name": "Wing Attack",
-        "baseDamage": 60,
+        "power": 60,
         "accuracy": 79,
         "type": "NORMAL"
       }

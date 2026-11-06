@@ -4,6 +4,7 @@ import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.handlers.InputHelper;
+import org.java26.repository.PokemonRepositoryImpl;
 import org.java26.service.battle.BattleStatistics;
 
 import java.io.IOException;
@@ -18,13 +19,12 @@ public class Main {
         Pokedex pokedex = new Pokedex();
         JsonHandler jsonHandler = new JsonHandler();
         BattleStatistics statistics = jsonHandler.loadStatistics("statistic.json");
-
+        PokemonRepositoryImpl impl = new PokemonRepositoryImpl();
         printWelcome();
-        loadInitialPokemonData(pokedex, jsonHandler);
+        loadInitialPokemonData(pokedex, jsonHandler,impl);
 
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        try {
+        try (Scanner scanner = new Scanner(System.in)) {
+            int choice;
             do {
                 showMenu();
                 choice = InputHelper.readMenuChoice(
@@ -40,8 +40,6 @@ public class Main {
             System.out.println("  Looks like you entered a special combination. App will close. Please be nice.");
         } catch (QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
-        } finally {
-            scanner.close();
         }
     }
 }

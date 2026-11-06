@@ -135,7 +135,7 @@ public abstract class Attack {
     public PokemonType getType() {
         return type;
     }
-
+    @JsonIgnore
     public Pokemon getPokemon() {
         return pokemon;
     }

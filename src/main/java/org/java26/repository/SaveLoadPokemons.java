@@ -53,7 +53,19 @@ public class SaveLoadPokemons {
         }
     }
 
-    public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl) {
+
+        List<Pokemon> isPresent = impl.findAll();
+
+        if (!isPresent.isEmpty()) {
+            for (Pokemon p : isPresent) {
+                pokedex.addPokemon(p);
+            }
+            return;
+
+        }
+
+
         try {
             Path path = Path.of("pokemon.json");
             List<Pokemon> listPokemon;
@@ -90,9 +102,9 @@ public class SaveLoadPokemons {
     }
 
     public static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
-        try{
+        try {
             boolean delete = Files.deleteIfExists(Path.of("statistic.json"));
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("  File for statistic does not exist. A file will be created after a battle.");
         }
 
