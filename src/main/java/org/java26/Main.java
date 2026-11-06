@@ -33,7 +33,7 @@ public class Main {
                         11,
                         "  Select an option %n  > "
                 );
-                runAction(choice, scanner, pokedex, jsonHandler, statistics);
+                runAction(choice, scanner, pokedex, jsonHandler, impl, statistics);
 
             } while (choice != 0);
         } catch (NoSuchElementException e) {

@@ -24,7 +24,7 @@ public class PokemonRepositoryImpl implements PokemonRepository {
     @Override
     public List<Pokemon> findAll() {
         try (EntityManager em = EntityManagerUtil.getEntityManager()) {
-            return em.createQuery("SELECT p FROM Pokemon p", Pokemon.class)
+            return em.createQuery("SELECT DISTINCT p FROM Pokemon p LEFT JOIN FETCH p.attacks", Pokemon.class)
                     .getResultList();
         }
     }

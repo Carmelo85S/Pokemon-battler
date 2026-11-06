@@ -1,8 +1,10 @@
 package org.java26.service;
 
 import org.java26.exceptions.QuitPokemonOperationException;
+import org.java26.models.Pokemon;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
+import org.java26.repository.PokemonRepositoryImpl;
 import org.java26.service.battle.BattleStatistics;
 
 import java.nio.file.Path;
@@ -52,7 +54,7 @@ public class Menu {
 
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleStatistics statistics) {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
@@ -68,6 +70,9 @@ public class Menu {
                 case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
                 case 0 -> {
                     saveToFile(pokedex, jsonHandler);
+                    for(Pokemon p : pokedex.getPokemons()){
+                        impl.save(p);
+                    }
                     jsonHandler.saveStatistics("statistic.json", statistics);
                     System.out.println("  Goodbye!");
                 }

@@ -20,6 +20,7 @@ public class SaveLoadPokemons {
                     pokedex.getPokemons()
             );
         } catch (PokemonSaveException e) {
+            e.getStackTrace();
             System.out.println(e.getMessage());
         }
     }

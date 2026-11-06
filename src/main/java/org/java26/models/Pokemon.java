@@ -13,7 +13,7 @@ public class Pokemon implements Evolveable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name", nullable = false, length = 30)
     private String name;
@@ -33,7 +33,6 @@ public class Pokemon implements Evolveable {
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 30)
     private PokemonType type;
-
 
     @OneToMany(
             mappedBy = "pokemon",
