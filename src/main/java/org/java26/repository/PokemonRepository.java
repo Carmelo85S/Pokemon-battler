@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface PokemonRepository {
 
-    Optional<Pokemon> findById(int id);
+    Optional<Pokemon> findById(Long id);
     List<Pokemon> findAll();
     void save(Pokemon pokemon);
-    void delete(int id);
+    void delete(Long id);
 }

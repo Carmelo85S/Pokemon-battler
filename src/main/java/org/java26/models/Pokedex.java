@@ -3,6 +3,7 @@ package org.java26.models;
 import org.java26.exceptions.InvalidPokemonException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Pokedex {
 
@@ -36,6 +37,17 @@ public class Pokedex {
         }
 
         pokemons.remove(index);
+    }
+
+    public void removePokemonById(Long id) {
+        Pokemon pokemon = pokemons.stream()
+                .filter(p -> p.getId()
+                        .equals(id))
+                .findFirst().orElseThrow(() -> new InvalidPokemonException(
+                        "  Pokemon with ID [" + id + "] not found."
+                ));
+
+        pokemons.remove(pokemon);
     }
 
     public void removeAllPokemon() {

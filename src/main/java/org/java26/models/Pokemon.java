@@ -15,6 +15,10 @@ public class Pokemon implements Evolveable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
     @Column(name = "name", nullable = false, length = 30)
     private String name;
 

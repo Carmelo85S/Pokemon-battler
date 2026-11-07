@@ -60,7 +60,7 @@ public class Menu {
                 case 1 -> showAllPokemon(scanner, pokedex);
                 case 2 -> createPokemon(scanner, pokedex);
                 case 3 -> updatePokemon(scanner, pokedex);
-                case 4 -> deletePokemon(scanner, pokedex);
+                case 4 -> deletePokemon(scanner, pokedex, impl);
                 case 5 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
                 case 7 -> resetToSeedData(pokedex, jsonHandler);

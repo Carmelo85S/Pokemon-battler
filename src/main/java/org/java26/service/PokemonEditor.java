@@ -2,10 +2,14 @@ package org.java26.service;
 
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
+import org.java26.handlers.InputHelper;
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.repository.PokemonRepositoryImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -207,7 +211,7 @@ public class PokemonEditor {
         }
     }
 
-    public static void deletePokemon(Scanner scanner, Pokedex pokedex) throws QuitPokemonOperationException {
+    public static void deletePokemon(Scanner scanner, Pokedex pokedex, PokemonRepositoryImpl impl) throws QuitPokemonOperationException {
 
         if (pokedex.getPokemons().isEmpty()) {
             System.out.println("  There are no Pokemon to delete.");
@@ -216,15 +220,16 @@ public class PokemonEditor {
         showPokemons(pokedex);
         backOption();
         title("Delete pokemon");
-        subTitle("Which method do you want to use?");
+        subTitle("Choose the id to eliminate");
         menuOption(1, "String");
         menuOption(2, "Index");
+        menuOption(3, "Id (DB Only)");
         separator();
 
         int chooseMethod = readIntBetween(
                 scanner,
                 1,
-                2,
+                3,
                 "  Choose your method (%d - %d): "
         );
         separator();
@@ -249,9 +254,10 @@ public class PokemonEditor {
                 }
             }
 
-        } else {
+        } else if (chooseMethod == 2) {
             while (true) {
                 try {
+
                     int indexToRemove = readIntBetween(
                             scanner,
                             0,
@@ -259,8 +265,36 @@ public class PokemonEditor {
                             "  Which Pokemon index do you wanna delete? (%d-%d): "
                     );
                     pokedex.removePokemonIndex(indexToRemove);
+
                     System.out.println(
                             "  Pokemon with index [" + indexToRemove
+                                    + "] has been removed from list."
+                    );
+                    return;
+                } catch (InvalidPokemonException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("  Try again.");
+                }
+            }
+        } else {
+            while (true) {
+                try {
+
+                    System.out.println(" --------------------------");
+                    System.out.printf("| %-8s | %-13s | %n", "Id", "Name");
+                    System.out.println(" --------------------------");
+
+                    for (Pokemon p : pokedex.getPokemons()) {
+                        System.out.printf("| %-8d | %-13s | %n",
+                                p.getId(), p.getName());
+                    }
+                    System.out.println(" --------------------------");
+
+                    Long idToRemove = Long.valueOf(InputHelper.readLong(scanner, "  Id to delete: "));
+
+                    impl.delete(idToRemove);
+                    System.out.println(
+                            "  Pokemon with index [" + idToRemove
                                     + "] has been removed from list."
                     );
                     return;

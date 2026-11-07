@@ -37,6 +37,20 @@ public class InputHelper {
         }
     }
 
+    public static String readLong(Scanner scanner, String prompt) throws QuitPokemonOperationException {
+        while(true){
+            System.out.print(prompt);
+            try{
+                String userInput = scanner.nextLine().trim();
+                checkCancellation(userInput);
+                validateLong(userInput);
+                return userInput;
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     public static String readString(Scanner scanner, String prompt, String confirm) throws QuitPokemonOperationException {
         while (true) {
             System.out.print(prompt);
@@ -108,6 +122,25 @@ public class InputHelper {
             );
         }
     }
+
+    public static Long validateLong(String userInput) {
+        if (userInput.isBlank()) {
+            throw new InvalidPokemonException("  Your input is blank");
+        }
+        long  value;
+        try {
+            value = Long.parseLong(userInput);
+        } catch (NumberFormatException e) {
+            throw new InvalidPokemonException("  Input must be a number");
+        }
+        if (value < 0) {
+            throw new InvalidPokemonException(
+                    "  Value must be be > 0 "
+            );
+        }
+        return value;
+    }
+
 
     private static void checkCancellation(String input) {
         if (input.equalsIgnoreCase("B")) {
