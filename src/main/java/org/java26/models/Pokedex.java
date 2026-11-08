@@ -5,6 +5,8 @@ import org.java26.exceptions.InvalidPokemonException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static org.java26.repository.SaveLoadPokemons.saveToFile;
+
 public class Pokedex {
 
     private ArrayList<Pokemon> pokemons = new ArrayList<>();

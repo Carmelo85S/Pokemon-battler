@@ -32,7 +32,6 @@ public class PokemonRepositoryImpl implements PokemonRepository {
             em.getTransaction().begin();
             Pokemon savedPokemon = em.merge(pokemon);
             em.getTransaction().commit();
-            System.out.println("ID: " + savedPokemon.getId());
         }
     }
 

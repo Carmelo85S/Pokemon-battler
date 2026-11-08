@@ -289,14 +289,16 @@ public class PokemonEditor {
                                 p.getId(), p.getName());
                     }
                     System.out.println(" --------------------------");
-
                     Long idToRemove = Long.valueOf(InputHelper.readLong(scanner, "  Id to delete: "));
 
+                    pokedex.removePokemonById(idToRemove);
                     impl.delete(idToRemove);
+
                     System.out.println(
                             "  Pokemon with index [" + idToRemove
                                     + "] has been removed from list."
                     );
+
                     return;
                 } catch (InvalidPokemonException e) {
                     System.out.println(e.getMessage());
