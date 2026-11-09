@@ -3,7 +3,6 @@ package org.java26.service;
 import org.java26.models.*;
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.repository.PokemonRepository;
 import org.java26.repository.PokemonRepositoryImpl;
 
 import java.util.Scanner;
@@ -103,10 +102,13 @@ public class PokemonCreator {
                     addAttack = false;
                 }
             }
-            impl.save(pokemon);
-            pokedex.addPokemon(pokemon);
-            System.out.println("  Pokemon '" + pokemon.getName() + "' created successfully.");
-
+            try {
+                impl.save(pokemon);
+                pokedex.addPokemon(pokemon);
+                System.out.println("  Pokemon created succesfully!");
+            } catch (InvalidPokemonException e) {
+                System.err.println("  Error saving pokemon: " + e.getMessage());
+            }
         } catch (InvalidPokemonException | QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
 

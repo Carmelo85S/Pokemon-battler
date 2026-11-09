@@ -1,6 +1,7 @@
 package org.java26.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.java26.config.EntityManagerUtil;
 import org.java26.models.Pokemon;
 
@@ -28,27 +29,43 @@ public class PokemonRepositoryImpl implements PokemonRepository {
 
     @Override
     public void save(Pokemon pokemon) {
-        try (EntityManager em = EntityManagerUtil.getEntityManager()) {
-            em.getTransaction().begin();
-            Pokemon savedPokemon = em.merge(pokemon);
-            em.getTransaction().commit();
+        EntityManager em = EntityManagerUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try{
+            tx.begin();
+            em.merge(pokemon);
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
         }
     }
 
     @Override
     public void delete(Long id) {
-        try (EntityManager em = EntityManagerUtil.getEntityManager()) {
-
-            em.getTransaction().begin();
+        EntityManager em = EntityManagerUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try{
+            tx.begin();
             Pokemon pokemon = em.find(Pokemon.class, id);
             if (pokemon == null) {
-                em.getTransaction().rollback();
-
+                tx.rollback();
                 System.err.println("  Pokemon not found.");
                 return;
             }
             em.remove(pokemon);
             em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
         }
     }
 
