@@ -3,6 +3,7 @@ package org.java26.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.java26.config.EntityManagerUtil;
+import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
 import java.util.List;
@@ -28,10 +29,19 @@ public class PokemonRepositoryImpl implements PokemonRepository {
     }
 
     @Override
+    public List<Pokemon> findByName(String name) {
+        try (EntityManager em = EntityManagerUtil.getEntityManager()) {
+            return em.createQuery("SELECT p from Pokemon p where p.name = :name", Pokemon.class)
+                    .setParameter("name", name)
+                    .getResultList();
+        }
+    }
+
+    @Override
     public void save(Pokemon pokemon) {
         EntityManager em = EntityManagerUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-        try{
+        try {
             tx.begin();
             em.merge(pokemon);
             tx.commit();
@@ -49,7 +59,7 @@ public class PokemonRepositoryImpl implements PokemonRepository {
     public void delete(Long id) {
         EntityManager em = EntityManagerUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-        try{
+        try {
             tx.begin();
             Pokemon pokemon = em.find(Pokemon.class, id);
             if (pokemon == null) {
@@ -58,7 +68,7 @@ public class PokemonRepositoryImpl implements PokemonRepository {
                 return;
             }
             em.remove(pokemon);
-            em.getTransaction().commit();
+            tx.commit();
         } catch (RuntimeException e) {
             if (tx.isActive()) {
                 tx.rollback();
@@ -69,4 +79,33 @@ public class PokemonRepositoryImpl implements PokemonRepository {
         }
     }
 
+    @Override
+    public void deleteByName(String name) {
+        EntityManager em = EntityManagerUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+
+            int deleted = em.createQuery(
+                            "DELETE FROM Pokemon p WHERE LOWER(p.name) = LOWER(:name)"
+                    )
+                    .setParameter("name", name)
+                    .executeUpdate();
+
+            tx.commit();
+
+            if (deleted == 0) {
+                System.err.println("  Pokemon not found.");
+            }
+
+        } catch (RuntimeException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }

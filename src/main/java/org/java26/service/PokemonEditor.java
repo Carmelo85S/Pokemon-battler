@@ -243,6 +243,7 @@ public class PokemonEditor {
                         "  Pokemon "
                 );
                 try {
+impl.deleteByName(pokemonToRemove);
                     pokedex.removePokemon(pokemonToRemove);
 
                     System.out.println("  " + pokemonToRemove + " has been removed from list.");
