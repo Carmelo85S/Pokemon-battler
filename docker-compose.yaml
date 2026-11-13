@@ -11,5 +11,16 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  mongodb:
+    image: mongo:7.0
+    container_name: battler-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
 volumes:
   pgdata:
+  mongodata:
+
