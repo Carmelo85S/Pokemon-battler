@@ -1,4 +1,4 @@
-package org.java26.repository;
+package org.java26.repository.battleLogRepository;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;

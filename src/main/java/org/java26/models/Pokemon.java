@@ -117,9 +117,9 @@ public class Pokemon implements Evolveable {
     }
 
     public void setMaxHp(int maxHp) {
-        if (maxHp < 200 || maxHp > 300) {
+        if (maxHp < 200) {
             throw new IllegalArgumentException(
-                    "  Max HP must be between 200 and 300"
+                    "  Max HP must be between 200"
             );
         }
         this.maxHp = maxHp;

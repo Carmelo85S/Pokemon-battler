@@ -54,7 +54,8 @@ public class BattleMenu {
                             pokedex,
                             wildPokemons,
                             statistics,
-                            jsonHandler
+                            jsonHandler,
+                            impl
                     );
                 }
                 case 2 ->  {
