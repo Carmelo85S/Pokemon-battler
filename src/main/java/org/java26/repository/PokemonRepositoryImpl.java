@@ -3,7 +3,6 @@ package org.java26.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.java26.config.EntityManagerUtil;
-import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 
 import java.util.List;
@@ -104,6 +103,25 @@ public class PokemonRepositoryImpl implements PokemonRepository {
                 tx.rollback();
             }
             throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void updateLevel(Pokemon pokemon) {
+        EntityManager em = EntityManagerUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+           em.merge(pokemon);
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            System.err.println("  Not possible to update pokemon:" + e.getMessage());
         } finally {
             em.close();
         }

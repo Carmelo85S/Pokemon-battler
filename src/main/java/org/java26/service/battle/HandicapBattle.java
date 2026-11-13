@@ -4,6 +4,7 @@ import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.repository.PokemonRepositoryImpl;
 
 import java.util.List;
 import java.util.Random;
@@ -16,7 +17,7 @@ import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class HandicapBattle {
-    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler) {
+    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler, PokemonRepositoryImpl impl) {
         title("Handicap Battle");
         showHandicapBattleRules();
         Random random = new Random();
@@ -55,7 +56,8 @@ public class HandicapBattle {
             handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
             boolean isEvolving = evolvePokemon(myPokemon, statistics);
             if(isEvolving){
-                saveToFile(pokedex, jsonHandler);
+                impl.updateLevel(myPokemon);
+                //saveToFile(pokedex, jsonHandler);
             }
             handleVictory(
                     scanner,
@@ -67,7 +69,8 @@ public class HandicapBattle {
                             pokedex,
                             wildPokemons,
                             statistics,
-                            jsonHandler
+                            jsonHandler,
+                            impl
                     )
             );
 

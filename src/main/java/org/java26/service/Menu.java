@@ -65,7 +65,7 @@ public class Menu {
                 case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
-                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics);
+                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl);
                 case 10 -> getPokemonsStats(pokedex, statistics);
                 case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
                 case 0 -> {

@@ -19,10 +19,6 @@ public class Pokemon implements Evolveable {
         return id;
     }
 
-    public Long setId(Long id){
-        return this.id = id;
-    }
-
     @Column(name = "name", nullable = false, length = 30)
     private String name;
 

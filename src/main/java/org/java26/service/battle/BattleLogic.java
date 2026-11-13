@@ -253,6 +253,8 @@ public class BattleLogic {
             pokemon.evolve();
             return true;
         }
+
+        pokemon.getLevel();
         return false;
     }
 

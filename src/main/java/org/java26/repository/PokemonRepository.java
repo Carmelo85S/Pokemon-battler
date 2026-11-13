@@ -13,4 +13,6 @@ public interface PokemonRepository {
     void save(Pokemon pokemon);
     void delete(Long id);
     void deleteByName(String name);
+
+    void updateLevel(Pokemon pokemon);
 }
