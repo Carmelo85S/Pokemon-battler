@@ -3,6 +3,7 @@ package org.java26.service.battle;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.repository.PokemonRepositoryImpl;
 
 import java.util.List;
 import java.util.Random;
@@ -14,7 +15,7 @@ import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
-    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler ) {
+    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler, PokemonRepositoryImpl impl) {
         Random random = new Random();
         title("Regular Battle");
         showRegularBattleRules();
@@ -60,7 +61,7 @@ public class RegularBattle {
             );
             boolean isEvolving = evolvePokemon(myPokemon, statistics);
             if(isEvolving){
-                saveToFile(pokedex, jsonHandler);
+                impl.updateLevel(myPokemon);
             }
             handleVictory(
                     scanner,
@@ -72,7 +73,8 @@ public class RegularBattle {
                             pokedex,
                             wildPokemons,
                             statistics,
-                            jsonHandler
+                            jsonHandler,
+                            impl
                     )
             );
         }
