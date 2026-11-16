@@ -5,6 +5,7 @@ import org.java26.models.Pokemon;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.repository.PokemonRepositoryImpl;
+import org.java26.service.battle.BattleLogService;
 import org.java26.service.battle.BattleStatistics;
 
 import java.nio.file.Path;
@@ -54,7 +55,7 @@ public class Menu {
 
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleStatistics statistics) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleStatistics statistics, BattleLogService bls) {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
@@ -65,7 +66,7 @@ public class Menu {
                 case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
-                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl);
+                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl, bls);
                 case 10 -> getPokemonsStats(pokedex, statistics);
                 case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
                 case 0 -> {

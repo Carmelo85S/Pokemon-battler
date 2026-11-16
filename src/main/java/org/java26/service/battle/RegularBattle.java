@@ -15,7 +15,7 @@ import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
-    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler, PokemonRepositoryImpl impl) {
+    public static void startBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleLogService bls) {
         Random random = new Random();
         title("Regular Battle");
         showRegularBattleRules();
@@ -74,7 +74,8 @@ public class RegularBattle {
                             wildPokemons,
                             statistics,
                             jsonHandler,
-                            impl
+                            impl,
+                            bls
                     )
             );
         }

@@ -1,14 +1,19 @@
 package org.java26;
 
+import org.bson.Document;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.handlers.InputHelper;
 import org.java26.repository.PokemonRepository;
 import org.java26.repository.PokemonRepositoryImpl;
+import org.java26.repository.battleLogRepository.BattleLogRepository;
+import org.java26.repository.battleLogRepository.MongoBattleLogRepositoryImpl;
+import org.java26.service.battle.BattleLogService;
 import org.java26.service.battle.BattleStatistics;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -23,6 +28,12 @@ public class Main {
         PokemonRepositoryImpl impl = new PokemonRepositoryImpl();
         printWelcome();
         loadInitialPokemonData(pokedex, jsonHandler,impl);
+        BattleLogRepository blr = new MongoBattleLogRepositoryImpl();
+        BattleLogService bls = new BattleLogService(blr);
+        List<Document> find = blr.findAll();
+
+        System.out.println(find);
+
 
         try (Scanner scanner = new Scanner(System.in)) {
             int choice;
@@ -34,7 +45,7 @@ public class Main {
                         11,
                         "  Select an option %n  > "
                 );
-                runAction(choice, scanner, pokedex, jsonHandler, impl, statistics);
+                runAction(choice, scanner, pokedex, jsonHandler, impl, statistics, bls);
 
             } while (choice != 0);
         } catch (NoSuchElementException e) {

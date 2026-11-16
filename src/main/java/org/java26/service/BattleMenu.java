@@ -5,6 +5,7 @@ import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.repository.PokemonRepositoryImpl;
+import org.java26.service.battle.BattleLogService;
 import org.java26.service.battle.BattleStatistics;
 import org.java26.service.battle.RegularBattle;
 
@@ -17,7 +18,7 @@ import static org.java26.repository.SaveLoadPokemons.*;
 import static org.java26.service.battle.HandicapBattle.startHandicapBattle;
 
 public class BattleMenu {
-    public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics, PokemonRepositoryImpl impl) {
+    public static void battleMenu(Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics, PokemonRepositoryImpl impl, BattleLogService bls) {
 
         int choice;
         do {
@@ -36,12 +37,13 @@ public class BattleMenu {
                     pokedex,
                     jsonHandler,
                     statistics,
-                    impl
+                    impl,
+                    bls
             );
         } while(choice != 3);
     }
 
-    public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics, PokemonRepositoryImpl impl) {
+    public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics, PokemonRepositoryImpl impl, BattleLogService bls) {
 
         try {
             switch (choice) {
@@ -55,7 +57,8 @@ public class BattleMenu {
                             wildPokemons,
                             statistics,
                             jsonHandler,
-                            impl
+                            impl,
+                            bls
                     );
                 }
                 case 2 ->  {
@@ -68,7 +71,8 @@ public class BattleMenu {
                             wildPokemons,
                             statistics,
                             jsonHandler,
-                            impl
+                            impl,
+                            bls
                     );
                 }
                 case 3 -> {

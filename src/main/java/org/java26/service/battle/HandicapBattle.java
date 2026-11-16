@@ -1,5 +1,6 @@
 package org.java26.service.battle;
 
+import org.bson.json.JsonWriterSettings;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
@@ -17,7 +18,7 @@ import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class HandicapBattle {
-    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler, PokemonRepositoryImpl impl) {
+    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleLogService bls) {
         title("Handicap Battle");
         showHandicapBattleRules();
         Random random = new Random();
@@ -50,10 +51,26 @@ public class HandicapBattle {
         runBattle(scanner, myPokemon, opponent, random, statistics, playerAccuracyPenalty, opponentAccuracyPenalty);
 
         if (myPokemon.isFainted()) {
-            handleEndFight(" lost the battle", myPokemon, opponent, false, statistics, jsonHandler
+            handleEndFight(" lost the battle", myPokemon, opponent, false, statistics, jsonHandler);
+            bls.saveBattle(myPokemon, opponent, false, "handicap");
+            bls.findAll().forEach(document ->
+                    System.out.println(document.toJson(
+                            JsonWriterSettings.builder()
+                                    .indent(true)
+                                    .build()
+                    ))
             );
+
         } else {
             handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
+            bls.saveBattle(myPokemon, opponent, true, "handicap");
+            bls.findAll().forEach(document ->
+                    System.out.println(document.toJson(
+                            JsonWriterSettings.builder()
+                                    .indent(true)
+                                    .build()
+                    ))
+            );
             boolean isEvolving = evolvePokemon(myPokemon, statistics);
             if(isEvolving){
                 impl.updateLevel(myPokemon);
@@ -70,10 +87,10 @@ public class HandicapBattle {
                             wildPokemons,
                             statistics,
                             jsonHandler,
-                            impl
+                            impl,
+                            bls
                     )
             );
-
         }
     }
 
