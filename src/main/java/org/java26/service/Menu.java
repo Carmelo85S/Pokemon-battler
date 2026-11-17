@@ -55,24 +55,24 @@ public class Menu {
 
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleStatistics statistics, BattleLogService bls) {
+    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl pokemonRepositoryImpl, BattleStatistics statistics, BattleLogService battleLogService) {
         try {
             switch (choice) {
                 case 1 -> showAllPokemon(scanner, pokedex);
                 case 2 -> createPokemon(scanner, pokedex);
                 case 3 -> updatePokemon(scanner, pokedex);
-                case 4 -> deletePokemon(scanner, pokedex, impl);
+                case 4 -> deletePokemon(scanner, pokedex, pokemonRepositoryImpl);
                 case 5 -> saveToFile(pokedex, jsonHandler);
                 case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
-                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl, bls);
+                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, pokemonRepositoryImpl, battleLogService);
                 case 10 -> getPokemonsStats(pokedex, statistics);
                 case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
                 case 0 -> {
                     saveToFile(pokedex, jsonHandler);
                     for(Pokemon p : pokedex.getPokemons()){
-                        impl.save(p);
+                        pokemonRepositoryImpl.save(p);
                     }
                     jsonHandler.saveStatistics("statistic.json", statistics);
                     System.out.println("  Goodbye!");

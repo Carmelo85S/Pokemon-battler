@@ -1,9 +1,10 @@
 package org.java26.models;
 
 import org.java26.exceptions.InvalidPokemonException;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-
+@Component
 public class Pokedex {
 
     private ArrayList<Pokemon> pokemons = new ArrayList<>();

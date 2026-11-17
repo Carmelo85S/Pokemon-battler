@@ -17,6 +17,4 @@ public interface BattleLogRepository extends AutoCloseable {
 
     long deleteById(String matchId);
 
-    @Override
-    void close();
 }

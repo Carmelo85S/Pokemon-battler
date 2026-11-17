@@ -54,9 +54,9 @@ public class SaveLoadPokemons {
         }
     }
 
-    public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl) {
+    public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler, PokemonRepository pokemonRepository) {
 
-        List<Pokemon> isPresent = impl.findAll();
+        List<Pokemon> isPresent = pokemonRepository.findAll();
 
         if (!isPresent.isEmpty()) {
             for (Pokemon p : isPresent) {

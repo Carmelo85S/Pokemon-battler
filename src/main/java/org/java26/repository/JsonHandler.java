@@ -7,13 +7,14 @@ import org.java26.models.Pokemon;
 import org.java26.exceptions.PokemonLoadException;
 import org.java26.exceptions.PokemonSaveException;
 import org.java26.service.battle.BattleStatistics;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
+@Component
 public class JsonHandler {
     private final ObjectMapper mapper = new ObjectMapper();
 

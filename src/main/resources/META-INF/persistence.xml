@@ -12,6 +12,8 @@
         <!-- Här listar vi våra entiteter -->
         <class>org.java26.models.Pokemon</class>
         <class>org.java26.models.Attack</class>
+        <class>org.java26.models.DamageAttack</class>
+        <class>org.java26.models.HealAttack</class>
 
         <properties>
             <property name="hibernate.show_sql" value="false"/>

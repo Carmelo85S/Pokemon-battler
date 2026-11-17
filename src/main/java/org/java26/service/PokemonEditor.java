@@ -211,7 +211,7 @@ public class PokemonEditor {
         }
     }
 
-    public static void deletePokemon(Scanner scanner, Pokedex pokedex, PokemonRepositoryImpl impl) throws QuitPokemonOperationException {
+    public static void deletePokemon(Scanner scanner, Pokedex pokedex, PokemonRepositoryImpl pokemonRepositoryImpl) throws QuitPokemonOperationException {
 
         if (pokedex.getPokemons().isEmpty()) {
             System.out.println("  There are no Pokemon to delete.");
@@ -243,7 +243,7 @@ public class PokemonEditor {
                         "  Pokemon "
                 );
                 try {
-impl.deleteByName(pokemonToRemove);
+                    pokemonRepositoryImpl.deleteByName(pokemonToRemove);
                     pokedex.removePokemon(pokemonToRemove);
 
                     System.out.println("  " + pokemonToRemove + " has been removed from list.");
@@ -293,7 +293,7 @@ impl.deleteByName(pokemonToRemove);
                     Long idToRemove = Long.valueOf(InputHelper.readLong(scanner, "  Id to delete: "));
 
                     pokedex.removePokemonById(idToRemove);
-                    impl.delete(idToRemove);
+                    pokemonRepositoryImpl.delete(idToRemove);
 
                     System.out.println(
                             "  Pokemon with index [" + idToRemove

@@ -1,75 +1,77 @@
+
 package org.java26.repository.battleLogRepository;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.java26.config.MongoConfig;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.set;
+@Repository
+public class MongoBattleLogRepositoryImpl implements BattleLogRepository {
 
-public class MongoBattleLogRepositoryImpl implements BattleLogRepository{
+    private final MongoTemplate mongoTemplate;
+    private static final String COLLECTION = "battle-logs";
 
-    private final MongoClient client;
-    private final MongoCollection<Document> collection;
-
-    public MongoBattleLogRepositoryImpl(){
-        client= MongoClients.create(
-                MongoConfig.getConnectionString()
-        );
-        MongoDatabase database =
-                client.getDatabase(MongoConfig.getDatabaseName());
-        collection = database.getCollection(
-                MongoConfig.getCollectionName()
-        );
-    };
+    public MongoBattleLogRepositoryImpl(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
 
     @Override
     public void save(Document battleLogs) {
-        collection.insertOne(battleLogs);
+        mongoTemplate.insert(battleLogs, COLLECTION);
     }
 
     @Override
     public List<Document> findAll() {
-        return collection.find().into(new ArrayList<>());
+        return mongoTemplate.findAll(Document.class, COLLECTION);
     }
 
     @Override
     public List<Document> findPokemonWinnerById(Long id) {
-        return collection.find(
-                eq("pokemonWinnerId", id)
-        ).into(new ArrayList<>());
+        Query query = new Query(
+                Criteria.where("pokemonWinnerId").is(id)
+        );
+
+        return mongoTemplate.find(query, Document.class, COLLECTION);
     }
 
     @Override
     public boolean updateWinner(String matchId, Long newId) {
-        return collection.updateOne(
-                eq("matchId", matchId),
-                set("pokemonWinner", newId)
-        ).getModifiedCount() > 0;
+        Query query = new Query(
+                Criteria.where("matchId").is(matchId)
+        );
+
+        Update update = new Update()
+                .set("pokemonWinner", newId);
+
+        return mongoTemplate.updateFirst(query, update, COLLECTION)
+                .getModifiedCount() > 0;
     }
 
     @Override
     public long delete() {
-        return collection.deleteMany(new Document()).getDeletedCount();
-    }
-
-    @Override
-    public long deleteById(String matchId) {
-        return collection.deleteOne(
-                eq("matchId", matchId)
+        return mongoTemplate.remove(
+                new Query(),
+                COLLECTION
         ).getDeletedCount();
     }
 
     @Override
-    public void close() {
-        client.close();
+    public long deleteById(String matchId) {
+        Query query = new Query(
+                Criteria.where("matchId").is(matchId)
+        );
+
+        return mongoTemplate.remove(query, COLLECTION)
+                .getDeletedCount();
     }
 
+    @Override
+    public void close() throws Exception {
 
+    }
 }
