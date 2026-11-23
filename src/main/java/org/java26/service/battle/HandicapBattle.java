@@ -48,29 +48,33 @@ public class HandicapBattle {
         int playerAccuracyPenalty = handicap[0];
         int opponentAccuracyPenalty = handicap[1];
 
-        runBattle(scanner, myPokemon, opponent, random, statistics, playerAccuracyPenalty, opponentAccuracyPenalty);
+        runBattle(scanner, myPokemon, opponent, random, statistics, playerAccuracyPenalty, opponentAccuracyPenalty, bls);
 
         if (myPokemon.isFainted()) {
             handleEndFight(" lost the battle", myPokemon, opponent, false, statistics, jsonHandler);
-            bls.saveBattle(myPokemon, opponent, false, "handicap");
-            bls.findAll().forEach(document ->
+            //bls.saveBattle(myPokemon, opponent, false, "handicap");
+            /*bls.findAll().forEach(document ->
                     System.out.println(document.toJson(
                             JsonWriterSettings.builder()
                                     .indent(true)
                                     .build()
                     ))
-            );
+            );*/
 
         } else {
             handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
-            bls.saveBattle(myPokemon, opponent, true, "handicap");
+            //bls.saveBattle(myPokemon, opponent, true, "handicap");
+            /*System.out.println("---------------------");
+            System.out.println("BATTLE SAVED");
             bls.findAll().forEach(document ->
                     System.out.println(document.toJson(
                             JsonWriterSettings.builder()
                                     .indent(true)
                                     .build()
                     ))
-            );
+            );*/
+            System.out.println("---------------------");
+
             boolean isEvolving = evolvePokemon(myPokemon, statistics);
             if(isEvolving){
                 impl.updateLevel(myPokemon);

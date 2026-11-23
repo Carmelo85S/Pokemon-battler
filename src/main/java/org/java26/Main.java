@@ -31,7 +31,6 @@ public class Main {
         BattleLogRepository blr = new MongoBattleLogRepositoryImpl();
         BattleLogService bls = new BattleLogService(blr);
         List<Document> find = blr.findAll();
-
         System.out.println(find);
 
 

@@ -1,5 +1,6 @@
 package org.java26.service.battle;
 
+import org.bson.Document;
 import org.java26.exceptions.QuitPokemonOperationException;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Attack;
@@ -7,6 +8,8 @@ import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.models.PokemonType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,6 +21,7 @@ import static org.java26.handlers.InputHelper.readIntBetween;
 import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
+import static org.java26.service.battle.BattleLogService.*;
 
 public class BattleLogic {
 
@@ -56,11 +60,14 @@ public class BattleLogic {
             Random random,
             BattleStatistics statistics,
             int playerAccuracyPenalty,
-            int opponentAccuracyPenalty
+            int opponentAccuracyPenalty,
+            BattleLogService battleLogService
     ) {
+        List<Document> rounds = new ArrayList<>();
+
         int round = 1;
 
-        if(myPokemon.isFainted() || opponent.isFainted()){
+        if (myPokemon.isFainted() || opponent.isFainted()) {
             System.out.println("  Cannot start battle: Pokemon has 0 HP.");
             return false;
         }
@@ -78,6 +85,8 @@ public class BattleLogic {
 
         title("---Random Start---");
 
+        Attack selectedPlayerAttack = null;
+        boolean firstTurnPlayer = playerTurn;
         while (!myPokemon.isFainted() && !opponent.isFainted()) {
 
             title("ROUND " + round);
@@ -85,7 +94,7 @@ public class BattleLogic {
             if (playerTurn) {
                 subTitle(myPokemon.getName() + " turn.");
                 try {
-                    Attack selectedPlayerAttack = chooseAttack(scanner, myPokemon);
+                    selectedPlayerAttack = chooseAttack(scanner, myPokemon);
 
                     runTurn(
                             selectedPlayerAttack,
@@ -95,6 +104,12 @@ public class BattleLogic {
                             playerAccuracyPenalty,
                             statistics
                     );
+
+                  assert selectedPlayerAttack != null;
+                    rounds.add(new Document("round", round)
+                            .append("attacker", myPokemon.getName())
+                            .append("attack", selectedPlayerAttack.getName())
+                            .append("defender", opponent.getName()));
 
                 } catch (QuitPokemonOperationException e) {
                     System.out.println(e.getMessage());
@@ -115,11 +130,29 @@ public class BattleLogic {
                         opponentAccuracyPenalty,
                         statistics
                 );
+                rounds.add(new Document("round", round)
+                        .append("attacker", opponent.getName())
+                        .append("attack", opponentAttack.getName())
+                        .append("defender", myPokemon.getName()));
+
             }
 
-            round++;
+            boolean roundCompleted = playerTurn != firstTurnPlayer;
+
             playerTurn = !playerTurn;
+
+            if (roundCompleted) {
+                round++;
+            }
         }
+
+        boolean myPokemonWon = (!myPokemon.isFainted());
+        System.out.println("---------------------");
+        System.out.println("BATTLE LOG");
+        battleLogService.showStatsBattle(myPokemon, opponent, myPokemonWon, rounds);
+        //battleLogService.saveBattle(myPokemon, opponent, myPokemonWon);
+        System.out.println("---------------------");
+
         return true;
     }
 

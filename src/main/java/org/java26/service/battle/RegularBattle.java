@@ -36,7 +36,7 @@ public class RegularBattle {
 
         System.out.println("  Your opponent for this battle is '" + opponent.getName() + "'");
 
-        boolean isReady = runBattle(scanner, myPokemon, opponent, random, statistics,0,0);
+        boolean isReady = runBattle(scanner, myPokemon, opponent, random, statistics,0,0, bls);
         if (!isReady) {
             return;
         }

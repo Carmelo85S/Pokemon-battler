@@ -17,8 +17,6 @@ import static org.java26.service.BattleMenu.battleMenu;
 import static org.java26.service.PokemonCreator.createPokemon;
 import static org.java26.service.PokemonEditor.deletePokemon;
 import static org.java26.service.PokemonEditor.updatePokemon;
-import static org.java26.service.PokemonStatsViewer.getPokemonsStats;
-import static org.java26.service.PokemonStatsViewer.resetPokemonsStats;
 import static org.java26.service.PokemonViewer.getPokemonInfo;
 import static org.java26.service.PokemonViewer.showAllPokemon;
 import static org.java26.service.StatisticsService.resetAllStatistic;
@@ -67,7 +65,9 @@ public class Menu {
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl, bls);
-                case 10 -> getPokemonsStats(pokedex, statistics);
+                //case 10 -> getPokemonsStats(pokedex, statistics);
+                case 10 -> bls.printAllBattles();
+
                 case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
                 case 0 -> {
                     saveToFile(pokedex, jsonHandler);
