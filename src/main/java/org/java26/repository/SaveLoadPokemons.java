@@ -57,47 +57,21 @@ public class SaveLoadPokemons {
     public static void loadInitialPokemonData(Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl) {
 
         List<Pokemon> isPresent = impl.findAll();
-
         if (!isPresent.isEmpty()) {
             for (Pokemon p : isPresent) {
                 pokedex.addPokemon(p);
             }
             return;
-
         }
-
-
         try {
-            Path path = Path.of("pokemon.json");
-            List<Pokemon> listPokemon;
-            if (Files.exists(path)) {
-                String json = Files.readString(path);
-                if (!json.isBlank() && jsonHandler.isValidJSON(json)) {
-                    listPokemon = jsonHandler.loadPokemon("pokemon.json");
-                    if (listPokemon.isEmpty()) {
-                        listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-                        title("Loading..");
-                        subTitle("Seed data loaded successfully.");
-                    } else {
-                        title("Loading..");
-                        subTitle("Data loaded successfully.");
-                    }
-                } else {
-                    listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-                    title("Loading..");
-                    subTitle("Seed data loaded successfully.");
-                }
-            } else {
-                listPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
-                title("Loading..");
-                subTitle("No saved data, load seed data");
-            }
-
-            for (Pokemon p : listPokemon) {
-                pokedex.addPokemon(p);
-            }
-
-        } catch (PokemonLoadException | IOException e) {
+           List<Pokemon> seedPokemon = jsonHandler.loadPokemon("seed-pokemons.json");
+           for(Pokemon p : seedPokemon){
+               impl.save(p);
+               pokedex.addPokemon(p);
+           }
+           title("Loading");
+           subTitle("Seed data loaded successfully");
+        } catch (PokemonLoadException e) {
             System.out.println(e.getMessage());
         }
     }
