@@ -1,8 +1,10 @@
+
 package org.java26.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.java26.exceptions.PokemonLoadException;
 import org.java26.models.Attack;
+import org.java26.models.DamageAttack;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -10,9 +12,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonHandlerTest {
+class JsonHandlerTest {
+
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
@@ -43,20 +46,23 @@ public class JsonHandlerTest {
                 () -> handler.loadPokemon(file.toString())
         );
     }
+
     @Test
-    public void testAttackDeserialization() throws IOException {
+    void damageAttack_ShouldDeserializeCorrectly() throws IOException {
+
         String json = """
-            {
-                "attackClassType": "damage",
-                "name": "Thunder Shock",
-                "power": 40,
-                "accuracy": 95,
-                "type": "ELECTRIC"
-            }
-            """;
+                {
+                    "attackClassType": "damage",
+                    "name": "Thunder Shock",
+                    "power": 40,
+                    "accuracy": 95,
+                    "type": "ELECTRIC"
+                }
+                """;
 
         Attack attack = mapper.readValue(json, Attack.class);
 
-        System.out.println(attack.getClass().getSimpleName());
+        assertInstanceOf(DamageAttack.class, attack);
+        assertEquals("Thunder Shock", attack.getName());
     }
 }

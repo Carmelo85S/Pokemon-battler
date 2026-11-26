@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -39,10 +38,12 @@ class BattleLogicTest {
 
     @Test
     void pokemonWith_0Hp_shouldNotStart_TheBattle() {
+
         Pokemon player = new Pokemon();
         Pokemon opponent = new Pokemon();
 
         player.setCurrentHp(0);
+
         opponent.setMaxHp(200);
         opponent.setCurrentHp(200);
 
@@ -50,21 +51,23 @@ class BattleLogicTest {
         Random random = new Random(1);
         BattleStatistics statistics = new BattleStatistics();
 
-        boolean result =
-                BattleLogic.runBattle(
-                        scanner,
-                        player,
-                        opponent,
-                        random,
-                        statistics,
-                        0,
-                        0
-                );
+        boolean result = BattleLogic.runBattle(
+                scanner,
+                player,
+                opponent,
+                random,
+                statistics,
+                0,
+                0,
+                null
+        );
+
         assertFalse(result);
     }
 
     @Test
     void pokemonWith_0Attacks_shouldNotStart_TheBattle() {
+
         Pokemon player = new Pokemon();
         Pokemon opponent = new Pokemon();
 
@@ -75,34 +78,32 @@ class BattleLogicTest {
         opponent.setMaxHp(200);
         opponent.setCurrentHp(200);
 
-        List<Attack> attack = new ArrayList<>();
-        player.setAttacks(attack);
         Attack opponentAttack = new DamageAttack(
                 "TestAttack",
                 50,
                 100,
                 PokemonType.FIRE
         );
+
         opponent.addAttack(opponentAttack);
 
         Scanner scanner = new Scanner("");
         Random random = new Random(1);
         BattleStatistics statistics = new BattleStatistics();
 
-        boolean result =
-                BattleLogic.runBattle(
-                        scanner,
-                        player,
-                        opponent,
-                        random,
-                        statistics,
-                        0,
-                        0
-                );
+        boolean result = BattleLogic.runBattle(
+                scanner,
+                player,
+                opponent,
+                random,
+                statistics,
+                0,
+                0,
+                null
+        );
+
         assertFalse(result);
-
     }
-
 
     @ParameterizedTest
     @CsvSource({
@@ -117,8 +118,10 @@ class BattleLogicTest {
             "9, true"
     })
     void evolve_EveryThree_Wins(int wins, boolean isEvolving) {
+
         Pokemon pokemon = new Pokemon();
         BattleStatistics statistics = new BattleStatistics();
+
         statistics.getPokemonWins().put(pokemon.getName(), wins);
 
         boolean evolve = BattleLogic.evolvePokemon(
@@ -126,30 +129,51 @@ class BattleLogicTest {
                 statistics
         );
 
-        assertEquals(evolve, isEvolving);
+        assertEquals(isEvolving, evolve);
     }
 
     @Test
-    void emptyPokedex_shouldNotStartBattle() {
+    void pokedexWithoutPlayablePokemon_shouldNotStartBattle() {
 
         Pokedex pokedex = new Pokedex();
         BattleStatistics statistics = new BattleStatistics();
-        Scanner scanner = new Scanner("2\n");
+        Scanner scanner = new Scanner("");
 
-        Pokemon result = BattleLogic.preparePlayerPokemon(scanner, pokedex, statistics);
+        Pokemon pokemon = new Pokemon();
+        pokemon.setName("TestPokemon");
+        pokemon.setType(PokemonType.NORMAL);
+        pokemon.setMaxHp(200);
+        pokemon.setCurrentHp(0);
+        pokemon.setSpeed(30);
+
+        pokedex.addPokemon(pokemon);
+
+        Pokemon result = BattleLogic.preparePlayerPokemon(
+                scanner,
+                pokedex,
+                statistics,
+                null
+        );
+
         assertNull(result);
-        assertTrue(pokedex.getPokemons().isEmpty());
     }
 
     @Test
     void cancelInputDuringBattle_shouldStopBattle() {
+
         Pokemon player = new Pokemon();
         player.setName("Player");
         player.setMaxHp(200);
         player.setCurrentHp(200);
         player.setSpeed(50);
+
         player.addAttack(
-                new DamageAttack("Thunder", 50, 100, PokemonType.ELECTRIC)
+                new DamageAttack(
+                        "Thunder",
+                        50,
+                        100,
+                        PokemonType.ELECTRIC
+                )
         );
 
         Pokemon opponent = new Pokemon();
@@ -157,8 +181,14 @@ class BattleLogicTest {
         opponent.setMaxHp(200);
         opponent.setCurrentHp(200);
         opponent.setSpeed(30);
+
         opponent.addAttack(
-                new DamageAttack("Thunder", 50, 100, PokemonType.ELECTRIC)
+                new DamageAttack(
+                        "Thunder",
+                        50,
+                        100,
+                        PokemonType.ELECTRIC
+                )
         );
 
         Scanner scanner = new Scanner("B\n");
@@ -178,12 +208,12 @@ class BattleLogicTest {
                 random,
                 statistics,
                 0,
-                0
+                0,
+                null
         );
 
         assertFalse(result);
         assertEquals(200, player.getCurrentHp());
         assertEquals(200, opponent.getCurrentHp());
     }
-
 }
