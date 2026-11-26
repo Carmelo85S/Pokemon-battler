@@ -1,5 +1,6 @@
 [
   {
+    "id": 43,
     "name": "Voltiger",
     "type": "ELECTRIC",
     "maxHp": 300,
@@ -23,6 +24,7 @@
     ]
   },
   {
+    "id": 403,
     "name": "Infernox",
     "type": "FIRE",
     "maxHp": 300,
@@ -46,6 +48,7 @@
     ]
   },
   {
+    "id": 52,
     "name": "Aquarion",
     "type": "WATER",
     "maxHp": 300,
@@ -69,6 +72,7 @@
     ]
   },
   {
+    "id": 112,
     "name": "Florabeast",
     "type": "GRASS",
     "maxHp": 300,
@@ -92,6 +96,7 @@
     ]
   },
   {
+    "id": 133,
     "name": "Stormclaw",
     "type": "ELECTRIC",
     "maxHp": 300,
@@ -115,6 +120,7 @@
     ]
   },
   {
+    "id": 443,
     "name": "Cinderling",
     "type": "FIRE",
     "maxHp": 300,
@@ -138,6 +144,7 @@
     ]
   },
   {
+    "id": 82,
     "name": "Magnetron",
     "type": "ELECTRIC",
     "maxHp": 300,
@@ -161,6 +168,7 @@
     ]
   },
   {
+    "id": 99,
     "name": "Pyrofang",
     "type": "FIRE",
     "maxHp": 300,

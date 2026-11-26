@@ -7,6 +7,7 @@ import org.java26.exceptions.InvalidPokemonException;
 import java.util.ArrayList;
 import java.util.List;
 
+//JPA Annotering
 @Entity
 @Table(name = "pokemon")
 public class Pokemon implements Evolveable {

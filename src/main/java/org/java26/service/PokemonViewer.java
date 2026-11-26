@@ -57,12 +57,12 @@ public class PokemonViewer {
                 // Attack information
                 separator();
                 title("ATTACKS");
-                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+----------------+----------------+----------------+");
                 System.out.printf(
                         "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                        "Name", "Value", "Accuracy", "Type", "Category"
+                        "Name", "Value", "Accuracy", "Type"
                 );
-                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+----------------+----------------+----------------+");
                 if(pokemon.getAttacks().isEmpty()){
                     subTitle("No attacks available");
                 }
@@ -72,12 +72,11 @@ public class PokemonViewer {
                         value = healAttack.getHeal();
                     }
                     System.out.printf(
-                            "| %-14s | %-14d | %-14d | %-14s | %-14s |%n",
+                            "| %-14s | %-14d | %-14d | %-14s |%n",
                             attack.getName(),
                             value,
                             attack.getAccuracy(),
-                            attack.getType().getLabel(),
-                            attack.getAttackClassType().getLabel()
+                            attack.getType().getLabel()
                     );
                 }
 

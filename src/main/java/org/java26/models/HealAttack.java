@@ -28,7 +28,7 @@ public class HealAttack extends Attack {
             @JsonProperty("type") PokemonType type,
             @JsonProperty("heal") int heal
     ) {
-        super(name, power, accuracy, type, AttackClassType.HEAL);
+        super(name, power, accuracy, type);
         this.heal = heal;
     }
 

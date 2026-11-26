@@ -41,34 +41,37 @@ public class BattleLogService {
     }
 
     public void printAllBattles() {
-        // 1. Diciamo a MongoDB di andare a capo e indentare il testo
-        JsonWriterSettings stileLeggibile = JsonWriterSettings.builder().indent(true).build();
+        List<Document> battles = findAll();
 
-        // 2. Stampiamo ogni battaglia usando quello stile
-        for (Document battle : findAll()) {
-            System.out.println(battle.toJson(stileLeggibile));
-            System.out.println("--------------------------------");
+        JsonWriterSettings settings = JsonWriterSettings.builder()
+                .indent(true)
+                .indentCharacters("    ")
+                .build();
+
+        for (Document battle : battles) {
+            System.out.println(battle.toJson(settings));
+            System.out.println();
         }
     }
 
-    public void showStatsBattle(Pokemon player, Pokemon opponent, boolean playerWon, List<Document> rounds){
+    public void showStatsBattle(Pokemon player, Pokemon opponent, boolean playerWon, List<Document> rounds) {
 
         Pokemon winner = playerWon ? player : opponent;
         Pokemon loser = playerWon ? opponent : player;
 
-       Document log = new Document("matchId", UUID.randomUUID().toString())
-               .append("playedAt", new Date())
-               .append("participants", List.of(
-                       new Document("playerId", player.getId())
-                               .append("name", player.getName()),
-                       new Document("opponentId", opponent.getId())
-                               .append("name", opponent.getName())
-               ))
-               .append("rounds", rounds)
-               .append("winner", new Document("pokemonId", winner.getId())
-                       .append("name", winner.getName())
-               .append("loser", new Document("pokemonId", loser.getId())
-                       .append("name", loser.getName())));
+        Document log = new Document("matchId", UUID.randomUUID().toString())
+                .append("playedAt", new Date())
+                .append("participants", List.of(
+                        new Document("playerId", player.getId())
+                                .append("name", player.getName()),
+                        new Document("opponentId", opponent.getId())
+                                .append("name", opponent.getName())
+                ))
+                .append("rounds", rounds)
+                .append("winner", new Document("pokemonId", winner.getId())
+                        .append("name", winner.getName()))
+                .append("loser", new Document("pokemonId", loser.getId())
+                        .append("name", loser.getName()));
         repository.save(log);
     }
 }

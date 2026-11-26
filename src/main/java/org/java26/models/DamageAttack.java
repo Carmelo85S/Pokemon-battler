@@ -22,7 +22,7 @@ public class DamageAttack extends Attack {
             @JsonProperty("type") PokemonType type
 
     ) {
-        super(name, power, accuracy, type, AttackClassType.DAMAGE);
+        super(name, power, accuracy, type);
     }
 
 

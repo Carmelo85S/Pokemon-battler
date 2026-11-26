@@ -47,17 +47,12 @@ public abstract class Attack {
     private int accuracy;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "attack_kind", nullable = false)
-    private AttackClassType attackClassType;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "attack_type", nullable = false)
     private PokemonType type;
 
-
     protected Attack(){}
 
-    protected Attack(PokemonType type, AttackClassType attackClassType) {
+    protected Attack(PokemonType type) {
 
         if (type == null) {
             throw new IllegalArgumentException(
@@ -65,16 +60,9 @@ public abstract class Attack {
             );
         }
         this.type = type;
-
-        if (attackClassType == null) {
-            throw new IllegalArgumentException(
-                    "  Attack class type cannot be null"
-            );
-        }
-        this.attackClassType = attackClassType;
     }
 
-    protected Attack(String name, int power, int accuracy, PokemonType type, AttackClassType attackClassType) {
+    protected Attack(String name, int power, int accuracy, PokemonType type) {
         setName(name);
         setPower(power);
         setAccuracy(accuracy);
@@ -84,13 +72,6 @@ public abstract class Attack {
             );
         }
         this.type = type;
-
-        if (attackClassType == null) {
-            throw new IllegalArgumentException(
-                    "  Attack class type cannot be null"
-            );
-        }
-        this.attackClassType = attackClassType;
     }
 
     public String getName() {
@@ -135,6 +116,7 @@ public abstract class Attack {
     public PokemonType getType() {
         return type;
     }
+
     @JsonIgnore
     public Pokemon getPokemon() {
         return pokemon;
@@ -144,11 +126,6 @@ public abstract class Attack {
         this.pokemon = pokemon;
     }
 
-
-    @JsonIgnore
-    public AttackClassType getAttackClassType() {
-        return attackClassType;
-    }
 
 
     public abstract void execute(

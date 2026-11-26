@@ -37,12 +37,12 @@ public class BattleUI {
     public static void showAttacks(Pokemon pokemon) {
         System.out.println();
         System.out.println("  ATTACKS");
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+----------------+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
         System.out.printf(
-                "| %-14s | %-14s | %-14s | %-14s | %-14s | %-14s |%n",
-                "Choice", "Name", "Value", "Accuracy", "Type", "Attack Cat."
+                "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                "Choice", "Name", "Value", "Accuracy", "Type"
         );
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+----------------+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
 
         for (int i = 0; i < pokemon.getAttacks().size(); i++) {
 
@@ -55,17 +55,16 @@ public class BattleUI {
             }
 
             System.out.printf(
-                    "| %-14d | %-14s | %-14d | %-14d | %-14s | %-14s |%n",
+                    "| %-14d | %-14s | %-14d | %-14d | %-14s |%n",
                     i + 1,
                     attack.getName(),
                     value,
                     attack.getAccuracy(),
-                    attack.getType().getLabel(),
-                    attack.getAttackClassType().getLabel()
+                    attack.getType().getLabel()
             );
         }
 
-        System.out.println("+----------------+----------------+----------------+----------------+----------------+----------------+");
+        System.out.println("+----------------+----------------+----------------+----------------+----------------+");
     }
 
     public static void showOptions(Scanner scanner, Pokedex pokedex) {
