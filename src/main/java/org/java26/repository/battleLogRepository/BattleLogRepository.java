@@ -13,6 +13,8 @@ public interface BattleLogRepository extends AutoCloseable {
 
     boolean updateWinner(String matchId, Long newId);
 
+    void deleteAll();
+
     long delete();
 
     long deleteById(String matchId);

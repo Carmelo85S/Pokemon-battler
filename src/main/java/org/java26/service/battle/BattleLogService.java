@@ -8,6 +8,7 @@ import org.java26.repository.battleLogRepository.BattleLogRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 
 public class BattleLogService {
@@ -42,6 +43,9 @@ public class BattleLogService {
 
     public void printAllBattles() {
         List<Document> battles = findAll();
+        if(battles.isEmpty()){
+            System.out.println("  No battle statistics available to show.");
+        }
 
         JsonWriterSettings settings = JsonWriterSettings.builder()
                 .indent(true)
@@ -74,4 +78,28 @@ public class BattleLogService {
                         .append("name", loser.getName()));
         repository.save(log);
     }
+
+    public void resetStatistics() {
+
+        List<Document> battle = repository.findAll();
+        if(battle.isEmpty()){
+            System.out.println("  No battle statistcs available to reset.");
+            return;
+        }
+
+        System.out.println("  Are you sure you want to delete all battle statistics?");
+        System.out.println("  This action cannot be undone.");
+        System.out.print("  Confirm? (Y/N): ");
+
+        Scanner scanner = new Scanner(System.in);
+        String confirmation = scanner.nextLine().trim();
+
+        if (confirmation.equalsIgnoreCase("Y")) {
+            repository.deleteAll();
+            System.out.println("  Battle statistics deleted successfully.");
+        } else {
+            System.out.println("  Operation cancelled.");
+        }
+    }
+
 }

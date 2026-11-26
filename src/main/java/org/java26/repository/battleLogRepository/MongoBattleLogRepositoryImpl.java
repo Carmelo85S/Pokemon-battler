@@ -55,6 +55,11 @@ public class MongoBattleLogRepositoryImpl implements BattleLogRepository{
     }
 
     @Override
+    public void deleteAll() {
+        collection.deleteMany(new Document());
+    }
+
+    @Override
     public long delete() {
         return collection.deleteMany(new Document()).getDeletedCount();
     }

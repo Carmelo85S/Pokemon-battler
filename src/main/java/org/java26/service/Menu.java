@@ -66,11 +66,10 @@ public class Menu {
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl, bls);
                 case 10 -> bls.printAllBattles();
-
-                case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
+                case 11 -> bls.resetStatistics();
                 case 0 -> {
                     saveToFile(pokedex, jsonHandler);
-                    for(Pokemon p : pokedex.getPokemons()){
+                    for (Pokemon p : pokedex.getPokemons()) {
                         impl.save(p);
                     }
                     jsonHandler.saveStatistics("statistic.json", statistics);
