@@ -41,9 +41,9 @@ public class SaveLoadPokemons {
         }
     }
 
-    public static void loadFromFile(Pokedex pokedex, JsonHandler jsonHandler, String filePath) {
+    public static void loadFromFile(Pokedex pokedex, PokemonRepositoryImpl impl) {
         try {
-            List<Pokemon> pokemons = jsonHandler.loadPokemon(filePath);
+            List<Pokemon> pokemons = impl.findAll();
             pokedex.removeAllPokemon();
             for (Pokemon p : pokemons) {
                 pokedex.addPokemon(p);

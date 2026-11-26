@@ -61,11 +61,10 @@ public class Menu {
                 case 3 -> updatePokemon(scanner, pokedex);
                 case 4 -> deletePokemon(scanner, pokedex, impl);
                 case 5 -> saveToFile(pokedex, jsonHandler);
-                case 6 -> loadFromFile(pokedex, jsonHandler, "pokemon.json");
+                case 6 -> loadFromFile(pokedex, impl);
                 case 7 -> resetToSeedData(pokedex, jsonHandler);
                 case 8 -> getPokemonInfo(scanner, pokedex);
                 case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl, bls);
-                //case 10 -> getPokemonsStats(pokedex, statistics);
                 case 10 -> bls.printAllBattles();
 
                 case 11 -> resetAllStatistic(Path.of("statistic.json"), pokedex, statistics, jsonHandler);
