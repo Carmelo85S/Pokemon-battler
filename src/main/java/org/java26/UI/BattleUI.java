@@ -2,6 +2,7 @@ package org.java26.UI;
 
 import org.java26.exceptions.InvalidPokemonException;
 import org.java26.models.*;
+import org.java26.repository.PokemonRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class BattleUI {
         System.out.println("+----------------+----------------+----------------+----------------+----------------+");
     }
 
-    public static void showOptions(Scanner scanner, Pokedex pokedex) {
+    public static void showOptions(Scanner scanner, Pokedex pokedex, PokemonRepositoryImpl impl) {
         title("No pokemons available");
         subTitle("Do you wanna create pokemons?");
         menuOption(1, "Yes");
@@ -76,7 +77,7 @@ public class BattleUI {
         try {
             int choice = readIntBetween(scanner, 1, 2, "Select one option: ");
             if (choice == 1) {
-                createPokemon(scanner, pokedex);
+                createPokemon(scanner, pokedex, impl);
             }
             return;
         } catch (InvalidPokemonException e) {

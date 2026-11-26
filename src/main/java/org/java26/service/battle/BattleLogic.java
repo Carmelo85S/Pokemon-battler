@@ -2,11 +2,12 @@ package org.java26.service.battle;
 
 import org.bson.Document;
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.repository.JsonHandler;
+
 import org.java26.models.Attack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.models.PokemonType;
+import org.java26.repository.PokemonRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +22,13 @@ import static org.java26.handlers.InputHelper.readIntBetween;
 import static org.java26.service.AttackCreator.createAttack;
 import static org.java26.service.PokemonViewer.showPokemons;
 import static org.java26.service.StatisticsService.*;
-import static org.java26.service.battle.BattleLogService.*;
+
 
 public class BattleLogic {
 
-    public static Pokemon preparePlayerPokemon(Scanner scanner, Pokedex pokedex, BattleStatistics statistics) {
+    public static Pokemon preparePlayerPokemon(Scanner scanner, Pokedex pokedex, BattleStatistics statistics, PokemonRepositoryImpl impl) {
         if (pokedex.getPokemons().isEmpty()) {
-            showOptions(scanner, pokedex);
+            showOptions(scanner, pokedex,  impl);
 
             if (pokedex.getPokemons().isEmpty()) {
                 return null;
@@ -150,13 +151,12 @@ public class BattleLogic {
         System.out.println("---------------------");
         System.out.println("BATTLE LOG");
         battleLogService.showStatsBattle(myPokemon, opponent, myPokemonWon, rounds);
-        //battleLogService.saveBattle(myPokemon, opponent, myPokemonWon);
         System.out.println("---------------------");
 
         return true;
     }
 
-    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics, JsonHandler jsonHandler) {
+    public static void handleEndFight(String prompt, Pokemon myPokemon, Pokemon opponent, boolean won, BattleStatistics statistics) {
 
         separator();
         System.out.println("  " + myPokemon.getName() + prompt);
@@ -171,8 +171,6 @@ public class BattleLogic {
         }
         myPokemon.fullHeal();
         opponent.fullHeal();
-        jsonHandler.saveStatistics("statistic.json", statistics);
-        System.out.println("  Statistic saved!");
     }
 
     public static void handleVictory(
@@ -180,6 +178,7 @@ public class BattleLogic {
             Pokedex pokedex,
             Pokemon caught,
             BattleStatistics statistics,
+            PokemonRepositoryImpl impl,
             Runnable playAgain
     ) {
 
@@ -198,7 +197,8 @@ public class BattleLogic {
 
         if (choice == 1) {
             recordPokemonCatch(statistics, caught);
-            pokedex.addPokemon(caught);
+            Pokemon savedPokemon = impl.save(caught);
+            pokedex.addPokemon(savedPokemon);
         }
 
         subTitle("Play again");

@@ -1,6 +1,8 @@
 package org.java26.repository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.java26.exceptions.PokemonLoadException;
+import org.java26.models.Attack;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -11,6 +13,8 @@ import java.nio.file.Path;
 import static org.junit.Assert.assertThrows;
 
 public class JsonHandlerTest {
+    private final ObjectMapper mapper = new ObjectMapper();
+
     @Test
     void corruptedJson_ShouldThrowPokemonLoadException(
             @TempDir Path tempDir) throws IOException {
@@ -38,5 +42,21 @@ public class JsonHandlerTest {
                 PokemonLoadException.class,
                 () -> handler.loadPokemon(file.toString())
         );
+    }
+    @Test
+    public void testAttackDeserialization() throws IOException {
+        String json = """
+            {
+                "attackClassType": "damage",
+                "name": "Thunder Shock",
+                "power": 40,
+                "accuracy": 95,
+                "type": "ELECTRIC"
+            }
+            """;
+
+        Attack attack = mapper.readValue(json, Attack.class);
+
+        System.out.println(attack.getClass().getSimpleName());
     }
 }

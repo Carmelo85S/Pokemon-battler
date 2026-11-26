@@ -8,8 +8,6 @@ import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.repository.PokemonRepositoryImpl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -20,7 +18,7 @@ import static org.java26.handlers.InputHelper.*;
 import static org.java26.service.PokemonViewer.showPokemons;
 
 public class PokemonEditor {
-    public static void updatePokemon(Scanner scanner, Pokedex pokedex) {
+    public static void updatePokemon(Scanner scanner, Pokedex pokedex, PokemonRepositoryImpl impl) {
         if (pokedex.getPokemons().isEmpty()) {
             System.out.println("  No pokemons listed");
             return;
@@ -75,6 +73,8 @@ public class PokemonEditor {
                 case 1 -> {
                     try {
                         pokemon.setName(readString(scanner, "  Enter new name: ", "  New name is "));
+                        pokemon = impl.save(pokemon);
+                        pokedex.updatePokemon(pokemon);
                         separator();
 
                     } catch (QuitPokemonOperationException e) {
@@ -85,6 +85,8 @@ public class PokemonEditor {
                 case 2 -> {
                     try {
                         pokemon.setType(readType(scanner, "  Enter new type: "));
+                        pokemon = impl.save(pokemon);
+                        pokedex.updatePokemon(pokemon);
                         separator();
                     } catch (QuitPokemonOperationException e) {
                         System.out.println(e.getMessage());
@@ -96,8 +98,9 @@ public class PokemonEditor {
                         if (pokemon.getCurrentHp() > pokemon.getMaxHp()) {
                             pokemon.setCurrentHp(pokemon.getMaxHp());
                         }
-
-                        System.out.println();
+                        pokemon = impl.save(pokemon);
+                        pokedex.updatePokemon(pokemon);
+                        separator();
 
                     } catch (QuitPokemonOperationException e) {
                         System.out.println(e.getMessage());
@@ -105,7 +108,9 @@ public class PokemonEditor {
                 }
                 case 4 -> {
                     try {
-                        pokemon.setSpeed(readIntBetween(scanner, 10, 50, "  Enter new hp value: "));
+                        pokemon.setSpeed(readIntBetween(scanner, 10, 50, "  Enter new speed value: "));
+                        pokemon = impl.save(pokemon);
+                        pokedex.updatePokemon(pokemon);
                         separator();
                     } catch (QuitPokemonOperationException e) {
                         System.out.println(e.getMessage());
@@ -126,6 +131,8 @@ public class PokemonEditor {
                             );
 
                             pokemon.addAttack(newAttack);
+                            pokemon = impl.save(pokemon);
+                            pokedex.updatePokemon(pokemon);
 
                             if (pokemon.hasMaxAttacks()) {
                                 System.out.println("  Attack slots filled");
@@ -142,7 +149,6 @@ public class PokemonEditor {
                                     2,
                                     "  Select an option: >  "
                             );
-
                             separator();
 
                             if (userChoice == 2) {
@@ -170,14 +176,15 @@ public class PokemonEditor {
                                     "  Which attack do you want to remove?: ",
                                     "  You want to remove "
                             );
-
-                            System.out.println();
+                            separator();
 
                             boolean attackRemoved = false;
 
                             for (int i = 0; i < pokemon.getAttacks().size(); i++) {
                                 if (pokemon.getAttacks().get(i).getName().equalsIgnoreCase(attackToRemove)) {
                                     pokemon.getAttacks().remove(i);
+                                    pokemon = impl.save(pokemon);
+                                    pokedex.updatePokemon(pokemon);
                                     System.out.println(
                                             "  Attack '" + attackToRemove + "' removed."
                                     );
@@ -222,14 +229,13 @@ public class PokemonEditor {
         title("Delete pokemon");
         subTitle("Choose the id to eliminate");
         menuOption(1, "String");
-        menuOption(2, "Index");
-        menuOption(3, "Id (DB Only)");
+        menuOption(2, "Id ");
         separator();
 
         int chooseMethod = readIntBetween(
                 scanner,
                 1,
-                3,
+                2,
                 "  Choose your method (%d - %d): "
         );
         separator();
@@ -254,29 +260,6 @@ public class PokemonEditor {
                     System.out.println("  Try again.");
                 }
             }
-
-        } else if (chooseMethod == 2) {
-            while (true) {
-                try {
-
-                    int indexToRemove = readIntBetween(
-                            scanner,
-                            0,
-                            pokedex.getPokemons().size() - 1,
-                            "  Which Pokemon index do you wanna delete? (%d-%d): "
-                    );
-                    pokedex.removePokemonIndex(indexToRemove);
-
-                    System.out.println(
-                            "  Pokemon with index [" + indexToRemove
-                                    + "] has been removed from list."
-                    );
-                    return;
-                } catch (InvalidPokemonException e) {
-                    System.out.println(e.getMessage());
-                    System.out.println("  Try again.");
-                }
-            }
         } else {
             while (true) {
                 try {
@@ -291,14 +274,10 @@ public class PokemonEditor {
                     }
                     System.out.println(" --------------------------");
                     Long idToRemove = Long.valueOf(InputHelper.readLong(scanner, "  Id to delete: "));
-
-                    pokedex.removePokemonById(idToRemove);
                     impl.delete(idToRemove);
+                    pokedex.removePokemonById(idToRemove);
 
-                    System.out.println(
-                            "  Pokemon with index [" + idToRemove
-                                    + "] has been removed from list."
-                    );
+                    System.out.println("  Pokemon with ID [" + idToRemove + "] has been removed.");
 
                     return;
                 } catch (InvalidPokemonException e) {

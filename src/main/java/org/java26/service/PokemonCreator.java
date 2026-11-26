@@ -17,8 +17,7 @@ import static org.java26.handlers.InputHelper.readIntBetween;
 
 public class PokemonCreator {
 
-    public static void createPokemon(Scanner scanner, Pokedex pokedex) {
-        PokemonRepositoryImpl impl = new PokemonRepositoryImpl();
+    public static void createPokemon(Scanner scanner, Pokedex pokedex, PokemonRepositoryImpl impl) {
 
         // Pokemon obj
         String name;
@@ -103,8 +102,8 @@ public class PokemonCreator {
                 }
             }
             try {
-                impl.save(pokemon);
-                pokedex.addPokemon(pokemon);
+                Pokemon savedPokemon = impl.save(pokemon);
+                pokedex.addPokemon(savedPokemon);
                 System.out.println("  Pokemon created succesfully!");
             } catch (InvalidPokemonException e) {
                 System.err.println("  Error saving pokemon: " + e.getMessage());

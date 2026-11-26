@@ -10,9 +10,9 @@ public interface PokemonRepository {
     Optional<Pokemon> findById(Long id);
     List<Pokemon> findAll();
     List<Pokemon> findByName(String name);
-    void save(Pokemon pokemon);
+    Pokemon save(Pokemon pokemon);
     void delete(Long id);
     void deleteByName(String name);
-
+    void deleteAll();
     void updateLevel(Pokemon pokemon);
 }

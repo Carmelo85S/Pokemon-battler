@@ -93,10 +93,10 @@ public class Pokemon implements Evolveable {
             );
         }
 
-        this.attacks = new ArrayList<>(attacks);
+        this.attacks.clear();
 
-        for (Attack attack : this.attacks) {
-            attack.setPokemon(this);
+        for (Attack attack : attacks) {
+            addAttack(attack);
         }
     }
 

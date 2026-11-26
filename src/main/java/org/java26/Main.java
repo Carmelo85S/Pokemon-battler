@@ -23,15 +23,12 @@ public class Main {
     public static void main(String[] args) throws QuitPokemonOperationException, IOException {
         Pokedex pokedex = new Pokedex();
         JsonHandler jsonHandler = new JsonHandler();
-        BattleStatistics statistics = jsonHandler.loadStatistics("statistic.json");
+        BattleStatistics statistics = new BattleStatistics();
         PokemonRepositoryImpl impl = new PokemonRepositoryImpl();
         printWelcome();
         loadInitialPokemonData(pokedex, jsonHandler,impl);
         BattleLogRepository blr = new MongoBattleLogRepositoryImpl();
         BattleLogService bls = new BattleLogService(blr);
-        List<Document> find = blr.findAll();
-        System.out.println(find);
-
 
         try (Scanner scanner = new Scanner(System.in)) {
             int choice;
@@ -43,7 +40,7 @@ public class Main {
                         11,
                         "  Select an option %n  > "
                 );
-                runAction(choice, scanner, pokedex, jsonHandler, impl, statistics, bls);
+                runAction(choice, scanner, pokedex, jsonHandler, impl, statistics, blr, bls);
 
             } while (choice != 0);
         } catch (NoSuchElementException e) {

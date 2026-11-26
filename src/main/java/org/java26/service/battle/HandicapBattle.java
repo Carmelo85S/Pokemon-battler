@@ -1,8 +1,7 @@
 package org.java26.service.battle;
 
-import org.bson.json.JsonWriterSettings;
+
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
 import org.java26.repository.PokemonRepositoryImpl;
@@ -14,11 +13,10 @@ import java.util.Scanner;
 import static org.java26.UI.BattleUI.*;
 import static org.java26.UI.Layout.*;
 import static org.java26.handlers.InputHelper.readIntBetween;
-import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class HandicapBattle {
-    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleLogService bls) {
+    public static void startHandicapBattle(Scanner scanner, Pokedex pokedex, List<Pokemon> wildPokemons, BattleStatistics statistics, PokemonRepositoryImpl impl, BattleLogService bls) {
         title("Handicap Battle");
         showHandicapBattleRules();
         Random random = new Random();
@@ -28,7 +26,7 @@ public class HandicapBattle {
             return;
         }
 
-        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex,statistics);
+        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex,statistics, impl);
         if (myPokemon == null) {
             return;
         }
@@ -48,49 +46,34 @@ public class HandicapBattle {
         int playerAccuracyPenalty = handicap[0];
         int opponentAccuracyPenalty = handicap[1];
 
-        runBattle(scanner, myPokemon, opponent, random, statistics, playerAccuracyPenalty, opponentAccuracyPenalty, bls);
+        boolean isReady = runBattle(scanner, myPokemon, opponent, random, statistics, playerAccuracyPenalty, opponentAccuracyPenalty, bls);
+
+        if(!isReady){
+            return;
+        }
 
         if (myPokemon.isFainted()) {
-            handleEndFight(" lost the battle", myPokemon, opponent, false, statistics, jsonHandler);
-            //bls.saveBattle(myPokemon, opponent, false, "handicap");
-            /*bls.findAll().forEach(document ->
-                    System.out.println(document.toJson(
-                            JsonWriterSettings.builder()
-                                    .indent(true)
-                                    .build()
-                    ))
-            );*/
+            handleEndFight(" lost the battle", myPokemon, opponent, false, statistics);
 
         } else {
-            handleEndFight(" won the battle", myPokemon, opponent, true, statistics, jsonHandler);
-            //bls.saveBattle(myPokemon, opponent, true, "handicap");
-            /*System.out.println("---------------------");
-            System.out.println("BATTLE SAVED");
-            bls.findAll().forEach(document ->
-                    System.out.println(document.toJson(
-                            JsonWriterSettings.builder()
-                                    .indent(true)
-                                    .build()
-                    ))
-            );*/
+            handleEndFight(" won the battle", myPokemon, opponent, true, statistics);
             System.out.println("---------------------");
 
             boolean isEvolving = evolvePokemon(myPokemon, statistics);
             if(isEvolving){
                 impl.updateLevel(myPokemon);
-                //saveToFile(pokedex, jsonHandler);
             }
             handleVictory(
                     scanner,
                     pokedex,
                     opponent,
                     statistics,
+                    impl,
                     () -> startHandicapBattle(
                             scanner,
                             pokedex,
                             wildPokemons,
                             statistics,
-                            jsonHandler,
                             impl,
                             bls
                     )

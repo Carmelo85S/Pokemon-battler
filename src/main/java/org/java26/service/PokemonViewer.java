@@ -6,6 +6,7 @@ import org.java26.models.Attack;
 import org.java26.models.HealAttack;
 import org.java26.models.Pokedex;
 import org.java26.models.Pokemon;
+import org.java26.repository.PokemonRepositoryImpl;
 
 import java.util.Scanner;
 
@@ -59,16 +60,16 @@ public class PokemonViewer {
                 title("ATTACKS");
                 System.out.println("+----------------+----------------+----------------+----------------+");
                 System.out.printf(
-                        "| %-14s | %-14s | %-14s | %-14s | %-14s |%n",
+                        "| %-14s | %-14s | %-14s | %-14s |%n",
                         "Name", "Value", "Accuracy", "Type"
                 );
                 System.out.println("+----------------+----------------+----------------+----------------+");
-                if(pokemon.getAttacks().isEmpty()){
+                if (pokemon.getAttacks().isEmpty()) {
                     subTitle("No attacks available");
                 }
                 for (Attack attack : pokemon.getAttacks()) {
                     int value = attack.getPower();
-                    if(attack instanceof HealAttack healAttack){
+                    if (attack instanceof HealAttack healAttack) {
                         value = healAttack.getHeal();
                     }
                     System.out.printf(
@@ -80,7 +81,7 @@ public class PokemonViewer {
                     );
                 }
 
-                System.out.println("+----------------+----------------+----------------+----------------+----------------+");
+                System.out.println("+----------------+----------------+----------------+----------------+");
 
             } catch (InvalidPokemonException e) {
                 System.out.println(e.getMessage());
@@ -102,32 +103,31 @@ public class PokemonViewer {
 
         System.out.println();
 
-        System.out.println("+----------------+---------+---------------+");
-        System.out.println("|              AVAILABLE POKEMONS          |");
-        System.out.println("+----------------+---------+---------------+");
+        System.out.println("+------+------------------+---------+---------------+");
+        System.out.println("|              AVAILABLE POKEMONS                   |");
+        System.out.println("+------+------------------+---------+---------------+");
         System.out.printf(
-                "| %-14s | %-6s | %-14s |%n",
-                "Name", "Level", "Type"
+                "| %-6s | %-14s | %-6s | %-14s |%n",
+                "Id", "Name", "Level", "Type"
         );
 
-        System.out.println(
-                "+----------------+---------+---------------+"
-        );
+        System.out.println("+------+------------------+---------+---------------+");
+
         for (Pokemon p : pokedex.getPokemons()) {
             System.out.printf(
-                    "| %-14s | %-6s | %-14s |%n",
+                    "| %-6s | %-14s | %-6s | %-14s |%n",
+                    p.getId(),
                     p.getName(),
                     p.getLevel(),
                     p.getType().getLabel()
             );
         }
-        System.out.println(
-                "+----------------+---------+---------------+"
-        );
+        System.out.println("+------+------------------+---------+---------------+");
+
 
     }
 
-    public static void showAllPokemon(Scanner scanner, Pokedex pokedex) {
+    public static void showAllPokemon(Scanner scanner, Pokedex pokedex, PokemonRepositoryImpl impl) {
 
         if (pokedex.getPokemons().isEmpty()) {
             separator();
@@ -147,7 +147,7 @@ public class PokemonViewer {
             );
             System.out.println();
             if (choice == 1) {
-                createPokemon(scanner, pokedex);
+                createPokemon(scanner, pokedex, impl);
             } else {
                 return;
             }

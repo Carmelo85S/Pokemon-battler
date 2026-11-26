@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import static org.hibernate.query.results.ResultsHelper.impl;
 import static org.java26.UI.BattleUI.*;
 import static org.java26.UI.Layout.*;
-import static org.java26.repository.SaveLoadPokemons.saveToFile;
 import static org.java26.service.battle.BattleLogic.*;
 
 public class RegularBattle {
@@ -25,7 +25,7 @@ public class RegularBattle {
             return;
         }
 
-        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex,statistics);
+        Pokemon myPokemon = preparePlayerPokemon(scanner, pokedex,statistics, impl);
         if (myPokemon == null) {
             return;
         }
@@ -47,8 +47,8 @@ public class RegularBattle {
                     myPokemon,
                     opponent,
                     false,
-                    statistics,
-                    jsonHandler
+                    statistics
+
             );
         } else {
             handleEndFight(
@@ -56,8 +56,7 @@ public class RegularBattle {
                     myPokemon,
                     opponent,
                     true,
-                    statistics,
-                    jsonHandler
+                    statistics
             );
             boolean isEvolving = evolvePokemon(myPokemon, statistics);
             if(isEvolving){
@@ -68,6 +67,7 @@ public class RegularBattle {
                     pokedex,
                     opponent,
                     statistics,
+                    impl,
                     () -> startBattle(
                             scanner,
                             pokedex,

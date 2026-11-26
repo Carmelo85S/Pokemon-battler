@@ -1,14 +1,13 @@
 package org.java26.service;
 
 import org.java26.exceptions.QuitPokemonOperationException;
-import org.java26.models.Pokemon;
 import org.java26.repository.JsonHandler;
 import org.java26.models.Pokedex;
 import org.java26.repository.PokemonRepositoryImpl;
+import org.java26.repository.battleLogRepository.BattleLogRepository;
 import org.java26.service.battle.BattleLogService;
 import org.java26.service.battle.BattleStatistics;
 
-import java.nio.file.Path;
 import java.util.Scanner;
 
 import static org.java26.UI.Layout.*;
@@ -19,7 +18,6 @@ import static org.java26.service.PokemonEditor.deletePokemon;
 import static org.java26.service.PokemonEditor.updatePokemon;
 import static org.java26.service.PokemonViewer.getPokemonInfo;
 import static org.java26.service.PokemonViewer.showAllPokemon;
-import static org.java26.service.StatisticsService.resetAllStatistic;
 
 public class Menu {
 
@@ -42,44 +40,40 @@ public class Menu {
         menuOption(2, "Add a new Pokemon");
         menuOption(3, "Customize Pokemon");
         menuOption(4, "Delete Pokemon");
-        menuOption(5, "Save Pokemon");
-        menuOption(6, "Load Pokemon");
-        menuOption(7, "Restore default Pokemon");
-        menuOption(8, "View Pokemon details");
-        menuOption(9, "Enter Battle Arena");
-        menuOption(10, "View Battle Statistics");
-        menuOption(11, "Reset Battle Statistics");
-        menuOption(0, "Save & Exit");
-
+        menuOption(5, "Reset to default data");
+        menuOption(6, "View Pokemon details");
+        menuOption(7, "Enter Battle Arena");
+        menuOption(8, "View Battle Statistics");
+        menuOption(9, "Reset Battle Statistics");
+        menuOption(0, "Exit");
     }
 
-    public static void runAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, PokemonRepositoryImpl impl, BattleStatistics statistics, BattleLogService bls) {
+    public static void runAction(
+            int choice,
+            Scanner scanner,
+            Pokedex pokedex,
+            JsonHandler jsonHandler,
+            PokemonRepositoryImpl impl,
+            BattleStatistics statistics,
+            BattleLogRepository blr,
+            BattleLogService bls
+    ) {
         try {
             switch (choice) {
-                case 1 -> showAllPokemon(scanner, pokedex);
-                case 2 -> createPokemon(scanner, pokedex);
-                case 3 -> updatePokemon(scanner, pokedex);
+                case 1 -> showAllPokemon(scanner, pokedex, impl);
+                case 2 -> createPokemon(scanner, pokedex, impl);
+                case 3 -> updatePokemon(scanner, pokedex, impl);
                 case 4 -> deletePokemon(scanner, pokedex, impl);
-                case 5 -> saveToFile(pokedex, jsonHandler);
-                case 6 -> loadFromFile(pokedex, impl);
-                case 7 -> resetToSeedData(pokedex, jsonHandler);
-                case 8 -> getPokemonInfo(scanner, pokedex);
-                case 9 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl, bls);
-                case 10 -> bls.printAllBattles();
-                case 11 -> bls.resetStatistics();
-                case 0 -> {
-                    saveToFile(pokedex, jsonHandler);
-                    for (Pokemon p : pokedex.getPokemons()) {
-                        impl.save(p);
-                    }
-                    jsonHandler.saveStatistics("statistic.json", statistics);
-                    System.out.println("  Goodbye!");
-                }
+                case 5 -> resetToSeedData(pokedex, impl, blr, jsonHandler);
+                case 6 -> getPokemonInfo(scanner, pokedex);
+                case 7 -> battleMenu(scanner, pokedex, jsonHandler, statistics, impl, bls);
+                case 8 -> bls.printAllBattles();
+                case 9 -> bls.resetStatistics();
+                case 0 -> System.out.println("  Goodbye!");
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {
             System.out.println(e.getMessage());
         }
-    }
-}
+    }}
 

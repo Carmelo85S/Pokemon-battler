@@ -3,6 +3,7 @@ package org.java26.repository;
 import org.java26.models.Pokemon;
 import org.java26.exceptions.*;
 import org.java26.models.Pokedex;
+import org.java26.repository.battleLogRepository.BattleLogRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,19 +14,7 @@ import static org.java26.UI.Layout.*;
 
 public class SaveLoadPokemons {
 
-    public static void saveToFile(Pokedex pokedex, JsonHandler jsonHandler) {
-        try {
-            jsonHandler.savePokemon(
-                    "pokemon.json",
-                    pokedex.getPokemons()
-            );
-        } catch (PokemonSaveException e) {
-            e.getStackTrace();
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public static List<Pokemon> loadPokemonList(
+    public static List<Pokemon> loadWildPokemons(
             JsonHandler jsonHandler,
             String filename) {
         try {
@@ -76,30 +65,45 @@ public class SaveLoadPokemons {
         }
     }
 
-    public static void resetToSeedData(Pokedex pokedex, JsonHandler jsonHandler) {
+    public static void resetToSeedData(
+            Pokedex pokedex,
+            PokemonRepositoryImpl impl,
+            BattleLogRepository blr,
+            JsonHandler jsonHandler
+    ) {
         try {
-            boolean delete = Files.deleteIfExists(Path.of("statistic.json"));
-        } catch (IOException e) {
-            System.out.println("  File for statistic does not exist. A file will be created after a battle.");
-        }
+            // Load and validate seed data before deleting anything
+            List<Pokemon> pokemons =
+                    jsonHandler.loadPokemon("seed-pokemons.json");
 
-        try {
-            List<Pokemon> pokemons = jsonHandler.loadPokemon("seed-pokemons.json");
+            if (pokemons.isEmpty()) {
+                System.out.println("  Seed data is empty. Reset cancelled.");
+                return;
+            }
+
+            // Reset PostgreSQL
+            impl.deleteAll();
+
+            for (Pokemon pokemon : pokemons) {
+                impl.save(pokemon);
+            }
+
+            // Reset MongoDB battle logs
+            blr.deleteAll();
+
+            // Refresh in-memory Pokedex from PostgreSQL
             pokedex.removeAllPokemon();
 
-            for (Pokemon p : pokemons) {
-                pokedex.addPokemon(p);
+            for (Pokemon pokemon : impl.findAll()) {
+                pokedex.addPokemon(pokemon);
             }
-            System.out.println("  Pokemons loaded successfully.");
-            jsonHandler.savePokemon(
-                    "pokemon.json",
-                    pokedex.getPokemons()
+
+            System.out.println(
+                    "  Pokemons and battle statistics reset successfully."
             );
 
-            System.out.println("  Pokemons saved successfully.");
-        } catch (PokemonLoadException | PokemonSaveException e) {
-            System.out.println(e.getMessage());
+        } catch (PokemonLoadException e) {
+            System.out.println("  Reset failed: " + e.getMessage());
         }
-    }
-}
+    }}
 

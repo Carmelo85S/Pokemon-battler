@@ -28,16 +28,6 @@ public class Pokedex {
         pokemons.remove(pokemon);
     }
 
-    public void removePokemonIndex(int index) {
-        if (index < 0 || index >= pokemons.size()) {
-            throw new InvalidPokemonException(
-                    "  Pokemon index [" + index + "] not found."
-            );
-        }
-
-        pokemons.remove(index);
-    }
-
     public void removePokemonById(Long id) {
         Pokemon pokemon = pokemons.stream()
                 .filter(p -> p.getId()
@@ -55,5 +45,14 @@ public class Pokedex {
 
     public ArrayList<Pokemon> getPokemons() {
         return pokemons;
+    }
+
+    public void updatePokemon(Pokemon updatedPokemon) {
+        for (int i = 0; i < pokemons.size(); i++) {
+            if (pokemons.get(i).getId().equals(updatedPokemon.getId())) {
+                pokemons.set(i, updatedPokemon);
+                return;
+            }
+        }
     }
 }

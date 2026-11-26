@@ -29,7 +29,7 @@ public class BattleMenu {
             menuOption(3, "Exit & Save");
             backOption();
 
-            choice = readIntBetween(scanner, 1,3, "Choose your battle mode: ");
+            choice = readIntBetween(scanner, 1, 3, "Choose your battle mode: ");
 
             runBattleMenuAction(
                     choice,
@@ -40,7 +40,7 @@ public class BattleMenu {
                     impl,
                     bls
             );
-        } while(choice != 3);
+        } while (choice != 3);
     }
 
     public static void runBattleMenuAction(int choice, Scanner scanner, Pokedex pokedex, JsonHandler jsonHandler, BattleStatistics statistics, PokemonRepositoryImpl impl, BattleLogService bls) {
@@ -49,7 +49,7 @@ public class BattleMenu {
             switch (choice) {
                 case 1 -> {
                     List<Pokemon> wildPokemons =
-                            loadPokemonList(jsonHandler, "wild-pokemons.json");
+                            loadWildPokemons(jsonHandler, "wild-pokemons.json");
 
                     RegularBattle.startBattle(
                             scanner,
@@ -61,25 +61,21 @@ public class BattleMenu {
                             bls
                     );
                 }
-                case 2 ->  {
+                case 2 -> {
                     List<Pokemon> wildPokemons =
-                            loadPokemonList(jsonHandler, "wild-pokemons.json");
+                            loadWildPokemons(jsonHandler, "wild-pokemons.json");
 
                     startHandicapBattle(
                             scanner,
                             pokedex,
                             wildPokemons,
                             statistics,
-                            jsonHandler,
                             impl,
                             bls
                     );
                 }
-                case 3 -> {
-                    jsonHandler.saveStatistics("statistic.json", statistics);
-                    saveToFile(pokedex, jsonHandler);
-                    System.out.println("  Statistics saved correctly!");
-                }
+                case 3 -> System.out.println("  Returning to main menu...");
+
                 default -> System.out.println("  Invalid input");
             }
         } catch (QuitPokemonOperationException e) {

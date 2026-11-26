@@ -3,6 +3,7 @@ package org.java26.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.java26.config.EntityManagerUtil;
+import org.java26.exceptions.InvalidPokemonException;
 import org.java26.models.Pokemon;
 
 import java.util.List;
@@ -12,10 +13,16 @@ public class PokemonRepositoryImpl implements PokemonRepository {
 
     @Override
     public Optional<Pokemon> findById(Long id) {
-
         try (EntityManager em = EntityManagerUtil.getEntityManager()) {
-            Pokemon pokemon = em.find(Pokemon.class, id);
-            return Optional.ofNullable(pokemon);
+            return em.createQuery(
+                            "SELECT DISTINCT p FROM Pokemon p " +
+                                    "LEFT JOIN FETCH p.attacks " +
+                                    "WHERE p.id = :id",
+                            Pokemon.class
+                    )
+                    .setParameter("id", id)
+                    .getResultStream()
+                    .findFirst();
         }
     }
 
@@ -30,20 +37,23 @@ public class PokemonRepositoryImpl implements PokemonRepository {
     @Override
     public List<Pokemon> findByName(String name) {
         try (EntityManager em = EntityManagerUtil.getEntityManager()) {
-            return em.createQuery("SELECT p from Pokemon p where p.name = :name", Pokemon.class)
+            return em.createQuery("SELECT DISTINCT p FROM Pokemon p " +
+                            "LEFT JOIN FETCH p.attacks " +
+                            "WHERE LOWER(p.name) = LOWER(:name)", Pokemon.class)
                     .setParameter("name", name)
                     .getResultList();
         }
     }
 
     @Override
-    public void save(Pokemon pokemon) {
+    public Pokemon save(Pokemon pokemon) {
         EntityManager em = EntityManagerUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            em.merge(pokemon);
+            Pokemon savedPokemon = em.merge(pokemon);
             tx.commit();
+            return savedPokemon;
         } catch (RuntimeException e) {
             if (tx.isActive()) {
                 tx.rollback();
@@ -62,9 +72,7 @@ public class PokemonRepositoryImpl implements PokemonRepository {
             tx.begin();
             Pokemon pokemon = em.find(Pokemon.class, id);
             if (pokemon == null) {
-                tx.rollback();
-                System.err.println("  Pokemon not found.");
-                return;
+                throw new InvalidPokemonException("Pokemon not found.");
             }
             em.remove(pokemon);
             tx.commit();
@@ -86,18 +94,45 @@ public class PokemonRepositoryImpl implements PokemonRepository {
         try {
             tx.begin();
 
-            int deleted = em.createQuery(
-                            "DELETE FROM Pokemon p WHERE LOWER(p.name) = LOWER(:name)"
+            List<Pokemon> pokemons = em.createQuery(
+                            "SELECT DISTINCT p FROM Pokemon p " +
+                                    "LEFT JOIN FETCH p.attacks " +
+                                    "WHERE LOWER(p.name) = LOWER(:name)",
+                            Pokemon.class
                     )
                     .setParameter("name", name)
-                    .executeUpdate();
+                    .getResultList();
+
+            if (pokemons.isEmpty()) {
+                throw new InvalidPokemonException("Pokemon not found.");
+            }
+
+            for (Pokemon pokemon : pokemons) {
+                em.remove(pokemon);
+            }
 
             tx.commit();
 
-            if (deleted == 0) {
-                System.err.println("  Pokemon not found.");
+        } catch (RuntimeException e) {
+            if (tx.isActive()) {
+                tx.rollback();
             }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 
+    @Override
+    public void deleteAll() {
+        EntityManager em = EntityManagerUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            em.createQuery("DELETE FROM Attack").executeUpdate();
+            em.createQuery("DELETE FROM Pokemon").executeUpdate();
+            tx.commit();
         } catch (RuntimeException e) {
             if (tx.isActive()) {
                 tx.rollback();
@@ -115,13 +150,13 @@ public class PokemonRepositoryImpl implements PokemonRepository {
 
         try {
             tx.begin();
-           em.merge(pokemon);
+            em.merge(pokemon);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx.isActive()) {
                 tx.rollback();
             }
-            System.err.println("  Not possible to update pokemon:" + e.getMessage());
+            throw e;
         } finally {
             em.close();
         }
